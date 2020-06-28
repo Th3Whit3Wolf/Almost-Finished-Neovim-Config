@@ -376,7 +376,7 @@ augroup Pack
 	" Vim Crates
 	autocmd BufRead,BufNewFile Cargo.toml packadd vim-crates | call crates#toggle()
 	" Vim Snippets 
-	autocmd InsertEnter * packadd vim-snippets
+	autocmd InsertEnter * packadd! vim-snippets
 	" Rainbow Parentheses
 	autocmd InsertEnter * packadd rainbow_parentheses.vim | RainbowParentheses
     autocmd InsertLeave * RainbowParentheses!
@@ -399,7 +399,6 @@ augroup Pack
 	" Async Run
 	command! -nargs=* -range -bang AsyncRun  packadd asyncrun.vim | let g:asyncrun_last = 1 | call s:do_cmd('AsyncRun'  , "<bang>", <line1>, <line2>, <q-args>)
 	command! -nargs=* -range -bang AsyncStop packadd asyncrun.vim | let g:asyncrun_last = 1 | call s:do_cmd('AsyncStop' , "<bang>", <line1>, <line2>, <q-args>)
-
 augroup END
 if mapcheck("<leader>tv") == ""
     noremap  <silent> <leader>tv :if !exists('vista#sidebar#Toggle()') <bar> :packadd vista.vim <bar>: call VistaAutoClose() <bar> :endif <bar> :Vista!!<CR>
