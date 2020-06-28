@@ -1,0 +1,63 @@
+extends html
+
+snippet end "end (ERB)"
+<% end %>
+endsnippet
+
+snippet if "if (erb)"
+<% if $1 %>
+  $2
+<% end %>
+endsnippet
+
+snippet ifelse "if else (erb)"
+<% if $1 %>
+  $2
+<% else %>
+  $3
+<% end %>
+endsnippet
+
+snippet else "else"
+<% else %>
+endsnippet
+
+snippet each "each (erb)"
+<% @$1.each do |$2| %>
+  $3
+<% end %>
+endsnippet
+
+snippet = "spit out value (erb)"
+<%= $1 %>
+endsnippet
+
+snippet % "erb tag (erb)"
+<% $1 %>
+endsnippet
+
+snippet formfor "form for"
+<%= form_for @$1 do |f| %>
+	$2
+<% end %>
+endsnippet
+
+snippet text
+<%= f.text_field :$1 %>$0
+endsnippet
+
+snippet password
+<%= f.password_field :${1:password} %>$0
+endsnippet
+
+snippet email "Email input field (erb)"
+<%= f.email_field :${1:email} %>$0
+endsnippet
+
+snippet submit
+<%= f.submit "$1" %>$0
+endsnippet
+
+snippet label
+<%= f.label :$1 %>$0
+endsnippet

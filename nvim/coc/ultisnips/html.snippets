@@ -1,0 +1,157 @@
+snippet doctype "HTML - 5.0 (doctype)" b
+<!DOCTYPE html>
+
+endsnippet
+
+#######################
+# Conditional inserts #
+#######################
+snippet ! "IE Conditional Comment: Internet Explorer 5_0 only"
+<!--[if IE 5.0]>${1:IE Conditional Comment: Internet Explorer 5.0 only }<![endif]-->$0
+endsnippet
+
+snippet ! "IE Conditional Comment: Internet Explorer 5_5 only"
+<!--[if IE 5.5000]>${1:IE Conditional Comment: Internet Explorer 5.5 only }<![endif]-->$0
+endsnippet
+
+snippet ! "IE Conditional Comment: Internet Explorer 5_x"
+<!--[if lt IE 6]>${1:IE Conditional Comment: Internet Explorer 5.x      }<![endif]-->$0
+endsnippet
+
+snippet ! "IE Conditional Comment: Internet Explorer 6 and below"
+<!--[if lte IE 6]>${1:IE Conditional Comment: Internet Explorer 6 and below }<![endif]-->$0
+endsnippet
+
+snippet ! "IE Conditional Comment: Internet Explorer 6 only"
+<!--[if IE 6]>${1:IE Conditional Comment: Internet Explorer 6 only   }<![endif]-->$0
+endsnippet
+
+snippet ! "IE Conditional Comment: Internet Explorer 7+"
+<!--[if gte IE 7]>${1:IE Conditional Comment: Internet Explorer 7 and above }<![endif]-->$0
+endsnippet
+
+snippet ! "IE Conditional Comment: Internet Explorer"
+<!--[if IE]>${1:       IE Conditional Comment: Internet Explorer          }<![endif]-->$0
+endsnippet
+
+snippet ! "IE Conditional Comment: NOT Internet Explorer"
+<!--[if !IE]><!-->${1:  IE Conditional Comment: NOT Internet Explorer      }<!-- <![endif]-->$0
+endsnippet
+
+#############
+# HTML TAGS #
+#############
+snippet html5 "HTML5 Template"
+<!DOCTYPE html>
+<html>
+<head>
+    <title>${1}</title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+	${0}
+
+</body>
+</html>
+endsnippet
+
+snippet . "class attribute"
+class="$1"
+endsnippet
+
+snippet # "id attribute"
+id="$1"
+endsnippet
+
+snippet data "data attribute"
+data-$1="$0"
+endsnippet
+
+snippet < "just a tag"
+<$1></$1>
+endsnippet
+
+snippet div "div"
+<div$1>
+	$0
+</div>
+endsnippet
+
+snippet section "section"
+<section$1>
+	$0
+</section>
+endsnippet
+
+snippet header "header"
+<header$1>
+	$0
+</header>
+endsnippet
+
+snippet footer "footer"
+<footer$1>
+	$0
+</footer>
+endsnippet
+
+snippet article "article"
+<article$1>
+	$0
+</article>
+endsnippet
+
+snippet img "img"
+<img$2 src="$1">
+endsnippet
+
+snippet a "a"
+<a$2 href="${1:#}">$0</a>
+endsnippet
+
+snippet span "span"
+<span$1>$0</span>
+endsnippet
+
+snippet p "p"
+<p$1>$0</p>
+endsnippet
+
+snippet ul "ul"
+<ul$1>
+	<li>$0</li>
+</ul>
+endsnippet
+
+snippet li "li"
+<li$1>$0</li>
+endsnippet
+
+snippet input "input"
+<input$2 type="${1:text}">$0</input>
+endsnippet
+
+snippet viewport "viewport"
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+endsnippet
+
+snippet link "link"
+<link rel="${1:stylesheet}" href="$2">
+endsnippet
+
+snippet style "style"
+<style>
+	$0
+</style>
+endsnippet
+
+snippet script "script"
+<script src="${1:resources/js/app.js}"></script>
+endsnippet
+
+snippet js "js"
+<script>
+	$0
+</script>
+endsnippet
