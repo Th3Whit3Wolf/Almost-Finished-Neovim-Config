@@ -2,12 +2,14 @@
     "coc": {
         "preferences": {
             "formatOnSaveFiletypes": [
+                "css",
                 "elm",
                 "elixir",
                 "javascript",
                 "javascript.jsx",
                 "javascriptreact",
                 "json",
+                "python",
                 "rust",
                 "typescript",
                 "typescript.tsx",
@@ -16,9 +18,11 @@
                 "yaml"
             ],
             "minTriggerInputLength": 2,
-            "hoverTarget": "echo"
+            "hoverTarget": "float",
+            "useQuickfixForLocations": true
         }
     },
+    "codeLens.enable": true,
     "diagnostic": {
         "checkCurrentLine": true,
         "virtualTextLines": 4,
@@ -81,7 +85,9 @@
         "enableGutters": false
     },
     "html": {
-        "format.enable": true
+        "enable": true,
+        "format.enable": true,
+        "validate.scripts": true
     },
     "languageserver": {
         "ccls": {
@@ -209,7 +215,9 @@
             "pylintEnabled": false,
             "flake8Enabled": true,
             "flake8Path": "~/.cache/vim/venv/neovim3/bin/flake8"
-        }
+        },
+        "venvFolders": ["neovim3"],
+        "venvPath" : "~/.cache/vim/venv"
     },
     "rust-analyzer": {
         "cargo": {
@@ -217,6 +225,10 @@
         },
         "cargo-watch": {
             "command": "clippy"
+        },
+        "checkOnSave.command": "clippy",
+        "completion" : {
+            "addCallParenthesis": true
         },
         "procMacro.enable": true
     },
@@ -232,11 +244,11 @@
         ]
     },
     "suggest": {
-        "echodocSupport": true,
         "maxCompleteItemCount": 20,
         "enablePreview": true,
-        "noselect": true,
-        "preferCompleteThanJumpPlaceholder": true
+        "noselect": false,
+        "preferCompleteThanJumpPlaceholder": true,
+        "removeDuplicateItems": true
     },
     "tsserver": {
         "implicitProjectConfig": {

@@ -13,7 +13,7 @@ else
 endif
 
 colorscheme one
-" hi Normal guibg=NONE ctermbg=NONE
+hi Normal guibg=NONE ctermbg=NONE
 
 " Cargo.toml
 highlight link Crates Comment
@@ -75,5 +75,5 @@ augroup setcolor
 	autocmd!
 	autocmd ColorScheme * nested call Setcolor()
 	autocmd CursorMoved,CursorHold,CursorHoldI,WinEnter,WinLeave,FocusLost,FocusGained,VimResized,ShellCmdPost * nested call setcolor#autoChange()
-	"autocmd ColorScheme * hi Normal guibg=NONE ctermbg=NONE
+	autocmd ColorScheme * hi Normal guibg=NONE ctermbg=NONE
 augroup END

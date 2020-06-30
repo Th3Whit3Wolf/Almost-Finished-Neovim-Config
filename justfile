@@ -15,7 +15,7 @@ install: _initialize _venv _web _pack
 	fi
 	echo "Super Saiyan Vim Installed Sucessfully"
 
-_initialize: 
+_initialize:
 	mkdir -vp {{env_var_or_default('XDG_CACHE_HOME', '$HOME/.cache')}}/vim/backup
 	mkdir -vp {{env_var_or_default('XDG_CACHE_HOME', '$HOME/.cache')}}/vim/session
 	mkdir -vp {{env_var_or_default('XDG_CACHE_HOME', '$HOME/.cache')}}/vim/swap
@@ -138,12 +138,12 @@ _web:
 		yarn global add neovim
 	elif [ -x "$(command -v npm)" ]; then
 		npm install -g neovim
-	else	
+	else
 		echo "Please install yarn or npm"
 		return 1
 	fi
 		#$js_install \
-		#neovim 
+		#neovim
 		#bash-language-server
 		#eslint \
 		#prettier \
@@ -154,7 +154,7 @@ _web:
 		#typescript \
 		#tern \
 		#jshint \
-		#jsxhint \ 
+		#jsxhint \
 		#jsonlint \
 		#stylelint \
 		#sass-lint \
@@ -185,12 +185,18 @@ _pack: _init_pack
 	# General #
 	###########
 	install() liuchengxu/vim-clap
-	install() Shougo/echodoc
 	install() ryanoasis/vim-devicons
 	install() mhinz/vim-signify
 	install() Th3Whit3Wolf/vim-shebang
 	install() hardcoreplayers/dashboard-nvim
-	
+	install() Konfekt/FoldText
+	install() Konfekt/FastFold
+	install() tpope/vim-abolish
+	install() tpope/vim-commentary
+	install() tpope/vim-surround
+	install() rstacruz/vim-closer
+
+	install() liuchengxu/vim-which-key
 	install() skywind3000/asyncrun.vim -o
 	install() honza/vim-snippets -o
 	install() tpope/vim-endwise -o
@@ -201,7 +207,6 @@ _pack: _init_pack
 	install() liuchengxu/vista.vim -o
 	install() alok/rainbow_parentheses.vim --build 'git checkout fix-spell' -o
 	install() ludovicchabant/vim-gutentags -o
-	install() liuchengxu/vim-which-key -o
 	install() rhysd/git-messenger.vim -o
 	install() tpope/vim-eunuch -o
 
@@ -209,11 +214,11 @@ _pack: _init_pack
 	# Language #
 	############
 	install() sheerun/vim-polyglot
-	
+
 	install() euclio/vim-markdown-composer --build 'cargo build --release' -o
 	install() mhinz/vim-crates -o
 	install() turbio/bracey.vim -o
 	install() arzg/vim-rust-syntax-ext -o
-
+	install() faith/vim-go -o
 	#install() cespare/vim-toml --for toml
 	#install() numirias/semshi --for python

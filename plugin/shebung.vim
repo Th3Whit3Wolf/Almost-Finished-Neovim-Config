@@ -62,7 +62,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Change Shebang
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap  <buffer><F6> :call <SID>change_bang()<CR>
+nnoremap  <buffer><leader>ccs :call <SID>change_bang()<CR>
 function! s:change_bang()
 	if &filetype == 'shell'
         if getline(1)[0:1] !=# "#!"
@@ -109,5 +109,7 @@ function! s:change_bang()
                 1d
                 0put = '#!/usr/bin/env ' . (python_options)[choice - 1]
         endif
+    else
+        echom "I don't know how to handle this filetype"
     endif
 endfunction
