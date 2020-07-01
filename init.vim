@@ -6,7 +6,8 @@ let g:polyglot_disabled = ['rust']
 let mapleader = "\<Space>"
 
 " Set main configuration directory, and where cache is stored.
-let $VIMPATH = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
+let $VIMPATH = 
+	\ expand(($XDG_CONFIG_HOME ? $XDG_CONFIG_HOME : '~/.config') . '/nvim')
 " Set data/cache directory as $XDG_CACHE_HOME/vim
 let $DATA_PATH =
 	\ expand(($XDG_CACHE_HOME ? $XDG_CACHE_HOME : '~/.cache') . '/vim')
@@ -44,24 +45,12 @@ if filereadable(expand('$VIMPATH/.vault.vim'))
 	execute 'source' expand('$VIMPATH/.vault.vim')
 endif
 
-function! s:source_file(path, ...) abort
-	let use_global = get(a:000, 0, ! has('vim_starting'))
-	let abspath = resolve(expand($VIMPATH.'/config/'.a:path))
-	if ! use_global
+function! s:source_lazy(path, ...) abort
+	let abspath = resolve(expand($VIMPATH.'/lazy/'.a:path))
+	if !stridx(&rtp, abspath) == 0
 		execute 'source' fnameescape(abspath)
 		return
 	endif
-	let content = map(readfile(abspath),
-		\ "substitute(v:val, '^\\W*\\zsset\\ze\\W', 'setglobal', '')")
-	let tempfile = tempname()
-	try
-		call writefile(content, tempfile)
-		execute printf('source %s', fnameescape(tempfile))
-	finally
-		if filereadable(tempfile)
-			call delete(tempfile)
-		endif
-	endtry
 endfunction
 
 " Rather than having loads of comments above my mappings I
@@ -99,6 +88,12 @@ if $SUDO_USER !=# '' && $USER !=# $SUDO_USER
 	set shada="NONE"
 endif
 
+" Secure sensitive information, disable backup files in temp directories
+if exists('&backupskip')
+	set backupskip+=/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*
+	set backupskip+=.vault.vim
+endif
+
 " Disable swap/undo/viminfo/shada files in temp directories or shm
 augroup user_secure
 	autocmd!
@@ -110,7 +105,7 @@ augroup END
 set secure
 filetype plugin indent on
 syntax enable
-
+set mouse=nv                 " Disable mouse in command-line mode
 set modeline                 " automatically setting options from modelines
 set report=0                 " Don't report on line changes
 set errorbells               " Trigger bell on error
@@ -135,18 +130,9 @@ set foldnestmax=5
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 
 
-" What to save for views:
-set viewoptions-=options
+" What to save for views and sessions:
 set viewoptions=folds,cursor,curdir,slash,unix
-
-" What to save in sessions:
-set sessionoptions-=blank
-set sessionoptions-=options
-set sessionoptions-=globals
-set sessionoptions-=folds
-set sessionoptions-=help
-set sessionoptions-=buffers
-set sessionoptions+=tabpages
+set sessionoptions=curdir,help,tabpages,winsize
 
 if has('clipboard')
 	set clipboard& clipboard+=unnamedplus
@@ -169,11 +155,11 @@ endif
 " Vim Directories
 """""""""""""""""""""""""""""
 set undofile swapfile nobackup
+set undolevels=1000           " How many steps of undo history Vim should remember
 set directory=$DATA_PATH/swap//,$DATA_PATH,~/tmp,/var/tmp,/tmp
 set undodir=$DATA_PATH/undo//,$DATA_PATH,~/tmp,/var/tmp,/tmp
 set backupdir=$DATA_PATH/backup/,$DATA_PATH,~/tmp,/var/tmp,/tmp
 set viewdir=$DATA_PATH/view/
-set undolevels=1000           " How many steps of undo history Vim should remember
 set spellfile=$VIM_PATH/spell/en.utf-8.add
 
 " History saving
@@ -308,8 +294,6 @@ endif
 function! s:do_cmd(cmd, bang, start, end, args)
     exec printf('%s%s%s %s', (a:start == a:end ? '' : (a:start.','.a:end)), a:cmd, a:bang, a:args)
 endfunction
-" Return to last edit position when opening files (You want this!)
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " Trim whitespace before saving
 autocmd BufWritePre * :call TrimWhitespace()
 " Reload vim config automatically
@@ -329,18 +313,16 @@ augroup Pack
 	autocmd FileType rust packadd rust.vim
 	" faith/vim-go
 	autocmd FileType go packadd vim-go
-	" tpope/vim-endwise
-	autocmd FileType c,cpp,xdefaaults,haskell,objc,make,verilog,matlab,htmldjango,vim,vb,vbnet,aspvbs,sh,zsh,ruby,elixir,lua,crystal,htmljinja,jina.html,snippets packadd vim-endwise
 	" turbio/bracey.vim
 	autocmd FileType html,css,javascript packadd bracey.vim
 	" Vim Which Key
-	command! -nargs=* -range -bang WhichKey packadd vim-which-key | call which_key#register('<Space>', 'g:which_key_map')
-	command! -nargs=* -range -bang WhichKeyVisual packadd vim-which-key | call which_key#register('<Space>', 'g:which_key_map')
+	command! -nargs=* -range -bang WhichKey       packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
+	command! -nargs=* -range -bang WhichKeyVisual packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
 	" Vim Crates
 	" Automatically check for new crate versions when opening Cargo.toml
 	autocmd BufRead,BufNewFile Cargo.toml packadd vim-crates | call crates#toggle()
-	" Vim Snippets 
-	autocmd InsertEnter * packadd vim-snippets
+	" Vim Vim Abolish 
+	autocmd InsertEnter * packadd vim-abolish | call  s:source_lazy('abolish.vim')
 	" Rainbow Parentheses
 	autocmd InsertEnter * packadd rainbow_parentheses.vim | RainbowParentheses
     autocmd InsertLeave * RainbowParentheses!
@@ -363,58 +345,52 @@ augroup Pack
 	" Async Run
 	command! -nargs=* -range -bang AsyncRun  packadd asyncrun.vim | let g:asyncrun_last = 1 | call s:do_cmd('AsyncRun'  , "<bang>", <line1>, <line2>, <q-args>)
 	command! -nargs=* -range -bang AsyncStop packadd asyncrun.vim | let g:asyncrun_last = 1 | call s:do_cmd('AsyncStop' , "<bang>", <line1>, <line2>, <q-args>)
+	" Vim StartupTime
+	command! -nargs=* -range -bang StartupTime packadd startuptime.vim | call s:do_cmd('StartupTime' , "<bang>", <line1>, <line2>, <q-args>)
+	" Vista.vim
+	if mapcheck("<leader>tv") == ""
+		noremap  <silent> <leader>tv :if !exists('vista#sidebar#Toggle()') <bar> :packadd vista.vim <bar>: call VistaAutoClose() <bar> :endif <bar> :Vista!!<CR>
+
+		" Close vista if it is the only open window
+		function! VistaAutoClose()
+			autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
+		endfunction
+	endif
+	" Git Messenger
+	if mapcheck("<leader>gm") == ""
+		nmap  <silent> <leader>gm :if !exists('g:git_messenger_git_command') <bar> :packadd git-messenger.vim <bar>: call VimWhichGM() <bar> :endif <bar><CR> <Plug>(git-messenger)
+
+		function! VimWhichGM()
+			let g:git_messenger_no_default_mappings = v:true
+		endfunction
+	endif
 augroup END
-
-if mapcheck("<leader>tv") == ""
-    noremap  <silent> <leader>tv :if !exists('vista#sidebar#Toggle()') <bar> :packadd vista.vim <bar>: call VistaAutoClose() <bar> :endif <bar> :Vista!!<CR>
-
-	" Close vista if it is the only open window
-	function! VistaAutoClose()
-		autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
-	endfunction
-endif
-
-if mapcheck("<leader>gm") == ""
-    nmap  <silent> <leader>gm :if !exists('g:git_messenger_git_command') <bar> :packadd git-messenger.vim <bar>: call VimWhichGM() <bar> :endif <bar><CR> <Plug>(git-messenger)
-
-	function! VimWhichGM()
-        let g:git_messenger_no_default_mappings = v:true
-	endfunction
-endif
 
 augroup MyAutoCmd
 	autocmd!
 	autocmd Syntax * if line('$') > 5000 | syntax sync minlines=300 | endif
-
 	" Highlight current line only on focused window
 	autocmd WinEnter,InsertLeave * set cursorline
 	autocmd WinLeave,InsertEnter * set nocursorline
-
 	" Automatically set read-only for files being edited elsewhere
 	autocmd SwapExists * nested let v:swapchoice = 'o'
-
 	" Equalize window dimensions when resizing vim window
 	autocmd VimResized * tabdo wincmd =
-
 		" Force write shada on leaving nvim
 	autocmd VimLeave * wshada! | else | wviminfo!
-
 	" Check if file changed when its window is focus, more eager than 'autoread'
 	autocmd WinEnter,FocusGained * checktime
-
 	" Update filetype on save if empty
 	autocmd BufWritePost * nested
 		\ if &l:filetype ==# '' || exists('b:ftdetect')
 		\ |   unlet! b:ftdetect
 		\ |   filetype detect
 		\ | endif
-
 	" Reload Vim script automatically if setlocal autoread
 	autocmd BufWritePost,FileWritePost *.vim nested
 		\ if &l:autoread > 0 | source <afile> |
 		\   echo 'source '.bufname('%') |
 		\ endif
-
 	" When editing a file, always jump to the last known cursor position.
 	" Don't do it when the position is invalid or when inside an event handler
 	autocmd BufReadPost *
@@ -424,47 +400,22 @@ augroup MyAutoCmd
 		\| endif
 augroup END
 
-augroup resumeCursorPosition
-	autocmd!
-	autocmd BufReadPost *
-	\ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
-augroup END
-
 augroup miscGroup
 	autocmd!
-
 	" somehow this is required to move the gray color of the sign column
 	autocmd FileType * highlight clear SignColumn
-
 	" when in a git commit buffer go the beginning
 	autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-
 	" save files when focus is lost
 	autocmd BufLeave * silent! update
-
 	" always have quickfix window take up all the horizontal space
 	autocmd FileType qf wincmd J
-
-	" configure indentation for python
-	autocmd FileType python set expandtab tabstop=4 softtabstop=4 shiftwidth=4
-
-	" configure indentation for python
-	autocmd FileType rust set expandtab tabstop=4 softtabstop=4 shiftwidth=4
-
-	" Disable spell checking in vim help files
-	autocmd FileType help set nospell
-
 	" Fasto setup
 	autocmd BufNewFile,BufRead *.fo setlocal ft=fasto
-
 	" Janus setup
 	autocmd BufNewFile,BufRead *.ja setlocal ft=janus
-
 	" C setup, Vim thinks .h is C++
 	autocmd BufNewFile,BufRead *.h setlocal ft=c
-
 	" Pow setup
 	autocmd BufNewFile,BufRead *.pow setlocal ft=pow
 	autocmd BufNewFile,BufRead */playbooks/*.{yml,yaml} setfiletype yaml.ansible
@@ -492,26 +443,22 @@ augroup miscGroup
 	autocmd BufWinEnter,WinEnter term://* startinsert
 	autocmd BufLeave term://* stopinsert
 	autocmd! BufWritePost *.tex call CompileLatex()
-	autocmd FileType haskell set colorcolumn=80
-	autocmd FileType haskell let &makeprg='hdevtools check %'
-	autocmd FileType rust set colorcolumn=9999
-	autocmd FileType markdown let &makeprg='proselint %'
 	autocmd BufEnter,FocusGained * checktime
-	autocmd BufRead *.rs :setlocal tags=./rusty-tags.vi;/
 	" autocmd FileType rust nnoremap <buffer> <cr> :w<cr>:RustFmt<cr>:w<cr>
 	" https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write
 	autocmd FileType css,javascript,javascriptreact setlocal backupcopy=yes
 
-	autocmd FileType mkd setlocal spell nofoldenable
-	autocmd FileType markdown  setlocal spell nofoldenable
+	autocmd FileType mkd       setlocal spell nofoldenable
 	autocmd FileType text      setlocal spell nofoldenable
 	autocmd FileType gitcommit setlocal spell
 	autocmd FileType vim       setlocal foldmethod=marker
+	autocmd FileType man nnoremap <silent><buffer> q :<C-u>:quit<CR>
 
 	autocmd! FileType which_key
 	autocmd  FileType which_key set laststatus=0 noshowmode noruler
 		\| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 augroup END
+
 """""""""""""""""""""""""""""
 " Mapping
 """""""""""""""""""""""""""""
@@ -557,9 +504,13 @@ nnoremap Y y$
 
 " Yank buffer's relative/absolute path to clipboard
 "nnoremap <Leader>y :let @+=expand("%:~:.")<CR>:echo 'Yanked relative path'<CR>
-nnoremap <leader>y  :<C-u>CocList -A --normal yank<cr>
+nnoremap <leader>y :<C-u>CocList -A --normal yank<cr>
 nnoremap <Leader>Y :let @+=expand("%:p")<CR>:echo 'Yanked absolute path'<CR>
 
+" Split Control
+nnoremap <leader>v :vsplit<CR>
+nnoremap <leader>h :split<CR>
+nnoremap <leader>q :close<CR>
 " Window control
 nnoremap <C-q> <C-w>
 nnoremap <C-x>  :bd<CR>   " delete buffer
@@ -610,7 +561,6 @@ cnoremap <silent><C-s> <C-u>write  \| write<CR>
 
 " I like to :quit with 'q', shrug.
 nnoremap <silent> q :<C-u>:quit<CR>
-autocmd MyAutoCmd FileType man nnoremap <silent><buffer> q :<C-u>:quit<CR>
 
 " Macros
 nnoremap Q q
@@ -631,132 +581,43 @@ nmap <leader>8 <Plug>BuffetSwitch(8)
 nmap <leader>9 <Plug>BuffetSwitch(9)
 nmap <leader>0 <Plug>BuffetSwitch(10)
 
-" Code Runner
-nnoremap <leader>cc :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call CompileMyCode()<CR>
-nnoremap <leader>cr :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call RunMyCode()<CR>
-nnoremap <leader>ct :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call RunRustTest()<CR>
-
 """" Find """"
-nnoremap <silent> <Leader>fh :<C-u>Clap history<CR>
-nnoremap <silent> <Leader>ff :<C-u>Clap files ++finder=rg --ignore --hidden --files<cr>
 nnoremap <silent> <Leader>fa :<C-u>Clap grep2<CR>
 nnoremap <silent> <Leader>fb :<C-u>Clap marks<CR>
+nnoremap <silent> <leader>fc :<C-u>Clap colors<cr>
+nnoremap <silent> <Leader>ff :<C-u>Clap files ++finder=rg --ignore --hidden --files<cr>
+nnoremap <silent> <Leader>fh :<C-u>Clap history<CR>
+nnoremap <silent> <leader>fl :<C-u>Clap blines<cr>
 
 " Session management shortcuts (see plugin/sessions.vim)
-nmap <leader>ss :<C-u>SessionSave<CR>
 nmap <leader>sl :<C-u>SessionLoad<CR>
+nmap <leader>ss :<C-u>SessionSave<CR>
 
 " Toggle
 nnoremap <leader>tf :CocCommand explorer<CR>
 nnoremap <leader>tt :call TermToggle(20)<CR>
 
 "" Taken from David Pederson
-nnoremap <leader>i :call IndentEntireFile()<cr>
-nnoremap <leader>j :call GotoDefinitionInSplit(0)<cr>
-nnoremap <leader>J :call GotoDefinitionInSplit(1)<cr>
-nnoremap <leader>w :wq<cr>
-nnoremap <leader>a :call YankWholeBuffer(0)<cr>
-nnoremap <leader>ag viw:call SearchForSelectedWord()<cr>
-nnoremap <leader>b :Clap buffers<cr>
-nnoremap <leader>cm :!chmod +x %<cr>
-nnoremap <leader>ll :Clap bLines<cr>
-nnoremap <leader>mH :call MakeMarkdownHeading(2)<cr>
+nnoremap <leader>a  :call YankWholeBuffer(0)<cr>
+nnoremap <leader>b  :Clap buffers<cr>
+nnoremap <leader>i  :call IndentEntireFile()<cr>
+nnoremap <leader>j  :call GotoDefinitionInSplit(0)<cr>
 nnoremap <leader>md :set filetype=markdown<cr>
-nnoremap <leader>mh :call MakeMarkdownHeading(1)<cr>>
-nnoremap <leader>p :call PasteFromSystemClipBoard()<cr>
-nnoremap <F2> :call RenameFile()<cr>
-nnoremap <leader>z :call CorrectSpelling()<cr>
+nnoremap <leader>mh :call MakeMarkdownHeading(1)<cr>
+nnoremap <leader>mH :call MakeMarkdownHeading(2)<cr>
 vnoremap <leader>ml :call PasteMarkdownLink()<cr>
+nnoremap <leader>p  :call PasteFromSystemClipBoard()<cr>
+nnoremap <leader>w  :wq<cr>
+nnoremap <leader>z  :call CorrectSpelling()<cr>
+nnoremap <F2>       :call RenameFile()<cr>
 
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 """""""""""""""""""""""""""""
-" Other Mappings
+" Other 
 """""""""""""""""""""""""""""
-nnoremap<C-p> :Clap files<CR>
-
-" Define prefix dictionary
-let g:which_key_map =  {
-	\ 'name' : 'Space'                          ,
-	\ '1'    : 'Switch to Buffer 1'             ,
-	\ '2'    : 'Switch to Buffer 2'             ,
-	\ '3'    : 'Switch to Buffer 3'             ,
-	\ '4'    : 'Switch to Buffer 4'             ,
-	\ '5'    : 'Switch to Buffer 5'             ,
-	\ '6'    : 'Switch to Buffer 6'             ,
-	\ '7'    : 'Switch to Buffer 7'             ,
-	\ '8'    : 'Switch to Buffer 8'             ,
-	\ '9'    : 'Switch to Buffer 9'             ,
-	\ '0'    : 'Switch to Buffer 10'            ,
-	\ 'a'    : 'Copy All'                       ,
-	\ 'ag'   : 'Search for Word'                ,
-	\ 'b'    : 'Search Buffers'                 ,
-	\ 'i'    : 'Indent All'                     ,
-	\ 'j'    : 'Coc Action Next'                , 
-	\ 'J'    : 'Goto Definition'                ,
-	\ 'k'    : 'Coc Action Previous'            ,
-	\ 'll'   : 'Search Lines in Current Buffer' ,
-	\ 'p'    : 'Paste From System Clipboard'    , 
-	\ 'w'    : 'Write and Quit'                 ,
-	\ 'y'    : 'Yank Relative Path'             ,
-	\ 'Y'    : 'Yank Absolute Path'             ,
-	\ 'z'    : 'Correct Spelling'               ,
-	\ 'F2'   : 'Rename File'                    ,
-	\ }
-
-let g:which_key_map['c'] = {
-	\ 'name' : '+Code'                        ,
-	\ 'a'    : 'Codeaction Current Buffer'    ,
-	\ 'as'   : 'Codeaction Selected Region'   ,
-    \ 'c'    : 'Code Compile'                 ,
-	\ 'cs'   : 'Code Change Shebang'          ,
-	\ 'cla'  : 'Code Lens Action'             ,
-	\ 'f'    : 'Format Selected Code'         ,
-	\ 'lc'   : 'CocList Commands'             ,
-	\ 'ld'   : 'CocList Diagnostics'          ,
-	\ 'le'   : 'CocList Extensions'           ,
-	\ 'lo'   : 'CocList Outline'              ,
-	\ 'lr'   : 'CocList Resume'               ,
-	\ 'ls'   : 'CocList Symbols'              ,
-	\ 'qf'   : 'Fix Problem on Current Line'  ,
-    \ 'r'    : 'Code Run'                     ,
-	\ 'rn'   : 'Rename Symbols '              ,
-    \ 't'    : 'Code Test'
-	\ }
-
-let g:which_key_map['f'] = {
-	\ 'name' : '+Find'     ,
-	\ 'a'    : 'Find Word' ,
-	\ 'b'    : 'Bookmarks' ,
-	\ 'f'    : 'Find File' ,
-	\ 'h'    : 'History' ,
-	\ }
-
-let g:which_key_map['g'] = {
-	\ 'name' : '+Git'          ,
-	\ 'gm'   : 'Git Messenger'  
-	\ }
-
-let g:which_key_map['m'] = {
-	\ 'name' : '+Markdown'                ,
-	\ 'd'    : 'Set Filetype as Markdown' ,
-	\ 'h'    : 'Markdown Heading 1'       ,
-	\ 'H'    : 'Markdown Heading 2'       ,
-	\ }
-
-let g:which_key_map['s'] = {
-	\ 'name' : '+Session'     ,
-	\ 'l'    : 'Session Load' ,
-	\ 's'    : 'Session Save' ,
-	\ }
-
-let g:which_key_map['t'] = {
-	\ 'name' : '+Toggle'          ,
-	\ 'f'    : 'Toggle File Tree' ,
-	\ 't'    : 'Toggle Terminal'  ,
-	\ 'v'    : 'Toggle Vista'
-	\ }
-
-let g:which_key_sep = '=>'
-
 let g:coc_data_home	= '~/.config/nvim/coc'
+let g:endwise_no_mappings = v:true
+inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+nnoremap<C-p> :Clap files<CR>
