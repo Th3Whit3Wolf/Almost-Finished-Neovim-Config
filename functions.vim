@@ -250,12 +250,6 @@ function! GetVisualSelection()
 	return join(lines, "\n")
 endfunction
 
-function! SearchForSelectedWord()
-	let word = GetVisualSelection()
-	tabedit
-	execute "Rg " . word
-endfunction
-
 function! FormatSql()
 	let path = expand('%:p')
 	write
