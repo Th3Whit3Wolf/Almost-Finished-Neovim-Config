@@ -1,11 +1,5 @@
 function! InCargoProject(...)
-	if filereadable("Cargo.toml")
-		return 1
-	elseif filereadable("../Cargo.toml")
-		return 1
-	elseif filereadable("../../Cargo.toml")
-		return 1
-	elseif filereadable("../../Cargo.toml")
+	if filereadable("Cargo.toml") || filereadable("../Cargo.toml") || filereadable("../../Cargo.toml") || filereadable("../../../Cargo.toml")
 		return 1
 	else
 		return 0
@@ -15,12 +9,6 @@ function! InRailsApp(...)
 	return filereadable("app/controllers/application_controller.rb")
 endfunction
 
-function! AddtoKey(key, action)
-	exec "let g:which_key_map." . join(split(a:key, '\zs'), '.') . " = '" . a:action . "'"
-endfunction
-
-let c_flags = "-D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS -fasynchronous-unwind-tables -fexceptions -fpie -Wl,-pie -fpic -shared -fplugin=annobin -fstack-clash-protection -fstack-protector-strong -g -grecord-gcc-switches -mcet -fcf-protection -pipe -Wall -Werror=format-security -Werror=implicit-function-declaration -Wl,-z,defs -Wl,-z,now -Wl,-z,relro"
-
 function! Run(executor)
 	exec "AsyncRun -mode=term -pos=bottom -rows=30 " . a:executor
 endfunction
@@ -29,33 +17,33 @@ function CompileMyCode()
     if &modified
 		write
 	end
-    if &filetype == 'c'
+    if &ft == 'c'
 		if executable('gcc')
-			call Run("gcc % -o %< " + c_flags)
+			call Run("gcc % -o %< -Wall -Wextra -Wshadow -Wdouble-promotion -Wformat=2 -Wformat-truncation -Wformat-overflow -Wundef -fno-common -ffunction-sections -fdata-sections -O0")
 		endif
-	elseif &filetype == 'cpp'
+	elseif &ft == 'cpp'
 		if executable('g++')
-			call Run("g++ -std=c++17 % -o %< " + c_flags)
+			call Run("g++ -std=c++17 % -o %< -Wall -Wextra -Wshadow -Wdouble-promotion -Wformat=2 -Wformat-truncation -Wformat-overflow -Wundef -fno-common -ffunction-sections -fdata-sections -O0")
 		endif
-	elseif &filetype == 'go'
+	elseif &ft == 'go'
 		if executable('go')
 			call Run("go build %")
 		else
 			echo 'Go is not installed!'
 		endif
-	elseif &filetype == 'haskell'
+	elseif &ft == 'haskell'
 		if executable('ghc')
 			call Run("ghc % -o %<")
 		else
 			echo 'Haskell is not installed!'
 		endif
-	elseif &filetype == 'java'
+	elseif &ft == 'java'
 		if executable('javac')
 			call Run("javac %")
 		else
 			echo 'Java is not installed!'
 		endif
-	elseif &filetype == 'rust'
+	elseif &ft == 'rust'
 		if InCargoProject()
 			if executable('cargo') 
 				call Run("cargo build --release")
@@ -78,15 +66,15 @@ function! RunMyCode()
     if &modified
 		write
 	end
-    if &filetype == 'c'
+    if &ft == 'c'
 		if executable('gcc')
-			call Run("gcc % -o %<  " + c_flags +"; ./%<")
+			call Run("gcc % -o %<  -Wall -Wextra -Wshadow -Wdouble-promotion -Wformat=2 -Wformat-truncation -Wformat-overflow -Wundef -fno-common -ffunction-sections -fdata-sections -O0 ; ./%<")
 		endif
-	elseif &filetype == 'cpp'
+	elseif &ft == 'cpp'
 		if executable('g++')
-			call Run("g++ -std=c++17 % -o %< " + c_flags +"; ./%<")
+			call Run("g++ -std=c++17 % -o %< -Wall -Wextra -Wshadow -Wdouble-promotion -Wformat=2 -Wformat-truncation -Wformat-overflow -Wundef -fno-common -ffunction-sections -fdata-sections -O0; ./%<")
 		endif
-	elseif &filetype == 'rust'
+	elseif &ft == 'rust'
 		if InCargoProject()
 			if executable('cargo') 
 				call Run("cargo run")		
@@ -100,19 +88,19 @@ function! RunMyCode()
 				echo 'Rustc is not installed!'
 			endif
 		endif
-	elseif &filetype == 'html'
+	elseif &ft == 'html'
 		let g:bracey_refresh_on_save = 1
 		Bracey
-	elseif &filetype == 'markdown'
+	elseif &ft == 'markdown'
 		ComposerOpen
 		ComposerUpdate
-	elseif &filetype == 'java'
+	elseif &ft == 'java'
 		if executable('javac')
 			call Run("javac %")			
 		else
 			echo 'Java is not installed!'
 		endif
-	elseif &filetype == 'sh'
+	elseif &ft == 'sh'
 		if getline(1)[0:18] ==# "#!/usr/bin/env bash" || getline(1)[0:14] ==# "#!/usr/bin/bash"
 			if executable('bash')
 				call Run("bash %")				
@@ -156,7 +144,7 @@ function! RunMyCode()
 				echo 'Zsh is not installed!'
 			endif
 		endif
-	elseif &filetype == 'python'
+	elseif &ft == 'python'
 		if getline(1)[0:21] ==# "#!/usr/bin/env python3" || getline(1)[0:17] ==# "#!/usr/bin/python3"
 			if executable('python3')
 				call Run("python3 %")				
@@ -194,25 +182,25 @@ function! RunMyCode()
 				echo 'Jython is not installed!'
 			endif
 		endif
-	elseif &filetype == 'go'
+	elseif &ft == 'go'
 		if executable('go')
 			call Run("go run %")			
 		else
 			echo 'Go is not installed!'
 		endif
-	elseif &filetype == 'haskell'
+	elseif &ft == 'haskell'
 		if executable('ghc')
 			call Run("ghc % -o %<")			
 		else
 			echo 'Haskell is not installed!'
 		endif
-	elseif &filetype == 'javascript'
+	elseif &ft == 'javascript'
 		if executable('node')
 			call Run("node %")			
 		else
 			echo 'Node is not installed!'
 		endif
-	elseif &filetype == 'ruby'
+	elseif &ft == 'ruby'
 		if InRailsApp()
 			if executable('rails')
 				call Run("rails runner %")

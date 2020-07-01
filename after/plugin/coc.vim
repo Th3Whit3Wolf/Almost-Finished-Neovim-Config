@@ -16,18 +16,19 @@ let g:coc_global_extensions = [
 	\ 'coc-pairs',
 	\ 'coc-markdownlint',
 	\ 'coc-sh',
-	\ 'coc-emmet',
-	\ 'coc-html',
-	\ 'coc-json',
-	\ 'coc-css',
 	\ 'coc-yaml',
 	\ 'coc-svg',
 	\ 'coc-vimlsp',
-	\ 'coc-eslint',
 	\ 'coc-actions',
 	\ 'coc-tasks',
 	\ 'coc-browser',
 	\ 'coc-rust-analyzer',
+	\ 'coc-emmet',
+	\ 'coc-html',
+	\ 'coc-json',
+	\ 'coc-css',
+	\ 'coc-eslint',
+	\ 'coc-tslint-plugin',
 	\ 'coc-tsserver'
 	\]
 
@@ -133,7 +134,7 @@ xmap <leader>cas  <Plug>(coc-codeaction-selected)
 nmap <leader>cas  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader>ca <Plug>(coc-codeaction)
+nmap <leader>cab <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>cqf <Plug>(coc-fix-current)
 
@@ -162,10 +163,8 @@ nnoremap <silent><nowait> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent><nowait> <leader>k  :<C-u>CocPrev<CR>
 
-
-
 " Insert Indented new line after pressing enter after closing pair
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call ShowDocumentation()<CR>
 

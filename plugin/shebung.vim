@@ -62,7 +62,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Change Shebang
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap  <buffer><leader>ccs :call <SID>change_bang()<CR>
+nnoremap  <buffer> <leader>ccs :call <SID>change_bang()<CR>
 function! s:change_bang()
 	if &filetype == 'shell'
         if getline(1)[0:1] !=# "#!"

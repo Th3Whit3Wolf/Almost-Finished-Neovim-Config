@@ -191,14 +191,14 @@ _pack: _init_pack
 	install() hardcoreplayers/dashboard-nvim
 	install() Konfekt/FoldText
 	install() Konfekt/FastFold
-	install() tpope/vim-abolish
 	install() tpope/vim-commentary
 	install() tpope/vim-surround
-	install() rstacruz/vim-closer
+	install() tpope/vim-endwise
+	install() honza/vim-snippets
 
+	install() tpope/vim-abolish -o
 	install() liuchengxu/vim-which-key
 	install() skywind3000/asyncrun.vim -o
-	install() honza/vim-snippets -o
 	install() tpope/vim-endwise -o
 	install() tpope/vim-eunuch -o
 	install() alvan/vim-closetag -o
