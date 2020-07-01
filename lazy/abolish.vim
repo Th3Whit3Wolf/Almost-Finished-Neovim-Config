@@ -49,6 +49,7 @@ Abolish aswell as well
 Abolish etx etc
 Abolish bcak back
 Abolish REmove Remove
+Abolish isntall install
 
 augroup abbreviationGroup
     autocmd!
@@ -73,7 +74,6 @@ augroup abbreviationGroup
 augroup END
 
 highlight clear SignColumn
-
 
 imap ;ln Karrick
 imap ;fn David
@@ -127,26 +127,18 @@ Abolish recieve receive
 Abolish selectino selection
 Abolish definitly definitely
 imap ;ea each arm
-Abolish omf OmniFocus
 imap ;atm at the moment
 Abolish btw by the way
-imap ;lb launchbar
-Abolish fb Facebook
 Abolish ily I love you ❤️
-Abolish texp TextExpander
-Abolish kbm Keyboard Maestro
 imap ;rx [runx]
 Abolish someting something
 imap ;date %d %b %Y
 Abolish wself typeof(self) __weak weakSelf = self;
 Abolish fformat [NSString stringWithFormat:@"%|"]
 Abolish llog NSLog(@"%|");
-imap ;tmand At the moment an Android version is not planned. I'm doing this in my spare time outside work and university so I simply don't have the time. Sorry about that.
-Abolish YP YO!
 Abolish cafeine caffeine
 Abolish infact in fact
 Abolish surprice surprise
-Abolish llp Lonely Proton
 Abolish thikn think
 Abolish achive archive
 Abolish acutally actually
