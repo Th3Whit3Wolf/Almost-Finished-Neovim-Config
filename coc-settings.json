@@ -1,276 +1,356 @@
 {
-    "coc": {
-        "preferences": {
-            "formatOnSaveFiletypes": [
-                "css",
-                "elm",
-                "elixir",
-                "javascript",
-                "javascript.jsx",
-                "javascriptreact",
-                "json",
-                "python",
-                "rust",
-                "typescript",
-                "typescript.tsx",
-                "typescriptreact",
-                "vue",
-                "yaml"
-            ],
-            "minTriggerInputLength": 2,
-            "hoverTarget": "float",
-            "useQuickfixForLocations": true
-        }
-    },
-    "codeLens.enable": true,
-    "diagnostic": {
-        "checkCurrentLine": true,
-        "virtualTextLines": 4,
-        "errorSign": "✘",
-        "warningSign": "",
-        "infoSign": "",
-        "enable": true
-    },
-    "eslint": {
-        "autoFixOnSave": true,
-        "filetypes": [
-            "javascript",
-            "javascriptreact",
-            "typescript",
-            "typescript.tsx",
-            "typescriptreact",
-            "vue"
-        ]
-    },
-    "explorer": {
-        "file": {
-            "child": {
-                "template": "[selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][readonly][git] [linkIcon & 1][link]"
-            },
-            "column": {
-                "filename": {
-                    "paddingEnd": false
-                },
-                "git": {
-                    "icon": {
-                        "modified": "⛥"
-                    }
-                }
-            },
-            "columns": [
-                "clip",
-                "diagnosticWarning",
-                "diagnosticError",
-                "indent",
-                "icon",
-                "filename",
-                "git",
-                "selection"
-            ]
-        },
-        "icon": {
-            "enableNerdfont": true
-        }
-    },
-    "javascript": {
-        "suggestionActions": {
-            "enabled": false
-        },
-        "format": {
-            "enabled": false
-        }
-    },
-    "git": {
-        "addGBlameToVirtualText": true,
-        "enableGutters": false
-    },
-    "html": {
-        "enable": true,
-        "format.enable": true,
-        "validate.scripts": true
-    },
-    "languageserver": {
-        "ccls": {
-            "command": "ccls",
-            "filetypes": ["c", "cpp", "cc", "cuda", "objc", "objcpp"],
-            "rootPatterns": [
-                ".ccls",
-                "compile_commands.json",
-                ".vim/",
-                ".git/",
-                ".hg/"
-            ],
-            "initializationOptions": {
-                "cache": {
-                    "directory": "~/.cache/vim/lsp/ccls-cache"
-                }
-            }
-        },
-        "dart": {
-            "command": "dart_language_server",
-            "args": [],
-            "filetypes": ["dart"],
-            "initializationOptions": {},
-            "settings": {
-                "dart": {
-                    "validation": {},
-                    "completion": {}
-                }
-            }
-        },
-        "dockerfile": {
-            "command": "docker-langserver",
-            "filetypes": ["dockerfile", "DockerFile"],
-            "args": ["--stdio"]
-        },
-        "golang": {
-            "command": "gopls",
-            "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-            "filetypes": ["go"]
-        },
-        "vls": {
-            "command": "vls",
-            "filetypes": ["vue"],
-            "initializationOptions": {
-                "config": {
-                    "vetur": {
-                        "experimental": {
-                            "templateInterpolationService": true
-                        },
-                        "useWorkspaceDependencies": false,
-                        "validation": {
-                            "template": true,
-                            "style": true,
-                            "script": true
-                        },
-                        "completion": {
-                            "autoImport": false,
-                            "useScaffoldSnippets": false,
-                            "tagCasing": "kebab"
-                        },
-                        "format": {
-                            "defaultFormatter": {
-                                "js": "prettier",
-                                "ts": "prettier"
-                            },
-                            "defaultFormatterOptions": {},
-                            "scriptInitialIndent": false,
-                            "styleInitialIndent": false
-                        }
-                    },
-                    "css": {},
-                    "html": {
-                        "suggest": {}
-                    },
-                    "javascript": {
-                        "format": {}
-                    },
-                    "typescript": {
-                        "format": {}
-                    },
-                    "emmet": {},
-                    "stylusSupremacy": {}
-                }
-            }
-        },
-        "haskell": {
-            "command": "hie-wrapper",
-            "args": ["--lsp"],
-            "rootPatterns": [
-                "*.cabal",
-                "stack.yaml",
-                "cabal.project",
-                "package.yaml"
-            ],
-            "filetypes": ["hs", "lhs", "haskell"],
-            "initializationOptions": {
-                "languageServerHaskell": {}
-            }
-        }
-    },
-    "latex": {
-        "forwardSearch": {
-            "args": ["--synctex-forward", "%l:1:%f", "%p"],
-            "executable": "zathura"
-        }
-    },
-    "pyls": {
-        "plugins": {
-            "pycodestyle": {
-                "enabled": false
-            }
-        }
-    },
-    "python": {
-        "autoComplete.addBrackets": true,
-        "formatting": {
-            "provider": "yapf",
-            "yapfPath": "/.cache/vim/venv/neovim3/bin/yapf"
-        },
-        "jediEnabled": true,
-        "jediPath": "/.cache/vim/venv/neovim3/bin/jedi",
-        "linting": {
-            "mypyEnabled": true,
-            "pydocstyleEnabled": false,
-            "pylintEnabled": false,
-            "flake8Enabled": true,
-            "flake8Path": "~/.cache/vim/venv/neovim3/bin/flake8"
-        },
-        "venvFolders": ["neovim3"],
-        "venvPath" : "~/.cache/vim/venv"
-    },
-    "rust-analyzer": {
-        "cargo": {
-            "loadOutDirsFromCheck": true
-        },
-        "cargo-watch": {
-            "command": "clippy"
-        },
-        "checkOnSave.command": "clippy",
-        "completion" : {
-            "addCallParenthesis": true
-        },
-        "procMacro.enable": true
-    },
-    "snippets": {
-        "extends": {
-            "cpp": ["c"],
-            "javascriptreact": ["javascript"],
-            "typescript": ["javascript"]
-        },
-        "ultisnips.directories": [
-            "UltiSnips",
-            "~/.config/nvim/ultisnips"
-        ]
-    },
-    "suggest": {
-        "maxCompleteItemCount": 20,
-        "enablePreview": true,
-        "noselect": false,
-        "preferCompleteThanJumpPlaceholder": true,
-        "removeDuplicateItems": true
-    },
-    "tsserver": {
-        "implicitProjectConfig": {
-            "checkJs": true
-        },
-        "npm": "/usr/local/bin/npm",
-        "enableJavascript": true
-    },
-    "yank": {
-        "priority": 40
-    },
-    "vetur": {
-        "experimental": {
-            "templateInterpolationService": true
-        }
-    },
-    "emmet": {
-        "priority": 100
-    },
-    "typescript": {
-        "format": {
-            "enabled": false
-        }
+  "coc": {
+    "preferences": {
+      "formatOnSaveFiletypes": [
+        "css",
+        "elm",
+        "elixir",
+        "javascript",
+        "javascript.jsx",
+        "javascriptreact",
+        "json",
+        "python",
+        "rust",
+        "typescript",
+        "typescript.tsx",
+        "typescriptreact",
+        "vue",
+        "yaml"
+      ],
+      "minTriggerInputLength": 2,
+      "hoverTarget": "float",
+      "useQuickfixForLocations": true
     }
+  },
+  "codeLens.enable": true,
+  "diagnostic": {
+    "checkCurrentLine": true,
+    "virtualTextLines": 4,
+    "errorSign": "✘",
+    "hintSign": "ஐ",
+    "warningSign": "",
+    "infoSign": "",
+    "enable": true
+  },
+  "eslint": {
+    "autoFixOnSave": true,
+    "filetypes": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescript.tsx",
+      "typescriptreact",
+      "vue"
+    ]
+  },
+  "explorer": {
+    "file": {
+      "child": {
+        "template": "[selection | clip | 1] [indent][icon | 1] [diagnosticError & 1][filename omitCenter 1][readonly][git] [linkIcon & 1][link]"
+      },
+      "column": {
+        "filename": {
+          "paddingEnd": false
+        },
+        "git": {
+          "icon": {
+            "modified": "⛥"
+          }
+        }
+      },
+      "columns": [
+        "clip",
+        "diagnosticWarning",
+        "diagnosticError",
+        "indent",
+        "icon",
+        "filename",
+        "git",
+        "selection"
+      ]
+    },
+    "icon": {
+      "enableNerdfont": true
+    }
+  },
+  "javascript": {
+    "suggestionActions": {
+      "enabled": false
+    },
+    "format": {
+      "enabled": false
+    }
+  },
+  "git": {
+    "addGBlameToVirtualText": true,
+    "enableGutters": false
+  },
+  "html": {
+    "enable": true,
+    "format.enable": true,
+    "validate.scripts": true
+  },
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": [
+        "c",
+        "cpp",
+        "cc",
+        "cuda",
+        "objc",
+        "objcpp"
+      ],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "initializationOptions": {
+        "cache": {
+          "directory": "~/.cache/vim/lsp/ccls-cache"
+        }
+      }
+    },
+    "dart": {
+      "command": "dart_language_server",
+      "args": [],
+      "filetypes": [
+        "dart"
+      ],
+      "initializationOptions": {},
+      "settings": {
+        "dart": {
+          "validation": {},
+          "completion": {}
+        }
+      }
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": [
+        "dockerfile",
+        "DockerFile"
+      ],
+      "args": [
+        "--stdio"
+      ]
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": [
+        "go.mod",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "filetypes": [
+        "go"
+      ]
+    },
+    "vls": {
+      "command": "vls",
+      "filetypes": [
+        "vue"
+      ],
+      "initializationOptions": {
+        "config": {
+          "vetur": {
+            "experimental": {
+              "templateInterpolationService": true
+            },
+            "useWorkspaceDependencies": false,
+            "validation": {
+              "template": true,
+              "style": true,
+              "script": true
+            },
+            "completion": {
+              "autoImport": false,
+              "useScaffoldSnippets": false,
+              "tagCasing": "kebab"
+            },
+            "format": {
+              "defaultFormatter": {
+                "js": "prettier",
+                "ts": "prettier"
+              },
+              "defaultFormatterOptions": {},
+              "scriptInitialIndent": false,
+              "styleInitialIndent": false
+            }
+          },
+          "css": {},
+          "html": {
+            "suggest": {}
+          },
+          "javascript": {
+            "format": {}
+          },
+          "typescript": {
+            "format": {}
+          },
+          "emmet": {},
+          "stylusSupremacy": {}
+        }
+      }
+    },
+    "haskell": {
+      "command": "hie-wrapper",
+      "args": [
+        "--lsp"
+      ],
+      "rootPatterns": [
+        "*.cabal",
+        "stack.yaml",
+        "cabal.project",
+        "package.yaml"
+      ],
+      "filetypes": [
+        "hs",
+        "lhs",
+        "haskell"
+      ],
+      "initializationOptions": {
+        "languageServerHaskell": {}
+      }
+    }
+  },
+  "latex": {
+    "forwardSearch": {
+      "args": [
+        "--synctex-forward",
+        "%l:1:%f",
+        "%p"
+      ],
+      "executable": "zathura"
+    }
+  },
+  "pyls": {
+    "plugins": {
+      "pycodestyle": {
+        "enabled": false
+      }
+    }
+  },
+  "python": {
+    "autoComplete.addBrackets": true,
+    "formatting": {
+      "provider": "yapf",
+      "yapfPath": "/.cache/vim/venv/neovim3/bin/yapf"
+    },
+    "jediEnabled": true,
+    "jediPath": "/.cache/vim/venv/neovim3/bin/jedi",
+    "linting": {
+      "mypyEnabled": true,
+      "pydocstyleEnabled": false,
+      "pylintEnabled": false,
+      "flake8Enabled": true,
+      "flake8Path": "~/.cache/vim/venv/neovim3/bin/flake8"
+    },
+    "venvFolders": [
+      "neovim3"
+    ],
+    "venvPath": "~/.cache/vim/venv"
+  },
+  "rust-analyzer": {
+    "cargo": {
+      "loadOutDirsFromCheck": true
+    },
+    "cargo-watch": {
+      "command": "clippy"
+    },
+    "checkOnSave.command": "clippy",
+    "completion": {
+      "addCallParenthesis": true,
+      "addCallArgumentSnippets": true,
+      "postfix.enable": true
+    },
+    "lens": {
+      "enable": true,
+      "run": true,
+      "implementations": true
+    },
+    "inlayHints": {
+      "chainingHints": true,
+      "refreshOnInsertMode": true
+    },
+    "procMacro.enable": true
+  },
+  "snippets": {
+    "extends": {
+      "cpp": [
+        "c"
+      ],
+      "javascriptreact": [
+        "javascript"
+      ],
+      "typescript": [
+        "javascript"
+      ]
+    },
+    "ultisnips.directories": [
+      "UltiSnips",
+      "~/.config/nvim/ultisnips"
+    ]
+  },
+  "suggest": {
+    "completionItemKindLabels": {
+      "keyword": "\uf1de",
+      "variable": "\ue79b",
+      "value": "\uf89f",
+      "operator": "\u03a8",
+      "function": "\u0192",
+      "reference": "\ufa46",
+      "constant": "\uf8fe",
+      "method": "\uf09a",
+      "struct": "\ufb44",
+      "class": "\uf0e8",
+      "interface": "\uf417",
+      "text": "\ue612",
+      "enum": "\uf435",
+      "enumMember": "\uf02b",
+      "module": "\uf40d",
+      "color": "\ue22b",
+      "property": "\ue624",
+      "field": "\uf9be",
+      "unit": "\uf475",
+      "event": "\ufacd",
+      "file": "\uf723",
+      "folder": "\uf114",
+      "snippet": "\ue60b",
+      "typeParameter": "\uf728",
+      "default": "\uf29c"
+    },
+    "maxCompleteItemCount": 20,
+    "enablePreview": true,
+    "noselect": false,
+    "preferCompleteThanJumpPlaceholder": true,
+    "removeDuplicateItems": true
+  },
+  "tsserver": {
+    "implicitProjectConfig": {
+      "checkJs": true
+    },
+    "npm": "/usr/local/bin/npm",
+    "enableJavascript": true
+  },
+  "yank": {
+    "priority": 40
+  },
+  "vetur": {
+    "experimental": {
+      "templateInterpolationService": true
+    }
+  },
+  "emmet": {
+    "priority": 100
+  },
+  "typescript": {
+    "format": {
+      "enabled": false
+    }
+  }
 }
