@@ -101,3 +101,21 @@ if s:tmux
 	execute "set <F11>=\e[23;*~"
 	execute "set <F12>=\e[24;*~"
 endif
+
+" Terminal go back to normal mode
+tnoremap <Esc> <C-\><C-n>
+tnoremap :q! <C-\><C-n>:q!<CR>
+
+" Make terminal mode behave more like any other mode
+tnoremap <C-[> <C-\><C-n>
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <A-k> <C-\><C-n><C-W>+i
+tnoremap <A-j> <C-\><C-n><C-W>-i
+tnoremap <A-h> <C-\><C-n>3<C-W>>i
+tnoremap <A-l> <C-\><C-n>3<C-W><i
+
+" Toggle terminal on/off (neovim)
+tnoremap <A-t> <C-\><C-n>:call TermToggle(10)<CR>
