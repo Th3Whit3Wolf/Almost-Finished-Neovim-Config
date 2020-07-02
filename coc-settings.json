@@ -1,6 +1,8 @@
 {
   "coc": {
     "preferences": {
+      "enablePreselect": true,
+      "enablePreview": true,
       "formatOnSaveFiletypes": [
         "css",
         "elm",
@@ -17,8 +19,8 @@
         "vue",
         "yaml"
       ],
-      "minTriggerInputLength": 2,
       "hoverTarget": "float",
+      "previewAutoClose": true,
       "useQuickfixForLocations": true
     }
   },
@@ -54,7 +56,7 @@
         },
         "git": {
           "icon": {
-            "modified": "⛥"
+            "modified": ""
           }
         }
       },
