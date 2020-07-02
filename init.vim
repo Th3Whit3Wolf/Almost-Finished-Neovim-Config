@@ -302,22 +302,19 @@ autocmd BufWritePost $VIM_PATH/{*.vim,*.json} nested
 " Autoload packages
 augroup Pack
 	" alvan/vim-closetag
-	autocmd FileType html,xhtml,xml,phtml,jsx packadd vim-closetag
-	" arzg/vim-rust-syntax-ext
+	autocmd FileType html,xhtml,xml,phtml,jsx packadd vim-closetag | call s:source_lazy('closetag.vim')
 	autocmd FileType rust packadd rust.vim | packadd vim-rust-syntax-ext
 	" euclio/vim-markdown-composer
 	autocmd FileType markdown packadd vim-markdown-composer
 	" ludovicchabant/vim-gutentags
 	autocmd FileType taggers packadd vim-gutentags
-	" rust-lang/rust.vim
-	autocmd FileType rust packadd rust.vim
 	" faith/vim-go
 	autocmd FileType go packadd vim-go
 	" turbio/bracey.vim
 	autocmd FileType html,css,javascript packadd bracey.vim
 	" Vim Which Key
-	command! -nargs=* -range -bang WhichKey       packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
-	command! -nargs=* -range -bang WhichKeyVisual packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
+	"command! -nargs=* -range -bang WhichKey       packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
+	"command! -nargs=* -range -bang WhichKeyVisual packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
 	" Vim Crates
 	" Automatically check for new crate versions when opening Cargo.toml
 	autocmd BufRead,BufNewFile Cargo.toml packadd vim-crates | call crates#toggle()
@@ -356,14 +353,7 @@ augroup Pack
 			autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
 		endfunction
 	endif
-	" Git Messenger
-	if mapcheck("<leader>gm") == ""
-		nmap  <silent> <leader>gm :if !exists('g:git_messenger_git_command') <bar> :packadd git-messenger.vim <bar>: call VimWhichGM() <bar> :endif <bar><CR> <Plug>(git-messenger)
-
-		function! VimWhichGM()
-			let g:git_messenger_no_default_mappings = v:true
-		endfunction
-	endif
+	packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
 augroup END
 
 augroup MyAutoCmd
@@ -408,8 +398,6 @@ augroup miscGroup
 	autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 	" save files when focus is lost
 	autocmd BufLeave * silent! update
-	" always have quickfix window take up all the horizontal space
-	autocmd FileType qf wincmd J
 	" Fasto setup
 	autocmd BufNewFile,BufRead *.fo setlocal ft=fasto
 	" Janus setup
@@ -444,7 +432,6 @@ augroup miscGroup
 	autocmd BufLeave term://* stopinsert
 	autocmd! BufWritePost *.tex call CompileLatex()
 	autocmd BufEnter,FocusGained * checktime
-	" autocmd FileType rust nnoremap <buffer> <cr> :w<cr>:RustFmt<cr>:w<cr>
 	" https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write
 	autocmd FileType css,javascript,javascriptreact setlocal backupcopy=yes
 
@@ -457,15 +444,14 @@ augroup miscGroup
 	autocmd! FileType which_key
 	autocmd  FileType which_key set laststatus=0 noshowmode noruler
 		\| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+	autocmd TermEnter * call s:source_lazy('terminal.vim')
+	autocmd FilterWritePost * if (&diff) | call s:source_lazy('diff.vim') | DiffOrig | endif
 augroup END
 
 """""""""""""""""""""""""""""
 " Mapping
 """""""""""""""""""""""""""""
-" Terminal go back to normal mode
-tnoremap <Esc> <C-\><C-n>
-tnoremap :q! <C-\><C-n>:q!<CR>
-
 " Start an external command with a single bang
 nnoremap ! :!
 
@@ -487,10 +473,10 @@ cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
 
 " Toggle fold
-nnoremap <CR> za
+nnoremap <CR> :packadd FoldText <bar><CR> za
 
 " Focus the current fold by closing all others
-nnoremap <S-Return> zMzvzt
+nnoremap <S-Return> :packadd FoldText <bar><CR> zMzvzt
 
 " Start new line from any cursor position
 inoremap <S-Return> <C-o>o
@@ -538,21 +524,9 @@ vnoremap <S-Tab> <gv
 nmap <Tab>   >>_
 nmap <S-Tab> <<_
 
-" Make terminal mode behave more like any other mode
-tnoremap <C-[> <C-\><C-n>
-tnoremap <C-h> <C-\><C-n><C-w>h
-tnoremap <C-j> <C-\><C-n><C-w>j
-tnoremap <C-k> <C-\><C-n><C-w>k
-tnoremap <C-l> <C-\><C-n><C-w>l
-tnoremap <A-k> <C-\><C-n><C-W>+i
-tnoremap <A-j> <C-\><C-n><C-W>-i
-tnoremap <A-h> <C-\><C-n>3<C-W>>i
-tnoremap <A-l> <C-\><C-n>3<C-W><i
-
 " Toggle terminal on/off (neovim)
 nnoremap <A-t> :call TermToggle(10)<CR>
 inoremap <A-t> <Esc>:call TermToggle(10)<CR>
-tnoremap <A-t> <C-\><C-n>:call TermToggle(10)<CR>
 
 " Exit insert mode and save just by hitting CTRL-s
 noremap <silent><C-s> :<C-u>write \| write<CR>
@@ -618,6 +592,6 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 """""""""""""""""""""""""""""
 let g:coc_data_home	= '~/.config/nvim/coc'
 let g:endwise_no_mappings = v:true
-inoremap <expr> <Plug>CustomCocCR pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 nnoremap<C-p> :Clap files<CR>
