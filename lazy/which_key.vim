@@ -1,4 +1,5 @@
 " Define prefix dictionary
+
 let g:which_key_map =  {
 	\ 'name' : 'Space'                          ,
 	\ '1'    : 'Switch to Buffer 1'             ,
@@ -53,7 +54,6 @@ let g:which_key_map['c'] = {
 	\ }                                       ,
 	\ 'rn'   : 'Rename Symbols '              ,
 	\ }
-
 
 let g:which_key_map['f'] = {
 	\ 'name' : '+Find'     ,
@@ -138,11 +138,6 @@ function! s:WhichKeyCodeNone()
 		unlet g:which_key_map.c.t
 	endif
 endfunction
-
-let g:which_key_map_git = {
-	\ 'name' : '+Git'          ,
-	\ 'm'   : 'Git Messenger'  
-	\ }
 
 function s:SetKeyOnFT()
 	if &ft == 'c' || &ft == 'cpp'
@@ -294,24 +289,33 @@ function s:SetKeyOnFT()
 	endif
 endfunction
 
-call s:SetKeyOnFT()
-
-let git_dir = system('git rev-parse --git-dir')
-" if in a git repo
-if !v:shell_error
-	let g:which_key_map.g = g:which_key_map_git
-elseif has_key(g:which_key_map, 'g')
-	unlet g:which_key_map.g
-endif
-
-function! SetWhichKey() abort
+function! s:SetKeyOnGit()
 	let git_dir = system('git rev-parse --git-dir')
 	" if in a git repo
 	if !v:shell_error
+		let g:which_key_map_git = {'name': '+git'}
+		let g:which_key_map_git.m = 'Messenger'
+		nmap  <silent> <leader>gm :if !exists('g:git_messenger_git_command') <bar> :packadd git-messenger.vim <bar>: call VimWhichGM() <bar> :endif <bar><CR> <Plug>(git-messenger)
+
+		function! VimWhichGM()
+			let g:git_messenger_no_default_mappings = v:true
+		endfunction
+
+		if executable('lazygit')
+			let g:which_key_map_git.l = 'Lazy'
+			nnoremap <silent> <leader>gl :call OpenLazyGit()<CR>
+		endif
 		let g:which_key_map.g = g:which_key_map_git
 	elseif has_key(g:which_key_map, 'g')
 		unlet g:which_key_map.g
 	endif
+endfunction
+
+call s:SetKeyOnFT()
+call s:SetKeyOnGit()
+
+function! SetWhichKey() abort
+	call s:SetKeyOnGit()
 	call s:SetKeyOnFT()
 endfunction
 
