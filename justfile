@@ -189,15 +189,15 @@ _pack: _init_pack
 	install() mhinz/vim-signify
 	install() Th3Whit3Wolf/vim-shebang
 	install() hardcoreplayers/dashboard-nvim
-	install() Konfekt/FoldText
 	install() Konfekt/FastFold
 	install() tpope/vim-commentary
 	install() tpope/vim-surround
 	install() tpope/vim-endwise
 	install() honza/vim-snippets
 
+	install() Konfekt/FoldText -o
 	install() tpope/vim-abolish -o
-	install() liuchengxu/vim-which-key
+	install() liuchengxu/vim-which-key -o
 	install() skywind3000/asyncrun.vim -o
 	install() tpope/vim-endwise -o
 	install() tpope/vim-eunuch -o
@@ -214,10 +214,9 @@ _pack: _init_pack
 	# Language #
 	############
 	install() sheerun/vim-polyglot
-
 	install() euclio/vim-markdown-composer --build 'cargo build --release' -o
 	install() mhinz/vim-crates -o
-	install() turbio/bracey.vim -o
+	install() turbio/bracey.vim --build 'npm install --prefix server' -o
 	install() arzg/vim-rust-syntax-ext -o
 	install() faith/vim-go -o
 	#install() cespare/vim-toml --for toml
