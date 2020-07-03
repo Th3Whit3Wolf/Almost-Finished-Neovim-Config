@@ -22,6 +22,11 @@ function! s:shell_shebang()
         \ + map(copy(options), '"[".(v:key+1)."] ".v:val'))
 
     if choice >= 1 && choice <= (len(copy(options)) - 2)
+        if choice == 5 
+            set ft=fish
+        elseif
+            set ft=ion
+        endif
         0put = '#!/usr/bin/env ' . (options)[choice - 1]
 	endif
 endfunction
@@ -64,7 +69,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap  <buffer> <leader>cs :call <SID>change_bang()<CR>
 function! s:change_bang()
-	if &filetype == 'shell'
+	if &filetype == 'sh'
         if getline(1)[0:1] !=# "#!"
             let shell_options  = [
                 \ 'ash',
