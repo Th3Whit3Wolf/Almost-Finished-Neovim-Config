@@ -87,17 +87,17 @@ let g:which_key_map['t'] = {
 let g:which_key_sep = '=>'
 
 function! s:WhichKeyCodeTest()
-	nnoremap <buffer> <leader>cc :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call CompileMyCode()<CR>
-    nnoremap <buffer> <leader>cr :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call RunMyCode()<CR>
-    nnoremap <buffer> <leader>ct :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call RunRustTest()<CR>
+	nnoremap <buffer> <leader>cc :update <bar> call LazySource('code') <bar> call CompileMyCode()<CR>
+    nnoremap <buffer> <leader>cr :update <bar> call LazySource('code') <bar> call RunMyCode()<CR>
+    nnoremap <buffer> <leader>ct :update <bar> call LazySource('code') <bar> call TestMyCode()<CR>
 	let g:which_key_map.c.c = 'Code Compile'
 	let g:which_key_map.c.r = 'Code Run'
 	let g:which_key_map.c.t = 'Code Test'
 endfunction
 
 function! s:WhichKeyCodeCompileRun()
-	nnoremap <buffer> <leader>cc :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call CompileMyCode()<CR>
-    nnoremap <buffer> <leader>cr :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call RunMyCode()<CR>
+	nnoremap <buffer> <leader>cc :update <bar> call LazySource('code') <bar> call CompileMyCode()<CR>
+    nnoremap <buffer> <leader>cr :update <bar> call LazySource('code') <bar> call RunMyCode()<CR>
 	let g:which_key_map.c.c = 'Code Compile'
 	let g:which_key_map.c.r = 'Code Run'
 	if has_key(g:which_key_map.c, 't')
@@ -106,7 +106,7 @@ function! s:WhichKeyCodeCompileRun()
 endfunction
 
 function! s:WhichKeyCodeCompile()
-	nnoremap <buffer> <leader>cc :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call CompileMyCode()<CR>
+	nnoremap <buffer> <leader>cc :update <bar> call LazySource('code') <bar> call CompileMyCode()<CR>
 	let g:which_key_map.c.c = 'Code Compile'
 	if has_key(g:which_key_map.c, 'r')
 		unlet g:which_key_map.c.r
@@ -117,7 +117,7 @@ function! s:WhichKeyCodeCompile()
 endfunction
 
 function! s:WhichKeyCodeRun()
-    nnoremap <buffer> <leader>cr :packadd asyncrun.vim <bar> let g:asyncrun_last = 1 <bar> call RunMyCode()<CR>
+    nnoremap <buffer> <leader>cr :update <bar> call LazySource('code') <bar> call RunMyCode()<CR>
 	let g:which_key_map.c.r = 'Code Run'
 	if has_key(g:which_key_map.c, 'c')
 		unlet g:which_key_map.c.c
@@ -139,79 +139,24 @@ function! s:WhichKeyCodeNone()
 	endif
 endfunction
 
+let g:CompileRunList = [
+	\ 'c','cpp','go', 'haskell', 'javac'
+	\ ]
+let g:RunList        = [
+	\ 'fish', 'html', 'ion', 'javascript',
+	\ 'mardown', 'python', 'sh'
+	\ ]
+let g:CompileList     = [
+	\ 'coffee','less'
+	\ ]
+
 function s:SetKeyOnFT()
-	if &ft == 'c' || &ft == 'cpp'
-		if executable('gcc') 
-			call s:WhichKeyCodeCompileRun()
-		else
-			call s:WhichKeyCodeNone()
-		endif
-	elseif &ft == 'go'
-		if executable('go')
-			call s:WhichKeyCodeCompileRun()
-		else
-			call s:WhichKeyCodeNone()
-		endif
-	elseif &ft == 'haskell'
-		if executable('ghc')
-			call s:WhichKeyCodeCompileRun()
-		else
-			call s:WhichKeyCodeNone()
-		endif
-	elseif &ft == 'html'
+	if index(g:CompileRunList, &ft) > -1
+		call s:WhichKeyCodeCompileRun()
+	elseif index(g:RunList, &ft) > -1
 		call s:WhichKeyCodeRun()
-	elseif &ft == 'java'
-		if executable('javac')
-			call s:WhichKeyCodeCompileRun()
-		else
-			call s:WhichKeyCodeNone()
-		endif
-	elseif &ft == 'javascript'
-		if executable('node')
-			call s:WhichKeyCodeRun()
-		else
-			call s:WhichKeyCodeNone()
-		endif
-	elseif &ft == 'markdown'
-		call s:WhichKeyCodeRun()
-	elseif &ft == 'python'
-		if getline(1)[0:21] ==# "#!/usr/bin/env python3" || getline(1)[0:17] ==# "#!/usr/bin/python3"
-			if executable('python3')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:21] ==# "#!/usr/bin/env python2" || getline(1)[0:17] ==# "#!/usr/bin/python2"
-			if executable('python2')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:20] ==# "#!/usr/bin/env python" || getline(1)[0:16] ==# "#!/usr/bin/python"
-			if executable('python')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:19] ==# "#!/usr/bin/env pypy3" || getline(1)[0:15] ==# "#!/usr/bin/pypy3"
-			if executable('pypy3')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:18] ==# "#!/usr/bin/env pypy" || getline(1)[0:14] ==# "#!/usr/bin/pypy"
-			if executable('pypy')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:20] ==# "#!/usr/bin/env jython" || getline(1)[0:16] ==# "#!/usr/bin/jython"
-			if executable('jython')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		endif
+	elseif index(g:CompileList, &ft) > -1
+		call s:WhichKeyCodeCompile()
 	elseif &ft == 'ruby'
 		if filereadable("app/controllers/application_controller.rb")
 			if executable('rails')
@@ -227,7 +172,7 @@ function s:SetKeyOnFT()
 			endif
 		endif
 	elseif &ft == 'rust'
-		if InCargoProject()
+		if filereadable("Cargo.toml") || filereadable("../Cargo.toml") || filereadable("../../Cargo.toml") || filereadable("../../../Cargo.toml")
 			if executable('cargo')
 				call s:WhichKeyCodeTest()
 			else
@@ -236,50 +181,6 @@ function s:SetKeyOnFT()
 		else
 			if executable('rustc')
 				call s:WhichKeyCodeCompileRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		endif
-	elseif &ft == 'sh'
-		if getline(1)[0:18] ==# "#!/usr/bin/env bash" || getline(1)[0:14] ==# "#!/usr/bin/bash"
-			if executable('bash')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:18] ==# "#!/usr/bin/env dash" || getline(1)[0:14] ==# "#!/usr/bin/dash"
-			if executable('dash')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:18] ==# "#!/usr/bin/env fish" || getline(1)[0:14] ==# "#!/usr/bin/fish"
-			if executable('fish')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:18] ==# "#!/usr/bin/env tcsh" || getline(1)[0:14] ==# "#!/usr/bin/tcsh"
-			if executable('tcsh')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:17] ==# "#!/usr/bin/env csh" || getline(1)[0:13] ==# "#!/usr/bin/csh"
-			if executable('csh')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:17] ==# "#!/usr/bin/env ksh" || getline(1)[0:13] ==# "#!/usr/bin/ksh"
-			if executable('ksh')
-				call s:WhichKeyCodeRun()
-			else
-				call s:WhichKeyCodeNone()
-			endif
-		elseif getline(1)[0:17] ==# "#!/usr/bin/env zsh" || getline(1)[0:13] ==# "#!/usr/bin/zsh"
-			if executable('zsh')
-				call s:WhichKeyCodeRun()
 			else
 				call s:WhichKeyCodeNone()
 			endif
@@ -293,13 +194,10 @@ function! s:SetKeyOnGit()
 	let git_dir = system('git rev-parse --git-dir')
 	" if in a git repo
 	if !v:shell_error
+		call LazySource('signify')
+		call LazySource('git')
 		let g:which_key_map_git = {'name': '+git'}
 		let g:which_key_map_git.m = 'Messenger'
-		nmap  <silent> <leader>gm :if !exists('g:git_messenger_git_command') <bar> :packadd git-messenger.vim <bar>: call VimWhichGM() <bar> :endif <bar><CR> <Plug>(git-messenger)
-
-		function! VimWhichGM()
-			let g:git_messenger_no_default_mappings = v:true
-		endfunction
 
 		if executable('lazygit')
 			let g:which_key_map_git.l = 'Lazy'

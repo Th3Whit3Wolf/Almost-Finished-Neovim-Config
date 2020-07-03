@@ -1,0 +1,1 @@
+packadd pboettch/vim-cmake-syntax
