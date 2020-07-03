@@ -1,3 +1,25 @@
+function! LazySource(path, ...) abort
+	let abspath = resolve(expand($VIMPATH.'/lazy/'.a:path.'.vim'))
+	if !stridx(&rtp, abspath) == 0
+		execute 'source' fnameescape(abspath)
+		return
+	endif
+endfunction
+
+function! InCargoProject(...)
+	return filereadable("Cargo.toml") || filereadable("../Cargo.toml") || filereadable("../../Cargo.toml") || filereadable("../../../Cargo.toml")
+endfunction
+
+function! InRailsApp(...)
+	return filereadable("app/controllers/application_controller.rb")
+endfunction
+
+function! Run(executor)
+    packadd asyncrun.vim
+	let g:asyncrun_last = 1
+	exec "AsyncRun -mode=term -pos=bottom -rows=30 " . a:executor
+endfunction
+
 let g:term_buf = 0
 let g:term_win = 0
 function! TermToggle(height)
