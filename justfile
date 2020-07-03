@@ -186,7 +186,6 @@ _pack: _init_pack
 	###########
 	install() liuchengxu/vim-clap
 	install() ryanoasis/vim-devicons
-	install() mhinz/vim-signify
 	install() Th3Whit3Wolf/vim-shebang
 	install() hardcoreplayers/dashboard-nvim
 	install() Konfekt/FastFold
@@ -194,10 +193,11 @@ _pack: _init_pack
 	install() tpope/vim-surround
 	install() tpope/vim-endwise
 	install() honza/vim-snippets
+	install() liuchengxu/vim-which-key -o
 
+	install() mhinz/vim-signify -o
 	install() Konfekt/FoldText -o
 	install() tpope/vim-abolish -o
-	install() liuchengxu/vim-which-key -o
 	install() skywind3000/asyncrun.vim -o
 	install() tpope/vim-endwise -o
 	install() tpope/vim-eunuch -o
@@ -209,15 +209,57 @@ _pack: _init_pack
 	install() ludovicchabant/vim-gutentags -o
 	install() rhysd/git-messenger.vim -o
 	install() tpope/vim-eunuch -o
+	install() godlygeek/tabular -o
 
 	############
 	# Language #
 	############
-	install() sheerun/vim-polyglot
 	install() euclio/vim-markdown-composer --build 'cargo build --release' -o
 	install() mhinz/vim-crates -o
 	install() turbio/bracey.vim --build 'npm install --prefix server' -o
 	install() arzg/vim-rust-syntax-ext -o
 	install() faith/vim-go -o
-	#install() cespare/vim-toml --for toml
-	#install() numirias/semshi --for python
+	install() cespare/vim-toml -o
+	install() vim-python/python-syntax -o
+	install() Vimjas/vim-python-pep8-indent -o
+	install() rhysd/committia.vim -o
+	install() vim-jp/vim-cpp -o  
+	install() octol/vim-cpp-enhanced-highlight -o
+	install() pboettch/vim-cmake-syntax -o
+	install() kchmck/vim-coffee-script -o 
+	install() dart-lang/dart-vim-plugin -o
+	install() JesseKPhillips/d.vim -o
+	install() dcharbon/vim-flatbuffers -o
+	install() mustache/vim-mustache-handlebars -o
+	install() neovimhaskell/haskell-vim
+	install() othree/html5.vim -o
+	install() vmchale/ion-vim -o
+	install() GutenYe/json5.vim -o
+	install() elzr/vim-json -o
+	install() yuezk/vim-js -o
+	install() maxmellon/vim-jsx-pretty -o
+	install() HerringtonDarkholme/yats.vim -o
+	install() groenewege/vim-less -o
+	install() udalov/kotlin-vim -o
+	install() plasticboy/vim-markdown -o
+	install() chr4/nginx.vim -o
+	install() zah/nim.vim -o
+	install() digitaltoad/vim-pug -o
+	install() uarun/vim-protobuf -o
+	install() StanAngeloff/php.vim -o
+	install() vim-perl/vim-perl -o
+	install() vim-ruby/vim-ruby -o
+	install() keith/rspec.vim -o
+	install() wavded/vim-stylus -o
+	install() cakebaker/scss-syntax.vim -o
+	install() stephpy/vim-yaml -o
+	install() ericpruitt/tmux.vim -o
+	install() baskerville/vim-sxhkdrc -o
+	install() posva/vim-vue -o
+	install() jparise/vim-graphql -o
+	install() heavenshell/vim-jsdoc --build 'make clean && make install' -o
+	install() hail2u/vim-css3-syntax -o
+	install() mboughaba/i3config.vim -o
+	install() MTDL9/vim-log-highlighting -o
+	install() tbastos/vim-lua -o
+	install() ekalinin/Dockerfile.vim -o
