@@ -2,7 +2,6 @@ if &compatible
 	set nocompatible
 endif
 
-let g:polyglot_disabled = ['rust']
 let mapleader = "\<Space>"
 
 " Set main configuration directory, and where cache is stored.
@@ -44,14 +43,6 @@ endif
 if filereadable(expand('$VIMPATH/.vault.vim'))
 	execute 'source' expand('$VIMPATH/.vault.vim')
 endif
-
-function! s:source_lazy(path, ...) abort
-	let abspath = resolve(expand($VIMPATH.'/lazy/'.a:path))
-	if !stridx(&rtp, abspath) == 0
-		execute 'source' fnameescape(abspath)
-		return
-	endif
-endfunction
 
 " Rather than having loads of comments above my mappings I
 " try to make well named functions
@@ -105,7 +96,7 @@ augroup END
 set secure
 filetype plugin indent on
 syntax enable
-set mouse=nv                 " Disable mouse in command-line mode
+set mouse=a                  " Enable mouse
 set modeline                 " automatically setting options from modelines
 set report=0                 " Don't report on line changes
 set errorbells               " Trigger bell on error
@@ -128,7 +119,6 @@ set foldlevelstart=99
 set foldnestmax=5
 " specifies for which commands a fold will be opened
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
-
 
 " What to save for views and sessions:
 set viewoptions=folds,cursor,curdir,slash,unix
@@ -269,8 +259,6 @@ set cmdwinheight=5      " Command-line lines
 set noequalalways       " Don't resize windows on split or close
 set colorcolumn=100     " Highlight the 100th character limit
 
-set guifont=JetBrains\ Mono:h12       " Set GUI font
-
 " Specify the behavior when switching between buffers 
 try
 	set switchbuf=useopen,usetab,newtab
@@ -302,24 +290,14 @@ autocmd BufWritePost $VIM_PATH/{*.vim,*.json} nested
 " Autoload packages
 augroup Pack
 	" alvan/vim-closetag
-	autocmd FileType html,xhtml,xml,phtml,jsx packadd vim-closetag | call s:source_lazy('closetag.vim')
-	autocmd FileType rust packadd rust.vim | packadd vim-rust-syntax-ext
-	" euclio/vim-markdown-composer
-	autocmd FileType markdown packadd vim-markdown-composer
+	autocmd FileType html,xhtml,xml,phtml,jsx packadd vim-closetag | call LazySource('closetag')
 	" ludovicchabant/vim-gutentags
-	autocmd FileType taggers packadd vim-gutentags
-	" faith/vim-go
-	autocmd FileType go packadd vim-go
-	" turbio/bracey.vim
-	autocmd FileType html,css,javascript packadd bracey.vim
-	" Vim Which Key
-	"command! -nargs=* -range -bang WhichKey       packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
-	"command! -nargs=* -range -bang WhichKeyVisual packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
+	autocmd FileType Ada,AnsiblePlaybook,Ant,Asciidoc,Asm,Asp,Autoconf,AutoIt,Automake,Awk,Basic,BETA,BibTeX,C,C#,C++,Clojure,CMake,Cobol,CPreProcessor,CSS,Ctags,CUDA,D,DBusIntrospect,Diff,DosBatch,DTD,DTS,Eiffel,Elixir,Elm,Erlang,Falcon,Flex,Fortran,Fypp,Gdbinit,Glade,Go,HTML,Iniconf,Inko,ITcl,Java,JavaProperties,JavaScript,JSON,LdScript,Lisp,Lua,M4,Make,Man,Markdown,MatLab,Maven2,Moose,Myrddin,NSIS,ObjectiveC,OCaml,OldC,[disabled],OldC++,[disabled],Pascal,Passwd,Perl,Perl6,PHP,PlistXML,Pod,PowerShell,Protobuf,PuppetManifest,Python,PythonLoggingConfig,QemuHX,QtMoc,R,RelaxNG,ReStructuredText,REXX,Robot,RpmSpec,RSpec,Ruby,Rust,Scheme,SCSS,Sh,SLang,SML,SQL,SVG,SystemdUnit,SystemTap,SystemVerilog,Tcl,TclOO,Tex,TTCN,TypeScript,Varlink,Vera,Verilog,VHDL,Vim,WindRes,XML,XSLT,YACC,Yaml,YumRepo,Zephir packadd vim-gutentags | call LazySource('gutentags')
 	" Vim Crates
 	" Automatically check for new crate versions when opening Cargo.toml
 	autocmd BufRead,BufNewFile Cargo.toml packadd vim-crates | call crates#toggle()
 	" Vim Vim Abolish 
-	autocmd InsertEnter * packadd vim-abolish | call  s:source_lazy('abolish.vim')
+	autocmd InsertEnter * packadd vim-abolish | call  LazySource('abolish')
 	" Rainbow Parentheses
 	autocmd InsertEnter * packadd rainbow_parentheses.vim | RainbowParentheses
     autocmd InsertLeave * RainbowParentheses!
@@ -353,7 +331,7 @@ augroup Pack
 			autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
 		endfunction
 	endif
-	packadd vim-which-key | call s:source_lazy('which_key.vim') | call which_key#register('<Space>', 'g:which_key_map') 
+	packadd vim-which-key | call LazySource('which_key') | call which_key#register('<Space>', 'g:which_key_map') 
 augroup END
 
 augroup MyAutoCmd
@@ -394,50 +372,14 @@ augroup miscGroup
 	autocmd!
 	" somehow this is required to move the gray color of the sign column
 	autocmd FileType * highlight clear SignColumn
-	" when in a git commit buffer go the beginning
-	autocmd FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 	" save files when focus is lost
 	autocmd BufLeave * silent! update
-	" Fasto setup
-	autocmd BufNewFile,BufRead *.fo setlocal ft=fasto
-	" Janus setup
-	autocmd BufNewFile,BufRead *.ja setlocal ft=janus
-	" C setup, Vim thinks .h is C++
-	autocmd BufNewFile,BufRead *.h setlocal ft=c
-	" Pow setup
-	autocmd BufNewFile,BufRead *.pow setlocal ft=pow
-	autocmd BufNewFile,BufRead */playbooks/*.{yml,yaml} setfiletype yaml.ansible
-	autocmd BufNewFile,BufRead */inventory/*            setfiletype ansible_hosts
-	autocmd BufNewFile,BufRead */templates/*.{yaml,tpl} setfiletype yaml.gotexttmpl
-	autocmd BufNewFile,BufRead yarn.lock                setfiletype yaml
-	autocmd BufNewFile,BufRead */.kube/config           setfiletype yaml
-	autocmd BufNewFile,BufRead *.postman_collection     setfiletype json
-	autocmd BufNewFile,BufRead .tern-{project,port}     setfiletype json
-	autocmd BufNewFile,BufRead *.lock                   setfiletype json
-	autocmd BufNewFile,BufRead *.js.map                 setfiletype json
-	autocmd BufNewFile,BufRead .jsbeautifyrc            setfiletype json
-	autocmd BufNewFile,BufRead .eslintrc                setfiletype json
-	autocmd BufNewFile,BufRead .jscsrc                  setfiletype json
-	autocmd BufNewFile,BufRead .babelrc                 setfiletype json
-	autocmd BufNewFile,BufRead .watchmanconfig          setfiletype json
-	autocmd BufNewFile,BufRead .buckconfig              setfiletype toml
-	autocmd BufNewFile,BufRead .flowconfig              setfiletype ini
-	autocmd BufNewFile,BufRead *.{feature,story}        setfiletype cucumber
-	autocmd BufNewFile,BufRead Jenkinsfile              setfiletype groovy
-	autocmd BufNewFile,BufRead Tmuxfile,tmux/config     setfiletype tmux
-	autocmd BufNewFile,BufRead Brewfile                 setfiletype ruby
-	autocmd BufNewFile,BufRead Justfile,justfile        setfiletype make
 	autocmd FileType pow set commentstring={{\ %s\ }}
 	autocmd BufWinEnter,WinEnter term://* startinsert
 	autocmd BufLeave term://* stopinsert
 	autocmd! BufWritePost *.tex call CompileLatex()
 	autocmd BufEnter,FocusGained * checktime
-	" https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write
-	autocmd FileType css,javascript,javascriptreact setlocal backupcopy=yes
-
-	autocmd FileType mkd       setlocal spell nofoldenable
 	autocmd FileType text      setlocal spell nofoldenable
-	autocmd FileType gitcommit setlocal spell
 	autocmd FileType vim       setlocal foldmethod=marker
 	autocmd FileType man nnoremap <silent><buffer> q :<C-u>:quit<CR>
 
@@ -445,8 +387,8 @@ augroup miscGroup
 	autocmd  FileType which_key set laststatus=0 noshowmode noruler
 		\| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
-	autocmd TermEnter * call s:source_lazy('terminal.vim')
-	autocmd FilterWritePost * if (&diff) | call s:source_lazy('diff.vim') | DiffOrig | endif
+	autocmd TermEnter * call LazySource('terminal')
+	autocmd FilterWritePost * if (&diff) | call LazySource('diff') | DiffOrig | endif
 augroup END
 
 """""""""""""""""""""""""""""
