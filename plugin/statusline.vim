@@ -25,7 +25,6 @@ let g:spaceline_git_branch_icon = get(g:,'spaceline_git_branch_icon','')
 let g:sep= {}
 let g:sep = spaceline#seperator#spacelineStyle(g:seperate_style)
 
-
 augroup spaceline
   autocmd!
   autocmd FileType,WinEnter,BufWinEnter,BufReadPost,BufWritePost * call spaceline#spacelinetoggle()
