@@ -1,4 +1,4 @@
-packadd rust.vim 
+packadd rust.vim
 packadd vim-rust-syntax-ext
 
 let g:rustfmt_autosave = 1
@@ -17,7 +17,7 @@ function! CompileMyCode() abort
         if executable('rustc')
             call Run("rustc % -o %<")
         else
-            echo, 'Rustc is not installed or this is not a cargo project'
+            echom 'Rustc is not installed or this is not a cargo project'
         endif
     endif
 endfunction!
@@ -41,11 +41,14 @@ endfunction!
 function! TestMyCode()
 	if InCargoProject()
         if executable('cargo')
-            call Run("cargo test --all -- --test-threads=1")
+          packadd asyncrun.vim
+          let g:asyncrun_open = 8
+          "AsyncRun -mode=term -pos=hide -name=Running\ Tests -post=echo\ g:asyncrun_name cargo test 2>/dev/null | grep 'test result' | cut -d ':' -f2
+          call Run("cargo test --all -- --test-threads=1")
         else
             echo 'Rust is not installed or this is not a cargo project'
         endif
     else
-        echo "Testing is only support for Cargo projects"
+        echom "Testing is only support for Cargo projects"
     endif
-endfunction
+endfunction!
