@@ -15,9 +15,10 @@ function! InRailsApp(...)
 endfunction
 
 function! Run(executor)
-    packadd asyncrun.vim
-	let g:asyncrun_last = 1
-	exec "AsyncRun -mode=term -pos=bottom -rows=30 " . a:executor
+  packadd asyncrun.vim
+  let g:asyncrun_last = 1
+  exec "AsyncRun -mode=term -pos=bottom -rows=30 -post=echo\ " . g:asyncrun_name . " " . a:executor
+
 endfunction
 
 let g:term_buf = 0
@@ -289,3 +290,54 @@ endfunction
 "	execute "read !psql " . $TONSSER_PRODUCTION_DATABASE . " -f " . path
 "	call FixFormatting()
 "endfunction
+
+
+function! Changebang()
+	if &ft == 'sh' || &ft == 'fish' || &ft == 'ion'
+        let shell_options  = [
+            \ 'ash',
+            \ 'bash',
+            \ 'csh',
+            \ 'dash',
+            \ 'fish',
+            \ 'ksh',
+            \ 'ion',
+            \ 'mksh',
+            \ 'pdksh',
+            \ 'sh',
+            \ 'tcsh',
+            \ 'zsh',
+            \ 'none'
+            \ ]
+
+        unsilent let choice = inputlist([ 'Select your shell:' ]
+            \ + map(copy(shell_options), '"[".(v:key+1)."] ".v:val'))
+
+        if choice >= 1 && choice <= (len(copy(shell_options)) - 2)
+            1d
+            0put = '#!/usr/bin/env ' . (shell_options)[choice - 1]
+
+        endif
+	elseif &filetype == 'python'
+        let python_options  = [
+            \ 'python2',
+            \ 'python3',
+            \ 'pypy',
+            \ 'pypy3',
+            \ 'jython',
+            \ 'none'
+            \ ]
+
+        unsilent let choice = inputlist([ 'Select your shell:' ]
+            \ + map(copy(python_options), '"[".(v:key+1)."] ".v:val'))
+
+        if choice >= 1 && choice <= (len(copy(python_options)) - 2)
+                1d
+                0put = '#!/usr/bin/env ' . (python_options)[choice - 1]
+        endif
+    else
+        echom "I don't know how to handle this filetype"
+    endif
+endfunction
+
+command! -bang -nargs=0 -bar ChangeBang call Changebang()
