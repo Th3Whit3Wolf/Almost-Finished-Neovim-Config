@@ -1,5 +1,4 @@
 " Define prefix dictionary
-
 let g:which_key_map =  {
 	\ 'name' : 'Space'                          ,
 	\ '1'    : 'Switch to Buffer 1'             ,
@@ -13,16 +12,16 @@ let g:which_key_map =  {
 	\ '9'    : 'Switch to Buffer 9'             ,
 	\ '0'    : 'Switch to Buffer 10'            ,
 	\ 'a'    : 'Copy All'                       ,
-	\ 'b'    : 'Search Buffers'                 ,
-	\ 'h'    : 'Horizontal Split'               ,
+	\ 'b'    : 'Move Cursor One Word Back'      , 
+	\ 'e'    : 'Move Cursor to End of Word'     ,          
 	\ 'i'    : 'Indent All'                     ,
-	\ 'j'    : 'Coc Action Next'                , 
+	\ 'h'    : 'Move Cursor Left'               , 
+	\ 'j'    : 'Move Cursor Down'               , 
 	\ 'J'    : 'Goto Definition'                ,
-	\ 'k'    : 'Coc Action Previous'            ,
+	\ 'k'    : 'Move Cursor Up'                 ,
 	\ 'p'    : 'Paste From System Clipboard'    , 
 	\ 'q'    : 'Exit Split'                     ,
-	\ 'v'    : 'Vertical Split'                 ,
-	\ 'w'    : 'Write and Quit'                 ,
+	\ 'w'    : 'Move Cursor One Word Forward'   ,
 	\ 'y'    : 'Yank Relative Path'             ,
 	\ 'Y'    : 'Yank Absolute Path'             ,
 	\ 'z'    : 'Correct Spelling'               ,
@@ -30,15 +29,18 @@ let g:which_key_map =  {
 	\ }
 
 let g:which_key_map['c'] = {
-	\ 'name' : '+Code'                        ,
+	\ 'name' : '+Code'                       ,
 	\ 'a'    : {
-	\    'name': '+CodeAction'                , 
-	\    'b'   : 'Current Buffer'             ,
-	\    's'   : 'Selected Region'            ,
-	\ }                                       ,
-	\ 'cs'   : 'Code Change Shebang'          ,
+	\    'name': '+CodeAction'               , 
+	\    'b'   : 'Current Buffer'            ,
+	\    's'   : 'Selected Region'           ,
+	\ }                                      ,
+	\ 'cs'   : 'Code Change Shebang'         ,
+	\ 'f'    : 'Format Selected Code'        ,
+	\ 'j'    : 'Coc Default Action Next'     ,
+	\ 'k'    : 'Coc Default Action Prev'     ,
 	\ 'l' : {
-	\    'name': '+CocList'                   ,
+	\    'name': '+CocList'                  ,
 	\    'a'  : 'Code Lens Action'           ,
 	\    'c'  : 'CocList Commands'           ,
 	\    'd'  : 'CocList Diagnostics'        ,
@@ -46,11 +48,10 @@ let g:which_key_map['c'] = {
 	\    'o'  : 'CocList Outline'            ,
 	\    'r'  : 'CocList Resume'             ,
 	\    's'  : 'CocList Symbols'            ,
-	\ }                                       ,
-	\ 'f'    : 'Format Selected Code'         ,
+	\ }                                      ,
 	\ 'q' : {
 	\    'name': '+QuickFix'                  ,
-	\    'f' : 'Fix Problem on Current Line' ,
+	\    'f' : 'Fix Problem on Current Line'  ,
 	\ }                                       ,
 	\ 'rn'   : 'Rename Symbols '              ,
 	\ }
@@ -67,37 +68,43 @@ let g:which_key_map['f'] = {
 let g:which_key_map['m'] = {
 	\ 'name' : '+Markdown'                ,
 	\ 'd'    : 'Set Filetype as Markdown' ,
-	\ 'h'    : 'Heading 1'       ,
-	\ 'H'    : 'Heading 2'       ,
+	\ 'h'    : 'Heading 1'                ,
+	\ 'H'    : 'Heading 2'                ,
 	\ }
 
 let g:which_key_map['s'] = {
-	\ 'name' : '+Session'     ,
-	\ 'l'    : 'Session Load' ,
-	\ 's'    : 'Session Save' ,
+	\ 'name' : '+Session/Split'     ,
+	\ 'h'    : 'Split Horizontally' ,
+	\ 'l'    : 'Session Load'       ,
+	\ 's'    : 'Session Save'       ,
+	\ 'v'    : 'Split Vertically'   ,
 	\ }
 
 let g:which_key_map['t'] = {
-	\ 'name' : '+Toggle'          ,
-	\ 'f'    : 'Toggle File Tree' ,
-	\ 't'    : 'Toggle Terminal'  ,
-	\ 'v'    : 'Toggle Vista'
+	\ 'name' : '+Toggle'    ,
+	\ 'f'    : 'File Tree'  ,
+	\ 'l'    : 'Lists'      ,
+	\ 'n'    : 'Numbers'    ,
+	\ 's'    : 'Spelling'   ,
+	\ 't'    : 'Terminal'   ,
+	\ 'v'    : 'Vista'      ,
+	\ 'w'    : 'wrap(smart)', 
 	\ }
 
 let g:which_key_sep = '=>'
 
 function! s:WhichKeyCodeTest()
-	nnoremap <buffer> <leader>cc :update <bar> call LazySource('code') <bar> call CompileMyCode()<CR>
-    nnoremap <buffer> <leader>cr :update <bar> call LazySource('code') <bar> call RunMyCode()<CR>
-    nnoremap <buffer> <leader>ct :update <bar> call LazySource('code') <bar> call TestMyCode()<CR>
+	nnoremap <buffer> <leader>cc :update <bar> call CompileMyCode()<CR>
+    nnoremap <buffer> <leader>cr :update <bar> call RunMyCode()<CR>
+    nnoremap <buffer> <leader>ct :update <bar> call TestMyCode()<CR>
 	let g:which_key_map.c.c = 'Code Compile'
 	let g:which_key_map.c.r = 'Code Run'
 	let g:which_key_map.c.t = 'Code Test'
 endfunction
 
 function! s:WhichKeyCodeCompileRun()
-	nnoremap <buffer> <leader>cc :update <bar> call LazySource('code') <bar> call CompileMyCode()<CR>
-    nnoremap <buffer> <leader>cr :update <bar> call LazySource('code') <bar> call RunMyCode()<CR>
+	nnoremap <buffer> <leader>cc :update <bar> call CompileMyCode()<CR><ESC>
+    nnoremap <buffer> <leader>cr :update <bar> call RunMyCode()<CR><ESC>
 	let g:which_key_map.c.c = 'Code Compile'
 	let g:which_key_map.c.r = 'Code Run'
 	if has_key(g:which_key_map.c, 't')
@@ -106,7 +113,7 @@ function! s:WhichKeyCodeCompileRun()
 endfunction
 
 function! s:WhichKeyCodeCompile()
-	nnoremap <buffer> <leader>cc :update <bar> call LazySource('code') <bar> call CompileMyCode()<CR>
+	nnoremap <buffer> <leader>cc :update <bar> call CompileMyCode()<CR><ESC>
 	let g:which_key_map.c.c = 'Code Compile'
 	if has_key(g:which_key_map.c, 'r')
 		unlet g:which_key_map.c.r
@@ -117,7 +124,7 @@ function! s:WhichKeyCodeCompile()
 endfunction
 
 function! s:WhichKeyCodeRun()
-    nnoremap <buffer> <leader>cr :update <bar> call LazySource('code') <bar> call RunMyCode()<CR>
+    nnoremap <buffer> <leader>cr :update <bar> call RunMyCode()<CR><ESC>
 	let g:which_key_map.c.r = 'Code Run'
 	if has_key(g:which_key_map.c, 'c')
 		unlet g:which_key_map.c.c
