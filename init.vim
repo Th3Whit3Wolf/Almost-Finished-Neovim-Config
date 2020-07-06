@@ -570,7 +570,7 @@ augroup bang
 	autocmd BufNewFile *.ion     0put =\"#!/usr/bin/env ion"
 	autocmd BufNewFile *jl       0put =\"#!/usr/bin/env julia"
 	autocmd BufNewFile *.lua     0put =\"#!/usr/bin/env lua"
-	autocmd BufNewFile *.php     0put =\"#!/usr/bin/env php
+	autocmd BufNewFile *.php     0put =\"#!/usr/bin/env php"
 	autocmd BufNewFile *.pl      0put =\"#!/usr/bin/env perl"
 	autocmd BufNewFile *.rb      0put =\"#!/usr/bin/env ruby"
 	autocmd BufNewFile *.scala   0put =\"#!/usr/bin/env scala"
