@@ -2,7 +2,7 @@ packadd vim-js
 packadd vim-jsx-pretty
 packadd vim-jsdoc
 packadd bracey.vim
-backupcopy=yes
+set backupcopy=yes
 
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1

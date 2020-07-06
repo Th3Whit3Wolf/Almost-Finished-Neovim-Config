@@ -1,4 +1,4 @@
 packadd vim-css3-syntax
 packadd bracey.vim
-backupcopy=yes
+set backupcopy=yes
 setlocal iskeyword+=-
