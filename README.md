@@ -24,6 +24,9 @@ modular file structure. Lazy loading where it makes sense.
   - [Features In-depth](#features-in-depth)
     - [Auto Shebang](#auto-shebang)
       - [Shebangs](#shebangs)
+    - [Code Compile](#code-compile)
+    - [Code Runner](#code-runner)
+    - [Code Tester](#code-tester)
   - [Plugins Included](#plugins-included)
     - [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
     - [Lazy-Loaded Plugins](#lazy-loaded-plugins)
@@ -33,6 +36,16 @@ modular file structure. Lazy loading where it makes sense.
       - [Command](#command)
   - [Custom Mappings](#custom-mappings)
     - [Leader Key Mappings](#leader-key-mappings)
+      - [Navigation](#navigation)
+      - [File Operations](#file-operations)
+      - [Edit](#edit)
+      - [Search & Replace](#search--replace)
+      - [Clipboard](#clipboard)
+      - [Command & History](#command--history)
+      - [Editory UI](#editory-ui)
+      - [Custom Tools & Plugins](#custom-tools--plugins)
+      - [Window Management](#window-management)
+      - [Git Version Control](#git-version-control)
   - [Credits](#credits)
 
 </details>
@@ -41,7 +54,7 @@ modular file structure. Lazy loading where it makes sense.
 
 - Fast startup time, 27-40ms
 - Robust, yet light-weight
-- Lazy Load 77% of plugins (67/85)
+- Lazy Load 85% of plugins (71/84)
 - Ultimate Linting, Code Formating, & Language Support
 - Central location for tags
 - Awesome Dashboard(thanks to [dashboard.nvim](https://github.com/hardcoreplayers/dashboard-nvim/blob/master/plugin/dashboard.vim))
@@ -66,7 +79,7 @@ modular file structure. Lazy loading where it makes sense.
 - Python 3
 - Rust (curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)
 - Neovim
-- [Just](https://github.com/casey/just) 
+- [Just](https://github.com/casey/just)
 - yarn (for coc.vim)
 - Your Compiler and/or Interpreter
 - Your favorite Language Servers, Linters, and/or Code Formatters
@@ -164,7 +177,7 @@ Looks Like This
 
   - Simple terminal UI for git commands
   - Makes using git insanely easy
-  
+
 - [zoxide](https://github.com/ajeetdsouza/zoxide)
   - zoxide is a blazing fast alternative to cd, inspired by z and z.lua.
   - It keeps track of the directories you use most frequently, and uses a ranking algorithm to navigate to the best match.
@@ -205,6 +218,10 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 
 #### Shebangs
 
+**Awk**
+
+`#!/usr/bin/env awk`
+
 **Escript**
 
 `#!/usr/bin/env escript`
@@ -216,6 +233,10 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 **Ion**
 
 `#!/usr/bin/env ion`
+
+**Julia**
+
+`#!/usr/bin/env julia`
 
 **Lua**
 
@@ -241,6 +262,10 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 
 `#!/usr/bin/env ruby`
 
+**Scala**
+
+`#!/usr/bin/env scala`
+
 **Shell**
 
 - ash   - `#!/usr/bin/env ash`
@@ -255,6 +280,28 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 - tcsh  - `#!/usr/bin/env tcsh`
 - zsh   - `#!/usr/bin/env zsh`
 
+### Code Compile
+
+| Language | Requirements | Action |
+| -------- | ------------ | ------ |
+| C     | gcc | Compiles binary to filename without extensions |
+| C++     | g++ | Compiles binary to filename without extensions |
+| Go     | go | Runs go build |
+
+### Code Runner
+
+| Language | Requirements | Action |
+| -------- | ------------ | ------ |
+| C        | gcc | Compiles binary and executes |
+| C++      | g++ | Compiles binary and executes |
+| Go       | go | Runs go run |
+
+### Code Tester
+
+| Language | Requirements | Action |
+| -------- | ------------ | ------ |
+| Rust     | Inside of Cargo Project | Runs test with one thread and shows output of test |
+
 </details>
 
 ## Plugins Included
@@ -266,7 +313,7 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 
 | Name | Description |
 | ---- | ----------- |
-|[vim-buffet](https://github.com/bagrat/vim-buffet)  |               |
+| [vim-buffet](https://github.com/bagrat/vim-buffet)  |               |
 | [vim-clap](https://github.com/liuchengxu/vim-clap) | |
 | [vim-devicons](https://github.com/ryanoasis/vim-devicons) |
 | [vim-shebang](https://github.com/Th3Whit3Wolf/vim-shebang) | |
@@ -322,6 +369,7 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 | [vim-startuptime](https://github.com/dstein64/vim-startuptime) | Visually profile Vim's startup time |
 | [gina.vim](https://github.com/lambdalisue/gina.vim) ||
 | [committia.vim](https://github.com/rhysd/committia.vim) ||
+
 </details>
 
 ## Custom Mappings
@@ -330,14 +378,74 @@ Note that,
 
 Leader key set as <kbd>Space</kbd>
 
+<details open>
+  <summary><strong>Key Mappings</strong> <small><i>(🔎 Click to expand/collapse)</i></small></summary>
+
+Modes: 𝐍=normal 𝐕=visual 𝐒=select 𝐈=insert 𝐂=command
+
 ### Leader Key Mappings
 
-| Key                                       | Action       |
-| ----------------------------------------- | ------------ |
-| <kbd>Space</kbd>                          | Leader       |
-| <kbd>Space</kbd>+<kbd>g</kbd><kbd>m</kbd> | GitMessenger |
+#### Navigation
 
-Plus a lot more
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### File Operations
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### Edit
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### Search & Replace
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### Clipboard
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### Command & History
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### Editory UI
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### Custom Tools & Plugins
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### Window Management
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ---- | --- | ---- |
+| | | | |
+
+#### Git Version Control
+
+| Key | 	Mode |	Action |	Plugin or Mapping |
+| ----------------------------------------- | ------------ |
+| <kbd>Space</kbd>+<kbd>gm</kbd> | *N*  | Show git blame of line under cursor in preview window |GitMessenger |
+
+</details>
 
 ## Credits
 
