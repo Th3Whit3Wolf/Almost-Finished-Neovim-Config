@@ -5,7 +5,7 @@ endif
 let mapleader = "\<Space>"
 
 " Set main configuration directory, and where cache is stored.
-let $VIMPATH = 
+let $VIMPATH =
 	\ expand(($XDG_CONFIG_HOME ? $XDG_CONFIG_HOME : '~/.config') . '/nvim')
 " Set data/cache directory as $XDG_CACHE_HOME/vim
 let $DATA_PATH =
@@ -93,7 +93,8 @@ augroup user_secure
 		\ setlocal noswapfile noundofile nobackup nowritebackup viminfo= shada=
 augroup END
 
-set secure
+set noreadonly
+"set secure
 filetype plugin indent on
 syntax enable
 set mouse=a                  " Enable mouse
@@ -228,8 +229,9 @@ set scrolljump=5           " Scroll more than one line
 set scrolloff=3            " Keep at least 3 lines above/below
 set sidescrolloff=5        " Keep at least 5 lines left/right
 set number                 " Show line numbers
+set relativenumber
 set numberwidth=4          " The width of the number column
-"set ruler                  " Disable default status ruler
+set ruler                  " Disable default status ruler
 set list                   " Show hidden characters
 set listchars=tab:▸\       " Char representing a tab
 set listchars+=extends:❯   " Char representing an extending line
@@ -247,7 +249,7 @@ set winheight=7         " Minimum height for active window
 try
 	set winminwidth=20      " Minimum width for inactive windows
 	set winminheight=7      " Minimum height for inactive windows
-catch 
+catch
 endtry
 set pumheight=15        " Pop-up menu's line height
 set helpheight=12       " Minimum help window height
@@ -259,7 +261,7 @@ set cmdwinheight=5      " Command-line lines
 set noequalalways       " Don't resize windows on split or close
 set colorcolumn=100     " Highlight the 100th character limit
 
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
 	set switchbuf=useopen,usetab,newtab
 	set stal=2
@@ -287,6 +289,7 @@ autocmd BufWritePre * :call TrimWhitespace()
 " Reload vim config automatically
 autocmd BufWritePost $VIM_PATH/{*.vim,*.json} nested
 	\ source $MYVIMRC | redraw
+
 " Autoload packages
 augroup Pack
 	" alvan/vim-closetag
@@ -296,7 +299,7 @@ augroup Pack
 	" Vim Crates
 	" Automatically check for new crate versions when opening Cargo.toml
 	autocmd BufRead,BufNewFile Cargo.toml packadd vim-crates | call crates#toggle()
-	" Vim Vim Abolish 
+	" Vim Vim Abolish
 	autocmd InsertEnter * packadd vim-abolish | call  LazySource('abolish')
 	" Rainbow Parentheses
 	autocmd InsertEnter * packadd rainbow_parentheses.vim | RainbowParentheses
@@ -331,7 +334,7 @@ augroup Pack
 			autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
 		endfunction
 	endif
-	packadd vim-which-key | call LazySource('which_key') | call which_key#register('<Space>', 'g:which_key_map') 
+	packadd vim-which-key | call LazySource('which_key') | call which_key#register('<Space>', 'g:which_key_map')
 augroup END
 
 augroup MyAutoCmd
@@ -377,7 +380,7 @@ augroup miscGroup
 	autocmd FileType pow set commentstring={{\ %s\ }}
 	autocmd BufWinEnter,WinEnter term://* startinsert
 	autocmd BufLeave term://* stopinsert
-	autocmd! BufWritePost *.tex call CompileLatex()
+	" autocmd! BufWritePost *.tex call CompileLatex()
 	autocmd BufEnter,FocusGained * checktime
 	autocmd FileType text      setlocal spell nofoldenable
 	autocmd FileType vim       setlocal foldmethod=marker
@@ -390,7 +393,6 @@ augroup miscGroup
 	autocmd TermEnter * call LazySource('terminal')
 	autocmd FilterWritePost * if (&diff) | call LazySource('diff') | DiffOrig | endif
 augroup END
-
 """""""""""""""""""""""""""""
 " Mapping
 """""""""""""""""""""""""""""
@@ -415,10 +417,10 @@ cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
 
 " Toggle fold
-nnoremap <CR> :packadd FoldText <bar><CR> za
+nnoremap <CR> :packadd FastFold <bar> LazySource('fastfold') <bar> packadd FoldText <bar><CR> za
 
 " Focus the current fold by closing all others
-nnoremap <S-Return> :packadd FoldText <bar><CR> zMzvzt
+nnoremap <S-Return> :packadd FastFold <bar> LazySource('fastfold') <bar> packadd FoldText <bar><CR> zMzvzt
 
 " Start new line from any cursor position
 inoremap <S-Return> <C-o>o
@@ -430,18 +432,9 @@ nnoremap gl g$
 " Yank from cursor position to end-of-line
 nnoremap Y y$
 
-" Yank buffer's relative/absolute path to clipboard
-"nnoremap <Leader>y :let @+=expand("%:~:.")<CR>:echo 'Yanked relative path'<CR>
-nnoremap <leader>y :<C-u>CocList -A --normal yank<cr>
-nnoremap <Leader>Y :let @+=expand("%:p")<CR>:echo 'Yanked absolute path'<CR>
-
-" Split Control
-nnoremap <leader>v :vsplit<CR>
-nnoremap <leader>h :split<CR>
-nnoremap <leader>q :close<CR>
 " Window control
 nnoremap <C-q> <C-w>
-nnoremap <C-x>  :bd<CR>   " delete buffer
+nnoremap <C-x>  :bd!<CR>   " delete buffer
 nnoremap <silent><C-w>z :vert resize<CR>:resize<CR>:normal! ze<CR>
 
 "switch windw
@@ -450,6 +443,22 @@ nnoremap <C-l> <C-w>l
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 
+if exists('g:eliteMode')
+	" Disable arrow movement, resize splits instead.
+	nnoremap <silent><Up>    :resize +1<CR>
+	nnoremap <silent><Down>  :resize -1<CR>
+	nnoremap <silent><Left>  :vertical resize +1<CR>
+	nnoremap <silent><Right> :vertical resize -1<CR>
+
+	" Insert navigation
+	noremap! <Leader>h <left>
+	noremap! <Leader>j <down>
+	noremap! <Leader>k <up>
+	noremap! <Leader>l <right>
+	noremap! <Leader>w <esc>wi
+	noremap! <Leader>e <esc>ei
+	noremap! <Leader>b <esc>bi
+endif
 "smart move
 nnoremap j gj
 nnoremap k gk
@@ -477,6 +486,16 @@ cnoremap <silent><C-s> <C-u>write  \| write<CR>
 
 " I like to :quit with 'q', shrug.
 nnoremap <silent> q :<C-u>:quit<CR>
+
+" Yank buffer's relative/absolute path to clipboard
+"nnoremap <Leader>y :let @+=expand("%:~:.")<CR>:echo 'Yanked relative path'<CR>
+nnoremap <leader>y :<C-u>CocList -A --normal yank<cr>
+nnoremap <Leader>Y :let @+=expand("%:p")<CR>:echo 'Yanked absolute path'<CR>
+
+" Split Control
+nnoremap <leader>sv :vsplit<CR>
+nnoremap <leader>sh :split<CR>
+nnoremap <leader>sq :close<CR>
 
 " Macros
 nnoremap Q q
@@ -512,10 +531,19 @@ nmap <leader>ss :<C-u>SessionSave<CR>
 " Toggle
 nnoremap <leader>tf :CocCommand explorer<CR>
 nnoremap <leader>tt :call TermToggle(20)<CR>
+nnoremap <Leader>ts :setlocal spell!<cr>
+nnoremap <Leader>tn :setlocal nonumber!<CR>
+nnoremap <Leader>tl :setlocal nolist!<CR>
+" Smart wrap toggle (breakindent and colorcolumn toggle as-well)
+nmap <Leader>tw :execute('setlocal wrap! breakindent! colorcolumn=' .
+	\ (&colorcolumn == '' ? &textwidth : ''))<CR>
+
+nnoremap  <leader>cs :call Changebang()<CR>
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
 "" Taken from David Pederson
 nnoremap <leader>a  :call YankWholeBuffer(0)<cr>
-nnoremap <leader>b  :Clap buffers<cr>
 nnoremap <leader>i  :call IndentEntireFile()<cr>
 nnoremap <leader>j  :call GotoDefinitionInSplit(0)<cr>
 nnoremap <leader>md :set filetype=markdown<cr>
@@ -523,17 +551,27 @@ nnoremap <leader>mh :call MakeMarkdownHeading(1)<cr>
 nnoremap <leader>mH :call MakeMarkdownHeading(2)<cr>
 vnoremap <leader>ml :call PasteMarkdownLink()<cr>
 nnoremap <leader>p  :call PasteFromSystemClipBoard()<cr>
-nnoremap <leader>w  :wq<cr>
 nnoremap <leader>z  :call CorrectSpelling()<cr>
 nnoremap <F2>       :call RenameFile()<cr>
-
-nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 """""""""""""""""""""""""""""
-" Other 
+" Other
 """""""""""""""""""""""""""""
 let g:coc_data_home	= '~/.config/nvim/coc'
 let g:endwise_no_mappings = v:true
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 nnoremap<C-p> :Clap files<CR>
+
+augroup bang
+	autocmd!
+	autocmd BufNewFile *.awk     0put =\"#!/usr/bin/env awk"
+	autocmd BufNewFile *.escript 0put =\"#!/usr/bin/env escript"
+	autocmd BufNewFile *.fish    0put =\"#!/usr/bin/env fish"
+	autocmd BufNewFile *.ion     0put =\"#!/usr/bin/env ion"
+	autocmd BufNewFile *jl       0put =\"#!/usr/bin/env julia"
+	autocmd BufNewFile *.lua     0put =\"#!/usr/bin/env lua"
+	autocmd BufNewFile *.php     0put =\"#!/usr/bin/env php
+	autocmd BufNewFile *.pl      0put =\"#!/usr/bin/env perl"
+	autocmd BufNewFile *.rb      0put =\"#!/usr/bin/env ruby"
+	autocmd BufNewFile *.scala   0put =\"#!/usr/bin/env scala"
+augroup END
