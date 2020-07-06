@@ -125,9 +125,6 @@ inoremap <silent><expr> <TAB>
 	\ CheckBackSpace() ? "\<TAB>" :
 	\ coc#refresh()
 
-
-""" Conqueror of Code """
-
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
 xmap <leader>cas  <Plug>(coc-codeaction-selected)
@@ -159,9 +156,9 @@ nnoremap <silent><nowait> <leader>cls  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list.
 nnoremap <silent><nowait> <leader>clr  :<C-u>CocListResume<CR>
 " Do default action for next item.
-nnoremap <silent><nowait> <leader>j  :<C-u>CocNext<CR>
+nnoremap <silent><nowait> <leader>cj  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent><nowait> <leader>k  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <leader>ck  :<C-u>CocPrev<CR>
 
 " Insert Indented new line after pressing enter after closing pair
 "inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
