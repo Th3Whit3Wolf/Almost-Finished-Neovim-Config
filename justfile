@@ -188,13 +188,13 @@ _pack: _init_pack
 	install() ryanoasis/vim-devicons
 	install() Th3Whit3Wolf/vim-shebang
 	install() hardcoreplayers/dashboard-nvim
-	install() Konfekt/FastFold
 	install() tpope/vim-commentary
 	install() tpope/vim-surround
 	install() tpope/vim-endwise
 	install() honza/vim-snippets
 	install() liuchengxu/vim-which-key -o
 
+	install() Konfekt/FastFold -o
 	install() mhinz/vim-signify -o
 	install() Konfekt/FoldText -o
 	install() tpope/vim-abolish -o
@@ -263,3 +263,4 @@ _pack: _init_pack
 	install() MTDL9/vim-log-highlighting -o
 	install() tbastos/vim-lua -o
 	install() ekalinin/Dockerfile.vim -o
+
