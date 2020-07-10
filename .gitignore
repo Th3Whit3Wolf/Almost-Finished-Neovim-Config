@@ -1,0 +1,4 @@
+coc/extensions/*
+coc/commands
+coc/memos.json
+coc/snippets-mru
