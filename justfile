@@ -263,4 +263,5 @@ _pack: _init_pack
 	install() MTDL9/vim-log-highlighting -o
 	install() tbastos/vim-lua -o
 	install() ekalinin/Dockerfile.vim -o
-
+	install() nastevens/vim-cargo-make -o
+	install() nastevens/vim-duckscript -o

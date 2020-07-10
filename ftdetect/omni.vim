@@ -62,6 +62,9 @@ au BufNewFile,BufRead *.dock set ft=Dockerfile
 au BufNewFile,BufRead *.[Dd]ockerfile set ft=Dockerfile
 au BufNewFile,BufRead docker-compose*.{yaml,yml}* set ft=yaml.docker-compose
 
+" Duckscript
+au BufRead,BufNewFile *.ds,*.duck set ft=duckscript
+
 " elixir
 au BufNewFile,BufRead *.ex,*.exs set ft=elixir
 au BufNewFile,BufRead *.eex,*.leex set ft=eelixir
@@ -481,8 +484,11 @@ au BufNewFile,BufRead *.thrift set ft=thrift
 " tmux
 au BufNewFile,BufRead {.,}tmux.conf set ft=tmux
 
-" toml
+" TOML
 au BufNewFile,BufRead *.toml,Gopkg.lock,Cargo.lock,*/.cargo/config,*/.cargo/credentials,Pipfile set ft=toml
+
+" Cargo Make
+au BufRead,BufNewFile Makefile.toml set ft=cargo-make
 
 " tptp
 au BufNewFile,BufRead *.p set ft=tptp
