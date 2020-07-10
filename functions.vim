@@ -14,13 +14,6 @@ function! InRailsApp(...)
 	return filereadable("app/controllers/application_controller.rb")
 endfunction
 
-function! Run(executor)
-  packadd asyncrun.vim
-  let g:asyncrun_last = 1
-  exec "AsyncRun -mode=term -pos=bottom -rows=30 -post=echo\ " . g:asyncrun_name . " " . a:executor
-
-endfunction
-
 let g:term_buf = 0
 let g:term_win = 0
 function! TermToggle(height)
@@ -109,23 +102,38 @@ function! CreateCenteredFloatingWindow()
     call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
     au BufWipeout <buffer> exe 'bw '.s:buf
 endfunction
-if executable('lazygit')
-	function! OpenTerm(cmd)
-		call CreateCenteredFloatingWindow()
-		call termopen(a:cmd, { 'on_exit': function('OnTermExit') })
-	endfunction
 
+function! OpenTerm(cmd)
+	call CreateCenteredFloatingWindow()
+	call termopen(a:cmd, { 'on_exit': function('OnTermExit') })
+endfunction
+
+function! OnTermExit(job_id, code, event) dict
+	if a:code == 0
+		bd!
+	endif
+endfunction
+
+if executable('lazygit')
 	function! OpenLazyGit()
 		call OpenTerm('lazygit')
 		startinsert
 	endfunction
-
-	function! OnTermExit(job_id, code, event) dict
-		if a:code == 0
-			bd!
-		endif
-	endfunction
 endif
+
+function! s:my_runner(opts)
+	let cmds = 'zsh -c "' . a:opts.cmd . ' && sleep 5"'
+    call OpenTerm(cmds)
+	startinsert
+endfunction
+
+function! Run(executor)
+	packadd asyncrun.vim
+	let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
+	let g:asyncrun_runner.centered = function('s:my_runner')
+	let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml', 'Cargo.toml'] 
+	exec "AsyncRun -mode=term -pos=centered -rows=30 -post=echo\ " . g:asyncrun_name . " " . a:executor
+endfunction
 
 function! FixFormatting()
 	%s/\r\(\n\)/\1/eg
@@ -180,10 +188,9 @@ function! ToggleRubyBlockSyntax()
 endfunction
 
 function! RenameFile()
-	let old_name = expand('%')
 	let new_name = input('New file name: ', expand('%'), 'file')
-	if new_name != '' && new_name != old_name
-		Rename new_name
+	if new_name != '' && new_name != expand('%')
+		exec 'Rename ' . new_name
 		redraw!
 	endif
 endfunction
