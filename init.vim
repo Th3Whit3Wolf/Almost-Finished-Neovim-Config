@@ -470,7 +470,7 @@ xnoremap < <gv
 xnoremap > >gv|
 
 " Use tab for indenting
-vnoremap <Tab> >gv|
+vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 nmap <Tab>   >>_
 nmap <S-Tab> <<_
