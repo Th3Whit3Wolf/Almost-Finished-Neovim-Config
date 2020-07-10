@@ -20,7 +20,6 @@ let g:coc_global_extensions = [
 	\ 'coc-svg',
 	\ 'coc-vimlsp',
 	\ 'coc-actions',
-	\ 'coc-tasks',
 	\ 'coc-browser',
 	\ 'coc-rust-analyzer',
 	\ 'coc-emmet',
