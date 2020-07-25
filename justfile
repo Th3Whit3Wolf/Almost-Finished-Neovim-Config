@@ -35,7 +35,6 @@ _init_pack:
 		rm pack-v{{v}}-{{os}}.tar.gz
 		rm README.md
 		echo "export VIM_CONFIG_PATH=$HOME/.cache/vim" >> ~/.zprofile
-		echo "export VIM_CONFIG_PATH=$HOME/.cache/vim" >> ~/.profile
 		VIM_CONFIG_PATH=$HOME/.cache/vim
 	elif [[ "$(pack -V | cut -d ' ' -f2 | cut -d '.' -f3)" < "$(echo {{v}} | cut -d '.' -f3)" ]] || [[ "$(pack -V | cut -d ' ' -f2 | cut -d '.' -f2)" < "$(echo {{v}} | cut -d '.' -f2)" ]] || [[ "$(pack -V | cut -d ' ' -f2 | cut -d '.' -f1)" < "$(echo {{v}} | cut -d '.' -f1)" ]]; then
 		wget https://github.com/maralla/pack/releases/download/v{{v}}/pack-v{{v}}-{{os}}.tar.gz
@@ -166,102 +165,202 @@ _web:
 # Install all packages
 _pack: _init_pack
 	#!/usr/bin/bash
-	install() {
-		if [ ! -z "$2" ]; then
-			if [ ! -d "$(echo ~/.cache/vim/pack/default/opt/$(echo $1 | cut -d '/' -f2 ))" ]; then
-				pack install $@
-			else
-				echo "$1 is already installed as lazily loaded"
-			fi
-		else
-			if [ ! -d "$(echo ~/.cache/vim/pack/default/start/$(echo $1 | cut -d '/' -f2 ))" ]; then
-				pack install $1
-			else
-				echo "$1 is already installed"
-			fi
-		fi
-	}
-	###########
-	# General #
-	###########
-	install() liuchengxu/vim-clap
-	install() ryanoasis/vim-devicons
-	install() Th3Whit3Wolf/vim-shebang
-	install() hardcoreplayers/dashboard-nvim
-	install() tpope/vim-commentary
-	install() tpope/vim-surround
-	install() tpope/vim-endwise
-	install() honza/vim-snippets
-	install() liuchengxu/vim-which-key -o
+	VIM_CONFIG_PATH=$HOME/.cache/vim
 
-	install() Konfekt/FastFold -o
-	install() mhinz/vim-signify -o
-	install() Konfekt/FoldText -o
-	install() tpope/vim-abolish -o
-	install() skywind3000/asyncrun.vim -o
-	install() tpope/vim-endwise -o
-	install() tpope/vim-eunuch -o
-	install() alvan/vim-closetag -o
-	install() neoclide/coc.nvim --build 'yarn install --frozen-lockfile' -o
-	install() lambdalisue/gina.vim -o
-	install() liuchengxu/vista.vim -o
-	install() alok/rainbow_parentheses.vim --build 'git checkout fix-spell' -o
-	install() ludovicchabant/vim-gutentags -o
-	install() rhysd/git-messenger.vim -o
-	install() tpope/vim-eunuch -o
-	install() godlygeek/tabular -o
+	# Lazy Loaded Plugins
+	Lazy=(
+		"tpope/vim-git"
+		"rhysd/committia.vim"
+		"mhinz/vim-signify"
+		"rhysd/git-messenger.vim"
+		"liuchengxu/vim-which-key"
+		"Konfekt/FastFold"
+		"Konfekt/FoldText"
+		"tpope/vim-abolish"
+		"tpope/vim-endwise"
+		"tpope/vim-eunuch"
+		"skywind3000/asyncrun.vim"
+		"alvan/vim-closetag"
+		"lambdalisue/gina.vim"
+		"liuchengxu/vista.vim"
+		"ludovicchabant/vim-gutentags"
+		"godlygeek/tabular"
+	)
+	for i in "${Lazy[@]}"; do
+		pack install $i -o
+	done
 
-	############
-	# Language #
-	############
-	install() euclio/vim-markdown-composer --build 'cargo build --release' -o
-	install() mhinz/vim-crates -o
-	install() turbio/bracey.vim --build 'npm install --prefix server' -o
-	install() arzg/vim-rust-syntax-ext -o
-	install() faith/vim-go -o
-	install() cespare/vim-toml -o
-	install() vim-python/python-syntax -o
-	install() Vimjas/vim-python-pep8-indent -o
-	install() rhysd/committia.vim -o
-	install() vim-jp/vim-cpp -o  
-	install() octol/vim-cpp-enhanced-highlight -o
-	install() pboettch/vim-cmake-syntax -o
-	install() kchmck/vim-coffee-script -o 
-	install() dart-lang/dart-vim-plugin -o
-	install() JesseKPhillips/d.vim -o
-	install() dcharbon/vim-flatbuffers -o
-	install() mustache/vim-mustache-handlebars -o
-	install() neovimhaskell/haskell-vim
-	install() othree/html5.vim -o
-	install() vmchale/ion-vim -o
-	install() GutenYe/json5.vim -o
-	install() elzr/vim-json -o
-	install() yuezk/vim-js -o
-	install() maxmellon/vim-jsx-pretty -o
-	install() HerringtonDarkholme/yats.vim -o
-	install() groenewege/vim-less -o
-	install() udalov/kotlin-vim -o
-	install() plasticboy/vim-markdown -o
-	install() chr4/nginx.vim -o
-	install() zah/nim.vim -o
-	install() digitaltoad/vim-pug -o
-	install() uarun/vim-protobuf -o
-	install() StanAngeloff/php.vim -o
-	install() vim-perl/vim-perl -o
-	install() vim-ruby/vim-ruby -o
-	install() keith/rspec.vim -o
-	install() wavded/vim-stylus -o
-	install() cakebaker/scss-syntax.vim -o
-	install() stephpy/vim-yaml -o
-	install() ericpruitt/tmux.vim -o
-	install() baskerville/vim-sxhkdrc -o
-	install() posva/vim-vue -o
-	install() jparise/vim-graphql -o
-	install() heavenshell/vim-jsdoc --build 'make clean && make install' -o
-	install() hail2u/vim-css3-syntax -o
-	install() mboughaba/i3config.vim -o
-	install() MTDL9/vim-log-highlighting -o
-	install() tbastos/vim-lua -o
-	install() ekalinin/Dockerfile.vim -o
-	install() nastevens/vim-cargo-make -o
-	install() nastevens/vim-duckscript -o
+		Filetype=(
+		"martinlroth/vim-acpi-asl"                # ACPI ASL
+		"pearofducks/ansible-vim"                 # Ansible 2.x
+		"sheerun/apiblueprint.vim"                # API Blueprint
+		"mityu/vim-applescript"                   # AppleScript
+		"sudar/vim-arduino-syntax"                # Arduino
+		"asciidoc/vim-asciidoc"                   # AsciiDoc
+		"jwalton512/vim-blade"                    # Blade templates
+		"bfontaine/Brewfile.vim"                  # Brewfile
+		"vim-jp/vim-cpp"                          # C++
+		"octol/vim-cpp-enhanced-highlight"        # C++
+		"isobit/vim-caddyfile"                    # Caddyfile
+		"nastevens/vim-cargo-make"                # Cargo Make (Rust cargo extension)
+		"mhinz/vim-crates"                        # Cargo.toml (Rust)
+		"hellerve/carp-vim"                       # Carp
+		"mtscout6/vim-cjsx"                       # CJSX (JSX equivalent in CoffeeScript)
+		"guns/vim-clojure-static"                 # Clojure
+		"tpope/vim-fireplace"                     # Clojure
+		"guns/vim-clojure-highlight"              # Clojure
+		"pboettch/vim-cmake-syntax"               # Cmake
+		"vhdirk/vim-cmake"                        # Cmake
+		"kchmck/vim-coffee-script"                # CoffeScript
+		"elubow/cql-vim"                          # Cassandra CQL
+		"victoredwardocallaghan/cryptol.vim"      # Cryptol
+		"vim-crystal/vim-crystal"                 # Crystal
+		"hail2u/vim-css3-syntax"                  # CSS
+		"chrisbra/csv.vim"                        # CSV
+		"tpope/vim-cucumber"                      # Cucumber
+		"mgrabovsky/vim-cuesheet"                 # Cue
+		"JesseKPhillips/d.vim"                    # D Lang
+		"dart-lang/dart-vim-plugin"               # Dart
+		"vmchale/dhall-vim"                       # Dhall
+		"ekalinin/Dockerfile.vim"                 # Dockerfile
+		"nastevens/vim-duckscript"                # Duckscript
+		"elixir-editors/vim-elixir"               # Elixir
+		"yalesov/vim-emblem"				      # Emblem
+		"vim-erlang/vim-erlang-runtime"           # Erlang
+		"vim-scripts/ferm.vim"                    # Ferm
+		"georgewitteman/vim-fish"                 # Fish
+		"dcharbon/vim-flatbuffers"                # Flatbuffers
+		"calviken/vim-gdscript3"                  # GDScript 3
+		"tikhomirov/vim-glsl"                     # OpenGL Shading Language
+		"maelvls/gmpl.vim"                        # GMPL
+		"vim-scripts/gnuplot-syntax-highlighting" # GNUPlot
+		"faith/vim-go"                            # Go
+		"tfnico/vim-gradle"                       # Gradle
+		"jparise/vim-graphql"                     # GraphQL
+		"sheerun/vim-haml"                        # Haml
+		"mustache/vim-mustache-handlebars"        # Handlebars
+		"CH-DanReif/haproxy.vim"                  # HAProxy
+		"neovimhaskell/haskell-vim"               # Haskel
+		"yaymukund/vim-haxe"                      # Haxe
+		"b4b4r07/vim-hcl"                         # HCL
+		"towolf/vim-helm"                         # Helm Templates
+		"zebradil/hive.vim"                       # Hive
+		"othree/html5.vim"                        # HTML5
+		"mboughaba/i3config.vim"                  # i3
+		"chutzpah/icalendar.vim"                  # icalendar
+		"idris-hackers/idris-vim"                 # Idris
+		"vmchale/ion-vim"                         # Ion
+		"yuezk/vim-js"                            # Javascript
+		"maxmellon/vim-jsx-pretty"                # JSX
+		"martinda/Jenkinsfile-vim-syntax"         # Jenkins
+		"lepture/vim-jinja"                       # Jinja
+		"elzr/vim-json"                           # Json
+		"GutenYe/json5.vim"                       # Json5
+		"JuliaEditorSupport/julia-vim"            # Julia
+		"udalov/kotlin-vim"                       # Kotlin
+		"ledger/vim-ledger"                       # Ledger
+		"groenewege/vim-less"                     # Less
+		"sersorrel/vim-lilypond"                  # Lilypond
+		"gkz/vim-ls"                              # LiveScript
+		"MTDL9/vim-log-highlighting"              # Log
+		"tbastos/vim-lua"                         # Lua
+		"sophacles/vim-bundle-mako"               # Mako
+		"plasticboy/vim-markdown"                 # Markdown
+		"voldikss/vim-mma"                        # Mathematica
+		"jxnblk/vim-mdx-js"                       # MDX
+		"leafo/moonscript-vim"                    # MoonScript
+		"chr4/nginx.vim"                          # Nginx
+		"zah/nim.vim"                             # Nim
+		"LnL7/vim-nix"                            # Nix
+		"b4winckler/vim-objc"                     # Objective-C
+		"ocaml/vim-ocaml"                         # OCaml
+		"McSinyx/vim-octave"                      # Octave
+		"vim-perl/vim-perl"                       # PERL
+		"lifepillar/pgsql.vim"                    # PostgreSQL
+		"StanAngeloff/php.vim"                    # PHP
+		"aklt/plantuml-syntax"                    # PlantUML
+		"jakwings/vim-pony"                       # Ponylang
+		"PProvost/vim-ps1"                        # PowerShell
+		"uarun/vim-protobuf"                      # Protocol Buffers
+		"digitaltoad/vim-pug"                     # Pug template
+		"rodjek/vim-puppet"                       # Puppet
+		"purescript-contrib/purescript-vim"       # PureScript
+		"vim-python/python-syntax"                # Python
+		"Vimjas/vim-python-pep8-indent"           # Python
+		"artoj/qmake-syntax-vim"                  # QMake
+		"peterhoeg/vim-qml"                       # QML
+		"wlangstroth/vim-racket"                  # Racket
+		"jneen/ragel.vim"                         # Ragel
+		"Raku/vim-raku"                           # Raku
+		"IN3D/vim-raml"                           # RAML
+		"adamclerk/vim-razor"                     # Razor view engine
+		"reasonml-editor/vim-reason-plus"         # Reason
+		"keith/rspec.vim"                         # RSpec
+		"marshallward/vim-restructuredtext"       # reStructuredText
+		"vim-ruby/vim-ruby"                       # Ruby
+		"rust-lang/rust.vim"                      # Rust
+		"arzg/vim-rust-syntax-ext"                # Rust
+		"derekwyatt/vim-sbt"                      # SBT
+		"derekwyatt/vim-scala"                    # Scala
+		"cakebaker/scss-syntax.vim"               # SCSS
+		"arzg/vim-sh"                             # Shell
+		"slim-template/vim-slim"                  # Slim
+		"slime-lang/vim-slime-syntax"             # Slime
+		"bohlender/vim-smt2"                      # SMT-LIB2
+		"tomlion/vim-solidity"                    # Solidity
+		"wavded/vim-stylus"                       # Stylus
+		"jasonshell/vim-svg-indent"               # SVG
+		"vim-scripts/svg.vim"                     # SVG
+		"keith/swift.vim"                         # Swift
+		"wgwoods/vim-systemd-syntax"              # Systemd
+		"baskerville/vim-sxhkdrc"                 # SXHKD (bspwm)
+		"hashivim/vim-terraform"                  # Terraform
+		"timcharper/textile.vim"                  # Textile
+		"solarnz/thrift.vim"                      # Thrift
+		"ericpruitt/tmux.vim"                     # Tmux
+		"wellbredgrapefruit/tomdoc.vim"           # TomDoc
+		"cespare/vim-toml"                        # TOML
+		"c-cube/vim-tptp"                         # TPTP
+		"lumiliet/vim-twig"                       # Twig
+		"HerringtonDarkholme/yats.vim"            # TypeScript
+		"ollykel/v-vim"                           # V
+		"arrufat/vala.vim"                        # Vala
+		"vim-scripts/vbnet.vim"                   # VB.NET
+		"smerrill/vcl-vim-plugin"                 # VCL
+		"vifm/vifm.vim"                           # vifm
+		"lepture/vim-velocity"                    # Velocity
+		"posva/vim-vue"                           # Vue
+		"amal-khailtash/vim-xdc-syntax"           # XDC
+		"vim-scripts/XSLT-syntax"                 # XSL
+		"amadeus/vim-xml"                         # XML
+		"stephpy/vim-yaml"                        # YAML
+		"sheerun/vim-yardoc"                      # YARD Documentation
+		"xwsoul/vim-zephir"                       # Zephir
+		"ziglang/zig.vim"                         # Zig
+		"zinit-zsh/zinit-vim-syntax"              # Zinit
+		"chrisbra/vim-zsh"                        # Zsh
+	)
+	for i in "${Filetype[@]}"; do
+		pack install $i -o
+	done
+
+	Normal=(
+		"liuchengxu/vim-clap"
+		"ryanoasis/vim-devicons"
+		"hardcoreplayers/dashboard-nvim"
+		"tpope/vim-commentary"
+		"tpope/vim-surround"
+		"honza/vim-snippets"
+	)
+	nm=$(printf " %s" "${Normal[@]}")
+	nm=${nm:1}
+	pack install $nm
+
+	pack install neoclide/coc.nvim --build 'git checkout release'
+	pack install alok/rainbow_parentheses.vim --build 'git checkout fix-spell' -o
+	pack install euclio/vim-markdown-composer --build 'cargo build --release' -o
+	pack install turbio/bracey.vim --build 'yarn --prefix server' -o
+	pack install heavenshell/vim-jsdoc --build 'make clean && make install' -o
+
+	# Build Clap with maple
+	nvim -c 'call clap#installer#build_all() | q'

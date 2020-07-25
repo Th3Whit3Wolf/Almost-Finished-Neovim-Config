@@ -1,7 +1,17 @@
 packadd vim-js
 packadd vim-jsx-pretty
+packadd vim-closetag
 packadd vim-jsdoc
+packadd vim-graphql
 packadd bracey.vim
+packadd vim-gutentags
+
+call LazySource('gutentags')
+call LazySource('closetag')
+
+inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+imap <CR> <Plug>CustomCocCR
+
 set backupcopy=yes
 
 let g:javascript_plugin_jsdoc = 1

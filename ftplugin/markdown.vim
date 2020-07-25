@@ -1,5 +1,11 @@
 packadd vim-markdown
 packadd vim-markdown-composer
+packadd vim-gutentags
+
+call LazySource('gutentags')
+inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+imap <CR> <Plug>CustomCocCR
+
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_toc_autofit = 1
 let g:vim_markdown_fenced_languages =  ['c++=cpp', 'viml=vim', 'bash=sh', 'ini=dosini', 'rs=rust']

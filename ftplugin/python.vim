@@ -1,5 +1,10 @@
 packadd python-syntax
 packadd vim-python-pep8-indent
+packadd vim-gutentags
+
+call LazySource('gutentags')
+inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+imap <CR> <Plug>CustomCocCR
 
 let g:python_highlight_all = 1
 let g:python_highlight_space_errors = 1
@@ -15,6 +20,31 @@ elseif getline(1)[0:18] ==# "#!/usr/bin/env pypy" || getline(1)[0:14] ==# "#!/us
 elseif getline(1)[0:20] ==# "#!/usr/bin/env jython" || getline(1)[0:16] ==# "#!/usr/bin/jython"
     Python2Syntax
 endif
+
+function! s:pybang()
+    let options  = [
+        \ 'python2',
+        \ 'python3',
+        \ 'pypy',
+        \ 'pypy3',
+        \ 'jython',
+        \ 'none'
+        \ ]
+
+    let choice = inputlist([ 'Select your shell:' ]
+        \ + map(copy(options), '"[".(v:key+1)."] ".v:val'))
+
+    if choice >= 1 && choice <= (len(copy(options)) - 2)
+        0put = '#!/usr/bin/env ' . (options)[choice - 1]
+	endif
+endfunction
+
+if line('$') == 1 && getline(1) == ''
+    call <SID>pybang()
+endif
+
+command! -bang -nargs=0 -bar PyBang call <SID>pybang()
+
 
 function! RunMyCode()
     if getline(1)[0:21] ==# "#!/usr/bin/env python3" || getline(1)[0:17] ==# "#!/usr/bin/python3"
