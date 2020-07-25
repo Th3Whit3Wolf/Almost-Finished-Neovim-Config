@@ -10,18 +10,21 @@ au BufNewFile,BufRead */.kube/config ft=yaml
 " C setup, Vim thinks .h is C++
 au BufNewFile,BufRead *.h setlocal ft=c
 
-" Coffeescript
-au BufNewFile,BufRead *.coffee set ft=coffee
-au BufNewFile,BufRead *Cakefile set ft=coffee
-au BufNewFile,BufRead *.coffeekup,*.ck set ft=coffee
-au BufNewFile,BufRead *._coffee set ft=coffee
-au BufNewFile,BufRead *.litcoffee set ft=litcoffee
-au BufNewFile,BufRead *.coffee.md set ft=litcoffee
+" Carp
+au BufRead,BufNewFile *.carp set ft=carp
 
+" Coffeescript
+au BufNewFile,BufRead *.coffee         set ft=coffee
+au BufNewFile,BufRead *Cakefile        set ft=coffee
+au BufNewFile,BufRead *.coffeekup,*.ck set ft=coffee
+au BufNewFile,BufRead *._coffee        set ft=coffee
+au BufNewFile,BufRead *.litcoffee      set ft=litcoffee
+au BufNewFile,BufRead *.coffee.md      set ft=litcoffee
+au BufNewFile,BufRead *.csx,*.cjsx     set ft=coffee
 " CQL
 au  BufNewFile,BufRead *.cql set ft=cql
 
-" Cryptop
+" Cryptol
 au BufNewFile,BufRead *.cry set ft=cryptol
 au BufNewFile,BufRead *.cyl set ft=cryptol
 au BufNewFile,BufRead *.l" cry set ft=cryptol
@@ -83,7 +86,7 @@ au BufNewFile,BufRead *.emblem set ft=emblem
 au BufNewFile,BufRead *.erl,*.hrl,rebar.config,*.app,*.app.src,*.yaws,*.xrl,*.escript set ft=erlang
 
 " ferm
-au BufNewFile,BufRead ferm.conf set ft=ferm 
+au BufNewFile,BufRead ferm.conf set ft=ferm
 au BufNewFile,BufRead *.ferm set ft=ferm
 
 " fish
@@ -537,3 +540,112 @@ au BufNewFile,BufRead *.zep set ft=zephir
 " zig
 au BufNewFile,BufRead *.zig set ft=zig
 au BufNewFile,BufRead *.zir set ft=zir
+
+
+" Shebang
+" Auto Detection
+function! s:detect_filetype(line, patterns) " {{{ try to detect current filetype
+    for pattern in keys(a:patterns)
+        if a:line =~# pattern
+            return a:patterns[pattern]
+        endif
+    endfor
+endfunction
+
+" internal shebang store
+let s:shebangs = {}
+let g:shebang_enable_debug = 0
+command! -nargs=* -bang AddShebangPattern
+    \ call s:add_shebang_pattern(<f-args>, <bang>0)
+function! s:add_shebang_pattern(filetype, pattern, ...) " {{{ add shebang pattern to filetype
+    if a:0 == 2
+        let [pre_hook, force] = [a:1, a:2]
+    else
+        let [pre_hook, force] = ['', a:000[-1]]
+    endif
+    try
+        if !force && has_key(s:shebangs, a:pattern)
+            throw string(a:pattern) . " is already defined, use ! to overwrite."
+        endif
+        let s:shebangs[a:pattern] = {
+            \ 'filetype': a:filetype,
+            \ 'pre_hook': pre_hook
+            \ }
+    catch
+        echohl ErrorMsg
+        echomsg "Add shebang pattern: " . v:exception
+        echohl None
+    endtry
+endfunction
+
+function! s:shebang() " {{{ set valid filetype based on shebang line
+    try
+        let line = getline(1)
+        if empty(line)
+            return
+        endif
+
+        let match = s:detect_filetype(line, s:shebangs)
+        if empty(match)
+            throw "Filetype detection failed for line: '" . line . "'"
+        endif
+        exe match.pre_hook
+        exe 'setfiletype ' . match.filetype
+    catch
+        if g:shebang_enable_debug
+            echohl ErrorMsg
+            echomsg v:exception
+            echohl None
+        endif
+    endtry
+endfunction
+
+" Default patterns
+" add default shebang patterns, paths of the following form are handled:
+" /bin/interpreter
+" /usr/bin/interpreter
+" /bin/env interpreter
+" /usr/bin/env interpreter
+
+" applescript
+AddShebangPattern! applescript   ^#!.*\s\+osascript\>
+AddShebangPattern! applescript   ^#!.*[s]\?bin/osascript\>
+" escript
+AddShebangPattern! erlang        ^#!.*\s\+escript\>
+AddShebangPattern! erlang        ^#!.*[s]\?bin/escript\>
+" js
+AddShebangPattern! javascript    ^#!.*\s\+node\>
+" lua
+AddShebangPattern! lua           ^#!.*\s\+lua\>
+AddShebangPattern! lua           ^#!.*[s]\?bin/lua\>
+" perl
+AddShebangPattern! perl          ^#!.*\s\+perl\>
+AddShebangPattern! perl          ^#!.*[s]\?bin/perl\>
+" php
+AddShebangPattern! php           ^#!.*\s\+php\>
+AddShebangPattern! php           ^#!.*[s]\?bin/php\>
+" python
+AddShebangPattern! python        ^#!.*\s\+python\>
+AddShebangPattern! python        ^#!.*[s]\?bin/python\>
+AddShebangPattern! python        ^#!.*\s\+pypy\>
+AddShebangPattern! python        ^#!.*[s]\?bin/pypy\>
+AddShebangPattern! python        ^#!.*\s\+jython\>
+AddShebangPattern! python        ^#!.*[s]\?bin/jython\>
+" ruby
+AddShebangPattern! ruby          ^#!.*\s\+ruby\>
+AddShebangPattern! ruby          ^#!.*[s]\?bin/ruby\>
+" support most of shells: bash, ash, csh, dash, fish, ion, ksh, mksh, pdksh, sh, tcsh, zsh
+AddShebangPattern! fish          ^#!.*\s\+fish\>
+AddShebangPattern! fish          ^#!.*[s]\?bin/fish\>
+AddShebangPattern! ion           ^#!.*\s\+ion\>
+AddShebangPattern! ion           ^#!.*[s]\?bin/ion\>
+AddShebangPattern! sh            ^#!.*[s]\?bin/sh\>    let\ b:is_sh=1|if\ exists('b:is_bash')|unlet\ b:is_bash|endif
+AddShebangPattern! sh            ^#!.*[s]\?bin/bash\>  let\ b:is_bash=1|if\ exists('b:is_sh')|unlet\ b:is_sh|endif
+AddShebangPattern! sh            ^#!.*\s\+\(ba\|c\|a\|da\|k\|pdk\|mk\|tc\)\?sh\>
+AddShebangPattern! zsh           ^#!.*\s\+zsh\>
+AddShebangPattern! zsh           ^#!.*[s]\?bin/zsh\>
+augroup shebang
+    au!
+    " try to detect filetype after enter to buffer
+    au BufEnter * if !did_filetype() | call s:shebang() | endif
+augroup END
