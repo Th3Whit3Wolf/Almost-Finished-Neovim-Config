@@ -292,17 +292,8 @@ autocmd BufWritePost $VIM_PATH/{*.vim,*.json} nested
 
 " Autoload packages
 augroup Pack
-	" alvan/vim-closetag
-	autocmd FileType html,xhtml,xml,phtml,jsx packadd vim-closetag | call LazySource('closetag')
-	" ludovicchabant/vim-gutentags
-	autocmd FileType Ada,AnsiblePlaybook,Ant,Asciidoc,Asm,Asp,Autoconf,AutoIt,Automake,Awk,Basic,BETA,BibTeX,C,C#,C++,Clojure,CMake,Cobol,CPreProcessor,CSS,Ctags,CUDA,D,DBusIntrospect,Diff,DosBatch,DTD,DTS,Eiffel,Elixir,Elm,Erlang,Falcon,Flex,Fortran,Fypp,Gdbinit,Glade,Go,HTML,Iniconf,Inko,ITcl,Java,JavaProperties,JavaScript,JSON,LdScript,Lisp,Lua,M4,Make,Man,Markdown,MatLab,Maven2,Moose,Myrddin,NSIS,ObjectiveC,OCaml,OldC,[disabled],OldC++,[disabled],Pascal,Passwd,Perl,Perl6,PHP,PlistXML,Pod,PowerShell,Protobuf,PuppetManifest,Python,PythonLoggingConfig,QemuHX,QtMoc,R,RelaxNG,ReStructuredText,REXX,Robot,RpmSpec,RSpec,Ruby,Rust,Scheme,SCSS,Sh,SLang,SML,SQL,SVG,SystemdUnit,SystemTap,SystemVerilog,Tcl,TclOO,Tex,TTCN,TypeScript,Varlink,Vera,Verilog,VHDL,Vim,WindRes,XML,XSLT,YACC,Yaml,YumRepo,Zephir packadd vim-gutentags | call LazySource('gutentags')
-	" Vim Crates
-	" Automatically check for new crate versions when opening Cargo.toml
-	autocmd BufRead,BufNewFile Cargo.toml packadd vim-crates | call crates#toggle()
-	" Vim Vim Abolish
-	autocmd InsertEnter * packadd vim-abolish | call  LazySource('abolish')
-	" Rainbow Parentheses
-	autocmd InsertEnter * packadd rainbow_parentheses.vim | RainbowParentheses
+	" Rainbow Parentheses & Vim Abolish
+	autocmd InsertEnter * packadd rainbow_parentheses.vim | RainbowParentheses | packadd vim-abolish | call  LazySource('abolish')
     autocmd InsertLeave * RainbowParentheses!
 	" Git Messenger
 	command! -nargs=* -range -bang GitMessenger packadd git-messenger.vim | call s:do_cmd('GitMessenger', "<bang>", <line1>, <line2>, <q-args>)
@@ -557,9 +548,6 @@ nnoremap <F2>       :call RenameFile()<cr>
 " Other
 """""""""""""""""""""""""""""
 let g:coc_data_home	= '~/.config/nvim/coc'
-let g:endwise_no_mappings = v:true
-inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
 nnoremap<C-p> :Clap files<CR>
 
 augroup bang
