@@ -1,3 +1,19 @@
+packadd vim-zsh
+packadd zinit-vim-syntax
+packadd vim-endwise
+
+let g:endwise_no_mappings = v:true
+inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+
+function! RunMyCode()
+    if executable('zsh')
+        call Run("zsh %")
+    else
+        echom 'Zsh is not installed!'
+    endif
+endfunction
+
 function s:shellbang() abort
     let options  = [
         \ 'ash',
@@ -23,13 +39,11 @@ function s:shellbang() abort
             set ft=fish
         elseif choice == 7
             set ft=ion
+        elseif choice =! 12
+            set ft=sh
         endif
         0put = '#!/usr/bin/env ' . (options)[choice - 1]
 	endif
 endfunction
-
-if line('$') == 1 && getline(1) == ''
-    call <SID>shellbang()
-endif
 
 command! -bang -nargs=0 -bar ShellBang call <SID>shellbang()
