@@ -55,17 +55,17 @@ let g:loaded_gzip = 1
 let g:loaded_logiPat = 1
 let g:loaded_matchit = 1
 let g:loaded_matchparen = 1
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
 let g:loaded_rrhelper = 1  " ?
 let g:loaded_shada_plugin = 1  " ?
 let g:loaded_tar = 1
 let g:loaded_tarPlugin = 1
-let g:loaded_tutor_mode_plugin = 1
+let g:loaded_tutor_mode_plugin = 0
 let g:loaded_2html_plugin = 1
 let g:loaded_vimball = 1
 let g:loaded_vimballPlugin = 1
 let g:loaded_zip = 1
 let g:loaded_zipPlugin = 1
+let g:loaded_netrwPlugin = 1
 
 " If sudo, disable vim swap/backup/undo/shada/viminfo writing
 if $SUDO_USER !=# '' && $USER !=# $SUDO_USER
@@ -314,8 +314,17 @@ augroup Pack
 	" Async Run
 	command! -nargs=* -range -bang AsyncRun  packadd asyncrun.vim | let g:asyncrun_last = 1 | call s:do_cmd('AsyncRun'  , "<bang>", <line1>, <line2>, <q-args>)
 	command! -nargs=* -range -bang AsyncStop packadd asyncrun.vim | let g:asyncrun_last = 1 | call s:do_cmd('AsyncStop' , "<bang>", <line1>, <line2>, <q-args>)
-	" Vim StartupTime
-	command! -nargs=* -range -bang StartupTime packadd startuptime.vim | call s:do_cmd('StartupTime' , "<bang>", <line1>, <line2>, <q-args>)
+	" Vim Wordy
+	command! -nargs=* -range -bang PrevWordy packadd vim-wordy | call s:do_cmd('PrevWordy' , "<bang>", <line1>, <line2>, <q-args>)
+	command! -nargs=* -range -bang Wordy     packadd vim-wordy | call s:do_cmd('Wordy'     , "<bang>", <line1>, <line2>, <q-args>)
+	command! -nargs=* -range -bang NextWordy packadd vim-wordy | call s:do_cmd('NextWordy' , "<bang>", <line1>, <line2>, <q-args>)
+	" Ditto.vim
+	command! -nargs=* -range -bang DittoNext packadd vim-ditto | call s:do_cmd('DittoNext' , "<bang>", <line1>, <line2>, <q-args>)
+	command! -nargs=* -range -bang DittoPrev packadd vim-ditto | call s:do_cmd('DittoPrev' , "<bang>", <line1>, <line2>, <q-args>)
+	command! -nargs=* -range -bang DittoGood packadd vim-ditto | call s:do_cmd('DittoGood' , "<bang>", <line1>, <line2>, <q-args>)
+	command! -nargs=* -range -bang DittoBad  packadd vim-ditto | call s:do_cmd('DittoBad'  , "<bang>", <line1>, <line2>, <q-args>)
+	command! -nargs=* -range -bang DittoMore packadd vim-ditto | call s:do_cmd('DittoMore' , "<bang>", <line1>, <line2>, <q-args>)
+	command! -nargs=* -range -bang DittoLess packadd vim-ditto | call s:do_cmd('DittoLess' , "<bang>", <line1>, <line2>, <q-args>)
 	" Vista.vim
 	if mapcheck("<leader>tv") == ""
 		noremap  <silent> <leader>tv :if !exists('vista#sidebar#Toggle()') <bar> :packadd vista.vim <bar>: call VistaAutoClose() <bar> :endif <bar> :Vista!!<CR>
@@ -325,6 +334,7 @@ augroup Pack
 			autocmd BufEnter * if winnr("$") == 1 && vista#sidebar#IsOpen() | execute "normal! :q!\<CR>" | endif
 		endfunction
 	endif
+	" Only way I could get vim-which to work properly for me
 	packadd vim-which-key | call LazySource('which_key') | call which_key#register('<Space>', 'g:which_key_map')
 augroup END
 
@@ -533,7 +543,7 @@ nnoremap  <leader>cs :call Changebang()<CR>
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
-"" Taken from David Pederson
+" Taken from David Pederson
 nnoremap <leader>a  :call YankWholeBuffer(0)<cr>
 nnoremap <leader>i  :call IndentEntireFile()<cr>
 nnoremap <leader>j  :call GotoDefinitionInSplit(0)<cr>
@@ -549,17 +559,3 @@ nnoremap <F2>       :call RenameFile()<cr>
 """""""""""""""""""""""""""""
 let g:coc_data_home	= '~/.config/nvim/coc'
 nnoremap<C-p> :Clap files<CR>
-
-augroup bang
-	autocmd!
-	autocmd BufNewFile *.awk     0put =\"#!/usr/bin/env awk"
-	autocmd BufNewFile *.escript 0put =\"#!/usr/bin/env escript"
-	autocmd BufNewFile *.fish    0put =\"#!/usr/bin/env fish"
-	autocmd BufNewFile *.ion     0put =\"#!/usr/bin/env ion"
-	autocmd BufNewFile *jl       0put =\"#!/usr/bin/env julia"
-	autocmd BufNewFile *.lua     0put =\"#!/usr/bin/env lua"
-	autocmd BufNewFile *.php     0put =\"#!/usr/bin/env php"
-	autocmd BufNewFile *.pl      0put =\"#!/usr/bin/env perl"
-	autocmd BufNewFile *.rb      0put =\"#!/usr/bin/env ruby"
-	autocmd BufNewFile *.scala   0put =\"#!/usr/bin/env scala"
-augroup END

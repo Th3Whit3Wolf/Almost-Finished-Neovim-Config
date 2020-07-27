@@ -1,5 +1,3 @@
-packadd vim-restructuredtext
-packadd vim-gutentags
 packadd vim-lexical
 packadd vim-pencil
 packadd vim-ditto
@@ -7,11 +5,9 @@ packadd vim-ditto
 DittoOn
 
 call lexical#init()
-call pencil#init({'wrap': 'hard'})
-call LazySource('gutentags')
+call pencil#init({'wrap': 'hard', 'textwidth': 60})
 
-inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-imap <CR> <Plug>CustomCocCR
+setl spell spl=en_us et sw=2 ts=2 noai nonu nornu
 
 let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt', '~/.config/nvim/moby_thesaurus.txt']
 let g:lexical#dictionary = ['/usr/share/dict/words']

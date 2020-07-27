@@ -1,10 +1,24 @@
 packadd vim-markdown
 packadd vim-markdown-composer
 packadd vim-gutentags
+packadd vim-lexical
+packadd vim-pencil
+packadd vim-ditto
 
+DittoOn
+
+call lexical#init()
+call pencil#init({'wrap': 'hard'})
 call LazySource('gutentags')
+
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR
+
+let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt', '~/.config/nvim/moby_thesaurus.txt']
+let g:lexical#dictionary = ['/usr/share/dict/words']
+let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add']
+let g:lexical#thesaurus_key = '<leader>t'
+let g:lexical#dictionary_key = '<leader>k'
 
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_toc_autofit = 1
@@ -31,3 +45,24 @@ function! RunMyCode()
     ComposerOpen
 	ComposerUpdate
 endfunction
+
+" Check if repository
+" If yes change to github flavored markdown
+function! s:CheckIfGithub()
+    let cwd = getcwd()
+    let parent_dir = expand('%:p:h')
+    exe 'cd ' . parent_dir
+	let github = system('git remote show origin | grep "Push  URL" | grep "github.com/" | wc -l')
+    exe 'cd ' . cwd
+	" if in a git repo
+	if !v:shell_error
+        if github > 0
+            packadd vim-gfm-syntax
+            let g:markdown_fenced_languages = ['cpp', 'ruby', 'json']
+        endif
+    elseif exists(g:gfm_syntax_enable_always)
+        unlet g:gfm_syntax_enable_always
+	endif
+endfunction
+
+autocmd BufEnter * call s:CheckIfGithub()
