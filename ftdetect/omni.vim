@@ -1,3 +1,6 @@
+" Awk
+au BufNewFile *.awk     0put =\"#!/usr/bin/env awk"
+
 " Fasto setup
 au BufNewFile,BufRead *.fo setlocal ft=fasto
 " Pow setup
@@ -84,6 +87,7 @@ au BufNewFile,BufRead *.emblem set ft=emblem
 
 " erlang
 au BufNewFile,BufRead *.erl,*.hrl,rebar.config,*.app,*.app.src,*.yaws,*.xrl,*.escript set ft=erlang
+au BufNewFile         *.escript 0put =\"#!/usr/bin/env escript\<nl>\"|$
 
 " ferm
 au BufNewFile,BufRead ferm.conf set ft=ferm
@@ -91,8 +95,8 @@ au BufNewFile,BufRead *.ferm set ft=ferm
 
 " fish
 au BufNewFile,BufRead *.fish set ft=fish
+au BufNewFile         *.fish 0put =\"#!/usr/bin/env fish\<nl>\"|$
 au BufNewFile,BufRead ~/.config/fish/fish_{read_,}history set ft=yaml
-au BufNewFile,BufRead * if getline(1)[0:18] ==# "#!/usr/bin/env fish" || getline(1)[0:14] ==# "#!/usr/bin/fish" | set ft=fish | endif
 
 " flatbuffers
 au BufNewFile,BufRead *.fbs set ft=fbs
@@ -190,7 +194,7 @@ au BufNewFile,BufRead *.lidr set ft=lidris
 " ion
 au BufNewFile,BufRead ~/.config/ion/initrc set ft=ion
 au BufNewFile,BufRead *.ion set ft=ion
-au BufNewFile,BufRead * if getline(1)[0:17] ==# "#!/usr/bin/env ion" || getline(1)[0:13] ==# "#!/usr/bin/ion" | set ft=fish | endif
+au BufNewFile         *.ion 0put =\"#!/usr/bin/env ion\<nl>\"|$
 
 " Janus setup
 au BufNewFile,BufRead *.ja setlocal ft=janus
@@ -244,6 +248,7 @@ au BufNewFile,BufRead *.jsx set ft=javascriptreact
 
 " julia
 au BufNewFile,BufRead *.jl set ft=julia
+au BufNewFile         *.jl       0put =\"#!/usr/bin/env julia\<nl>\"|$
 
 " justfile
 au BufNewFile,BufRead Justfile,justfile ft=make
@@ -275,6 +280,9 @@ au BufNewFile,BufRead *.td set ft=tablegen
 " log
 au BufNewFile,BufRead *.log set ft=log
 au BufNewFile,BufRead *_log set ft=log
+
+" lua
+au BufNewFile *.lua     0put =\"#!/usr/bin/env lua\<nl>\"|$
 
 " mako
 au BufNewFile *.*.mako execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
@@ -328,14 +336,22 @@ au BufNewFile,BufRead *.sexp set ft=sexplib
 " opencl
 au BufNewFile,BufRead *.cl set ft=opencl
 
-" perl
+" PERL
 au BufNew,BufNewFile,BufRead *.nqp set ft=perl6
+au BufNew *.pl 0put =\"#!/usr/bin/env perl\<nl>\"|$
+au BufNew *.pl 0put =\"#!/usr/bin/env perl\<nl>\"|$
 
-" pgsql
+" PostgreSQL
 au BufNewFile,BufRead *.pgsql let b:sql_type_override='pgsql' | set ft=sql
+
+" PHP
+au BufNewFile *.php     0put =\"#!/usr/bin/env php\<nl>\"|$
 
 " plantuml
 au BufNewFile,BufRead *.pu,*.uml,*.plantuml,*.puml set ft=plantuml
+
+" Portfile
+au BufNewFile,BufRead Portfile set filetype=portfile
 
 " pony
 au BufNewFile,BufRead *.pony set ft=pony
@@ -420,6 +436,7 @@ au BufNewFile,BufRead *.rbi set ft=ruby
 au BufNewFile,BufRead [tT]horfile,*.thor set ft=ruby
 au BufNewFile,BufRead [vV]agrantfile set ft=ruby
 au BufNewFile,BufRead Brewfile set ft=ruby
+au BufNewFile         *.rb 0put =\"#!/usr/bin/env ruby\<nl>\"|$
 
 " Declared after ruby so that the more general *.rb
 " doesn't override
@@ -431,6 +448,7 @@ au BufNewFile,BufRead *.rs set ft=rust
 
 " scala
 au BufNewFile,BufRead *.scala,*.sc set ft=scala
+au BufNewFile         *.scala   0put =\"#!/usr/bin/env scala\<nl>\"|$
 au BufNewFile,BufRead *.sbt set ft=sbt.scala
 au BufNewFile,BufRead *.sbt set ft=sbt.scala
 
