@@ -1,4 +1,4 @@
-packadd vim-js
+packadd vim-javascript
 packadd vim-jsx-pretty
 packadd vim-jsdoc
 packadd vim-graphql
