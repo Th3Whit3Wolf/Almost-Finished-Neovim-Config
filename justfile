@@ -185,6 +185,10 @@ _pack: _init_pack
 		"liuchengxu/vista.vim"
 		"ludovicchabant/vim-gutentags"
 		"godlygeek/tabular"
+		"reedes/vim-wordy"
+		"reedes/vim-lexical"
+		"reedes/vim-pencil"
+		"dbmrq/vim-ditto"
 	)
 	for i in "${Lazy[@]}"; do
 		pack install $i -o
@@ -250,7 +254,8 @@ _pack: _init_pack
 		"chutzpah/icalendar.vim"                  # icalendar
 		"idris-hackers/idris-vim"                 # Idris
 		"vmchale/ion-vim"                         # Ion
-		"yuezk/vim-js"                            # Javascript
+		"pangloss/vim-javascript"                 # Javascript
+		"briancollins/vim-jst"                    # JST
 		"maxmellon/vim-jsx-pretty"                # JSX
 		"martinda/Jenkinsfile-vim-syntax"         # Jenkins
 		"lepture/vim-jinja"                       # Jinja
@@ -264,8 +269,10 @@ _pack: _init_pack
 		"gkz/vim-ls"                              # LiveScript
 		"MTDL9/vim-log-highlighting"              # Log
 		"tbastos/vim-lua"                         # Lua
+		"jstrater/mpvim"                          # Macports
 		"sophacles/vim-bundle-mako"               # Mako
 		"plasticboy/vim-markdown"                 # Markdown
+		"rhysd/vim-gfm-syntax"                    # Markdown (github)
 		"voldikss/vim-mma"                        # Mathematica
 		"jxnblk/vim-mdx-js"                       # MDX
 		"leafo/moonscript-vim"                    # MoonScript
@@ -309,6 +316,7 @@ _pack: _init_pack
 		"bohlender/vim-smt2"                      # SMT-LIB2
 		"tomlion/vim-solidity"                    # Solidity
 		"wavded/vim-stylus"                       # Stylus
+		"leafOfTree/vim-svelte-plugin"            # Svelte
 		"jasonshell/vim-svg-indent"               # SVG
 		"vim-scripts/svg.vim"                     # SVG
 		"keith/swift.vim"                         # Swift
