@@ -3,6 +3,9 @@ packadd vim-git
 packadd committia.vim
 packadd vim-pencil
 
+hi! link SignifySignAdd OneHue4
+hi! link SignifySignChange OneHue62
+hi! link SignifySignDelete OneHue5
 
 " replace common punctuation
 iabbrev <buffer> -- –

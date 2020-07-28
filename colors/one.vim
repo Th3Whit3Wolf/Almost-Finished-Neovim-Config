@@ -28,7 +28,7 @@ let g:colors_name = 'one'
 let s:italic = 'italic'
 
 
-if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
+
   " functions
   " returns an approximate grey index for the given grey level
 
@@ -441,10 +441,7 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   " }}}
 
   " Vim Help highlighting ---------------------------------------------------{{{
-  hi! link helpCommand OneHue62
-  hi! link helpExample OneHue62
   call <sid>X('helpHeader',       s:mono_1,  '', 'bold')
-  hi! link helpSectionDelim OneMono3
   " }}}
 
   " Standard syntax highlighting --------------------------------------------{{{
@@ -497,522 +494,48 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   call <sid>X('DiffRemoved', s:hue_5, s:visual_grey, '')
   " }}}
 
-  " Asciidoc highlighting ---------------------------------------------------{{{
-  hi! link asciidocListingBlock OneMono2
-  " }}}
-
-  " C/C++ highlighting ------------------------------------------------------{{{
-  hi! link cInclude OneHue3
-  hi! link cPreCondit OneHue3
-  hi! link cPreConditMatch OneHue3
-
-  hi! link cType OneHue3
-  hi! link cStorageClass OneHue3
-  hi! link cStructure OneHue3
-  hi! link cOperator OneHue3
-  hi! link cStatement OneHue3
-  hi! link cTODO OneHue3
-  hi! link cConstant OneHue6
-  hi! link cSpecial OneHue1
-  hi! link cSpecialCharacter OneHue1
-  hi! link cString OneHue4
-
-  hi! link cppType OneHue3
-  hi! link cppStorageClass OneHue3
-  hi! link cppStructure OneHue3
-  hi! link cppModifier OneHue3
-  hi! link cppOperator OneHue3
-  hi! link cppAccess OneHue3
-  hi! link cppStatement OneHue3
-  hi! link cppConstant OneHue5
-  hi! link cCppString OneHue4
-  " }}}
-
   " Cucumber highlighting ---------------------------------------------------{{{
-  hi! link cucumberGiven OneHue2
-  hi! link cucumberWhen OneHue2
-  hi! link cucumberWhenAnd OneHue2
-  hi! link cucumberThen OneHue2
-  hi! link cucumberThenAnd OneHue2
-  hi! link cucumberUnparsed OneHue6
   call <sid>X('cucumberFeature',         s:hue_5,  '', 'bold')
-  hi! link cucumberBackground OneHue3
-  hi! link cucumberScenario OneHue3
-  hi! link cucumberScenarioOutline OneHue3
   call <sid>X('cucumberTags',            s:mono_3, '', 'bold')
   call <sid>X('cucumberDelimiter',       s:mono_3, '', 'bold')
   " }}}
 
-  " CSS/Sass highlighting ---------------------------------------------------{{{
-  hi! link cssAttrComma OneHue3
-  hi! link cssAttributeSelector OneHue4
-  hi! link cssBraces OneMono2
-  hi! link cssClassName OneHue6
-  hi! link cssClassNameDot OneHue6
-  hi! link cssDefinition OneHue3
-  hi! link cssFontAttr OneHue6
-  hi! link cssFontDescriptor OneHue3
-  hi! link cssFunctionName OneHue2
-  hi! link cssIdentifier OneHue2
-  hi! link cssImportant OneHue3
-  hi! link cssInclude OneMono1
-  hi! link cssIncludeKeyword OneHue3
-  hi! link cssMediaType OneHue6
-  hi! link cssProp OneHue1
-  hi! link cssPseudoClassId OneHue6
-  hi! link cssSelectorOp OneHue3
-  hi! link cssSelectorOp2 OneHue3
-  hi! link cssStringQ OneHue4
-  hi! link cssStringQQ OneHue4
-  hi! link cssTagName OneHue5
-  hi! link cssAttr OneHue6
-
-  hi! link sassAmpersand OneHue5
-  hi! link sassClass OneHue62
-  hi! link sassControl OneHue3
-  hi! link sassExtend OneHue3
-  hi! link sassFor OneMono1
-  hi! link sassFunction OneHue1
-  hi! link sassId OneHue2
-  hi! link sassInclude OneHue3
-  hi! link sassProperty OneHue1
-  hi! link sassMedia OneHue3
-  hi! link sassMediaOperators OneMono1
-  hi! link sassMixin OneHue3
-  hi! link sassMixinName OneHue2
-  hi! link sassMixing OneHue3
-  hi! link sassVariable OneHue3
-
-  hi! link scssExtend OneHue3
-  hi! link scssImport OneHue3
-  hi! link scssInclude OneHue3
-  hi! link scssMixin OneHue3
-  hi! link scssSelectorName OneHue62
-  hi! link scssVariable OneHue3
-  " }}}
-
-  " Elixir highlighting------------------------------------------------------{{{
-  hi! link elixirModuleDefine Define
-  hi! link elixirAlias OneHue62
-  hi! link elixirAtom OneHue1
-  hi! link elixirBlockDefinition OneHue3
-  hi! link elixirModuleDeclaration OneHue6
-  hi! link elixirInclude OneHue5
-  hi! link elixirOperator OneHue6
-  " }}}
-
-  " Fish shell highlighting--------------------------------------------------{{{
-  hi! link fishKeyword OneHue3
-  hi! link fishConditional OneHue3
-  " }}}
-
   " Git and git related plugins highlighting --------------------------------{{{
-  hi! link gitcommitComment OneMono3
-  hi! link gitcommitUnmerged OneHue4
   call <sid>X('gitcommitOnBranch',      '',        '', '')
-  hi! link gitcommitBranch OneHue3
-  hi! link gitcommitDiscardedType OneHue5
-  hi! link gitcommitSelectedType OneHue4
   call <sid>X('gitcommitHeader',        '',        '', '')
-  hi! link gitcommitUntrackedFile OneHue1
-  hi! link gitcommitDiscardedFile OneHue5
-  hi! link gitcommitSelectedFile OneHue4
-  hi! link gitcommitUnmergedFile OneHue62
   call <sid>X('gitcommitFile',          '',        '', '')
-  hi! link gitcommitNoBranch       gitcommitBranch
-  hi! link gitcommitUntracked      gitcommitComment
-  hi! link gitcommitDiscarded      gitcommitComment
-  hi! link gitcommitSelected       gitcommitComment
-  hi! link gitcommitDiscardedArrow gitcommitDiscardedFile
-  hi! link gitcommitSelectedArrow  gitcommitSelectedFile
-  hi! link gitcommitUnmergedArrow  gitcommitUnmergedFile
-
-  hi! link SignifySignAdd OneHue4
-  hi! link SignifySignChange OneHue62
-  hi! link SignifySignDelete OneHue5
-  hi! link GitGutterAdd    SignifySignAdd
-  hi! link GitGutterChange SignifySignChange
-  hi! link GitGutterDelete SignifySignDelete
   hi! link diffAdded OneHue4
   hi! link diffRemoved OneHue5
   " }}}
 
-  " Go highlighting ---------------------------------------------------------{{{
-  hi! link goBuiltins OneHue1
-  hi! link goConst OneHue3
-  hi! link goDeclType OneHue1
-  hi! link goDeclaration OneHue3
-  hi! link goField OneHue5
-  hi! link goFunctionCall OneHue2
-  hi! link goMethod OneHue1
-  hi! link goType OneHue62
-  hi! link goTypeName OneHue62
-  hi! link goTypeDecl OneHue3
-  hi! link goUnsignedInts OneHue1
-  hi! link goVar OneHue3
-  hi! link goVarDefs OneHue5
-  hi! link goVarAssign OneHue5
-  " }}}
-
-  " Haskell highlighting ----------------------------------------------------{{{
-  hi! link haskellDeclKeyword OneHue2
-  hi! link haskellType OneHue4
-  hi! link haskellWhere OneHue5
-  hi! link haskellImportKeywords OneHue2
-  hi! link haskellOperators OneHue5
-  hi! link haskellDelimiter OneHue2
-  hi! link haskellIdentifier OneHue6
-  hi! link haskellKeyword OneHue5
-  hi! link haskellNumber OneHue1
-  hi! link haskellString OneHue1
-  "}}}
-
   " HTML highlighting -------------------------------------------------------{{{
-  hi! link htmlArg OneHue6
   call <sid>X('htmlBold', s:hue_6, '', 'bold')
-  hi! link htmlH1 OneHue5
-  hi! link htmlH2 OneHue5
-  hi! link htmlH3 OneHue5
-  hi! link htmlH4 OneHue5
-  hi! link htmlH5 OneHue5
-  hi! link htmlH6 OneHue5
   call <sid>X('htmlItalic', s:hue_3, '', 'italic')
   call <sid>X('htmlLink', s:hue_1, '', 'underline')
-  hi! link htmlSpecialChar OneHue6
-  hi! link htmlSpecialTagName OneHue5
-  hi! link htmlTag OneMono2
-  hi! link htmlTagN OneHue5
-  hi! link htmlEndTag OneMono2
-  hi! link htmlTagName OneHue5
-  hi! link htmlTagN OneHue5
-  hi! link htmlTitle OneMono1
-
   call <sid>X('MatchTag', s:hue_5, s:syntax_cursor, 'underline,bold')
   " }}}
 
-  " JavaScript highlighting -------------------------------------------------{{{
-  hi! link coffeeString OneHue4
-
-  hi! link javaScriptBraces OneMono1
-  hi! link javaScriptFunction OneHue3
-  hi! link javaScriptIdentifier OneHue3
-  hi! link javaScriptNull OneHue6
-  hi! link javaScriptNumber OneHue6
-  hi! link javaScriptRequire OneHue1
-  hi! link javaScriptReserved OneHue3
-  " https://github.com/pangloss/vim-javascript
-  hi! link jsArrowFunction OneHue3
-  hi! link jsBraces OneMono2
-  hi! link jsClassBraces OneMono2
-  hi! link jsClassKeywords OneHue3
-  hi! link jsClassMethodType OneHue3
-  hi! link jsDocParam OneHue2
-  hi! link jsDocTags OneHue3
-  hi! link jsExport OneHue3
-  hi! link jsExportDefault OneHue3
-  hi! link jsExtendsKeyword OneHue3
-  hi! link jsFrom OneHue3
-  hi! link jsFuncBraces OneMono2
-  hi! link jsFuncCall OneHue2
-  hi! link jsFuncParens OneMono2
-  hi! link jsFunction OneHue3
-  hi! link jsGenerator OneHue62
-  hi! link jsGlobalObjects OneHue62
-  hi! link jsImport OneHue3
-  hi! link jsModuleWords OneHue3
-  hi! link jsModules OneHue3
-  hi! link jsModulesAs OneHue3
-  hi! link jsNoise OneMono2
-  hi! link jsNull OneHue6
-  hi! link jsOperator OneHue3
-  hi! link jsStorageClass OneHue3
-  hi! link jsSuper OneHue5
-  hi! link jsParens OneMono2
-  hi! link jsStorageClass OneHue3
-  hi! link jsTemplateBraces OneHue52
-  hi! link jsTemplateVar OneHue4
-  hi! link jsThis OneHue5
-  hi! link jsUndefined OneHue6
-  hi! link jsObjectValue OneHue2
-  hi! link jsObjectKey OneHue1
-  hi! link jsReturn OneHue3
-  " https://github.com/othree/yajs.vim
-  hi! link javascriptArrowFunc OneHue3
-  hi! link javascriptClassExtends OneHue3
-  hi! link javascriptClassKeyword OneHue3
-  hi! link javascriptDocNotation OneHue3
-  hi! link javascriptDocParamName OneHue2
-  hi! link javascriptDocTags OneHue3
-  hi! link javascriptEndColons OneMono3
-  hi! link javascriptExport OneHue3
-  hi! link javascriptFuncArg OneMono1
-  hi! link javascriptFuncKeyword OneHue3
-  hi! link javascriptIdentifier OneHue5
-  hi! link javascriptImport OneHue3
-  hi! link javascriptMethodName OneMono1
-  hi! link javascriptObjectLabel OneMono1
-  hi! link javascriptOpSymbol OneHue1
-  hi! link javascriptOpSymbols OneHue1
-  hi! link javascriptPropertyName OneHue4
-  hi! link javascriptTemplateSB OneHue52
-  hi! link javascriptVariable OneHue3
-  " }}}
-
   " JSON highlighting -------------------------------------------------------{{{
-  hi! link jsonCommentError OneMono1
-  hi! link jsonKeyword OneHue5
-  hi! link jsonQuote OneMono3
   call <sid>X('jsonTrailingCommaError',   s:hue_5,   '', 'reverse' )
   call <sid>X('jsonMissingCommaError',    s:hue_5,   '', 'reverse' )
   call <sid>X('jsonNoQuotesError',        s:hue_5,   '', 'reverse' )
   call <sid>X('jsonNumError',             s:hue_5,   '', 'reverse' )
-  hi! link jsonString OneHue4
-  hi! link jsonBoolean OneHue3
-  hi! link jsonNumber OneHue6
   call <sid>X('jsonStringSQError',        s:hue_5,   '', 'reverse' )
   call <sid>X('jsonSemicolonError',       s:hue_5,   '', 'reverse' )
   " }}}
 
-  " LESS highlighting -------------------------------------------------------{{{
-  hi! link lessVariable OneHue3
-  hi! link lessAmpersandChar OneMono1
-  hi! link lessClass OneHue6
-  " }}}
-
   " Markdown highlighting ---------------------------------------------------{{{
-  hi! link markdownBlockquote  OneMono3
   call <sid>X('markdownBold',             s:hue_6,   '', 'bold')
-  hi! link markdownCode OneHue4
-  hi! link markdownCodeBlock OneHue5
-  hi! link markdownCodeDelimiter OneHue4
-  hi! link markdownH1 OneHue5
-  hi! link markdownH2 OneHue5
-  hi! link markdownH3 OneHue5
-  hi! link markdownH3 OneHue5
-  hi! link markdownH4 OneHue5
-  hi! link markdownH5 OneHue5
-  hi! link markdownH6 OneHue5
-  hi! link markdownHeadingDelimiter OneHue52
-  hi! link markdownHeadingRule OneMono3
-  hi! link markdownId OneHue3
-  hi! link markdownIdDeclaration OneHue2
-  hi! link markdownIdDelimiter OneHue3
   call <sid>X('markdownItalic',           s:hue_6,   '', 'bold')
-  hi! link markdownLinkDelimiter OneHue3
-  hi! link markdownLinkText OneHue2
-  hi! link markdownListMarker OneHue5
-  hi! link markdownOrderedListMarker OneHue5
-  hi! link markdownRule OneMono3
   call <sid>X('markdownUrl',           s:hue_1,   '', 'underline')
   " }}}
 
-  " PERL highlighting -------------------------------------------------------{{{
-  hi! link perlFiledescRead OneHue4
-  hi! link perlFunction OneHue3
-  hi! link perlMatchStartEnd OneHue2
-  hi! link perlMethod OneHue3
-  hi! link perlPOD OneMono3
-  hi! link perlSharpBang OneMono3
-  hi! link perlSpecialString OneHue1
-  hi! link perlStatementFiledesc OneHue5
-  hi! link perlStatementFlow OneHue5
-  hi! link perlStatementInclude OneHue3
-  hi! link perlStatementScalar OneHue3
-  hi! link perlStatementStorage OneMono3
-  hi! link perlSubName OneHue62
-  hi! link perlVarPlain OneHue2
-  " }}}
-
-  " PHP highlighting --------------------------------------------------------{{{
-  hi! link phpVarSelector OneHue52
-  hi! link phpOperator OneMono1
-  hi! link phpParent OneMono1
-  hi! link phpMemberSelector OneMono1
-  hi! link phpType OneHue3
-  hi! link phpKeyword OneMono3
-  hi! link phpClass OneHue62
-  hi! link phpUseClass OneMono1
-  hi! link phpUseAlias OneMono1
-  hi! link phpInclude OneHue3
-  hi! link phpClassExtends OneHue4
-  hi! link phpDocTags OneMono1
-  hi! link phpFunction OneHue2
-  hi! link phpFunctions OneHue1
-  hi! link phpMethodsVar OneHue6
-  hi! link phpMagicConstants OneHue6
-  hi! link phpSuperglobals OneHue5
-  hi! link phpConstants OneHue6
-  " }}}
-
   " Pug (Formerly Jade) highlighting ----------------------------------------{{{
-  hi! link pugAttributesDelimiter OneHue6
-  hi! link pugClass OneHue6
   call <sid>X('pugDocType',               s:mono_3,   '', s:italic)
-  hi! link pugTag OneHue5
-  " }}}
-
-  " PureScript highlighting -------------------------------------------------{{{
-  hi! link purescriptKeyword OneHue3
-  hi! link purescriptModuleName OneSyntaxFg
-  hi! link purescriptIdentifier OneSyntaxFg
-  hi! link purescriptType OneHue62
-  hi! link purescriptTypeVar OneHue5
-  hi! link purescriptConstructor OneHue5
-  hi! link purescriptOperator OneSyntaxFg
   " }}}
 
   " Python highlighting -----------------------------------------------------{{{
-  hi! link pythonImport OneHue3
-  hi! link pythonBuiltin OneHue1
-  hi! link pythonStatement OneHue3
-  hi! link pythonParam OneHue6
-  hi! link pythonEscape OneHue5
   call <sid>X('pythonSelf',                 s:mono_2,    '', s:italic)
-  hi! link pythonClass OneHue2
-  hi! link pythonOperator OneHue3
-  hi! link pythonEscape OneHue5
-  hi! link pythonFunction OneHue2
-  hi! link pythonKeyword OneHue2
-  hi! link pythonModule OneHue3
-  hi! link pythonStringDelimiter OneHue4
-  hi! link pythonSymbol OneHue1
-  " }}}
-
-  " Ruby highlighting -------------------------------------------------------{{{
-  hi! link rubyBlock OneHue3
-  hi! link rubyBlockParameter OneHue5
-  hi! link rubyBlockParameterList OneHue5
-  hi! link rubyCapitalizedMethod OneHue3
-  hi! link rubyClass OneHue3
-  hi! link rubyConstant OneHue62
-  hi! link rubyControl OneHue3
-  hi! link rubyDefine OneHue3
-  hi! link rubyEscape OneHue5
-  hi! link rubyFunction OneHue2
-  hi! link rubyGlobalVariable OneHue5
-  hi! link rubyInclude OneHue2
-  hi! link rubyIncluderubyGlobalVariable OneHue5
-  hi! link rubyInstanceVariable OneHue5
-  hi! link rubyInterpolation OneHue1
-  hi! link rubyInterpolationDelimiter OneHue5
-  hi! link rubyKeyword OneHue2
-  hi! link rubyModule OneHue3
-  hi! link rubyPseudoVariable OneHue5
-  hi! link rubyRegexp OneHue1
-  hi! link rubyRegexpDelimiter OneHue1
-  hi! link rubyStringDelimiter OneHue4
-  hi! link rubySymbol OneHue1
-  " }}}
-
-  " Rust highlighting -------------------------------------------------------{{{
-  " arzg/vim-rust-syntax-ext
-  hi! link rsAs OneMono1
-  hi! link rsAttribute OneHue6
-  hi! link rsAttributeParenWrapped OneHue4
-  hi! link rsAsync OneMono1
-  hi! link rsAwait OneMono1
-  " hi! link rsBlockComment OneHue4
-  hi! link rsBreak OneHue4
-  "hi! link rsBoolean OneHue4 " rsTrue & rsFalse can be defined
-  " hi! link rsCharacter OneHue4
-  " hi! link rsComment OneHue4
-  " hi! link rsCommentNote OneHue4
-  " hi! link rsConditional OneHue4
-  hi! link rsConst OneHue4
-  hi! link rsContinue OneHue4
-  hi! link rsCrate OneHue52
-  hi! link rsCrateConst OneHue52
-  hi! link rsCrateFunc OneHue52
-  hi! link rsCrateMacro OneHue52
-  hi! link rsCrateType OneHue52
-  hi! link rsDelimiter OneMono1
-  " hi! link rsDocComment OneHue4
-  " hi! link rsDocTest OneHue4
-  hi! link rsDyn OneHue3
-  hi! link rsEnum OneHue4
-  hi! link rsExtern OneHue4
-  hi! link rsFieldAccess OneHue5
-  " hi! link rsFloat OneHue4
-  hi! link rsForeignConst OneHue3
-  hi! link rsForeignFunc OneHue2
-  hi! link rsForeignMacro OneMono1
-  hi! link rsForeignType OneHue1
-  hi! link rsFn OneHue3
-  hi! link rsFuncDef OneHue2
-  hi! link rsIdentDef OneMono1
-  hi! link rsImpl OneHue3
-  hi! link rsIn OneHue3
-  hi! link rsInferredLifetime OneHue4
-  hi! link rsKeyword OneHue4
-  hi! link rsLet OneHue3
-  hi! link rsLibraryConst OneHue4
-  hi! link rsLibraryFunc OneHue2
-  hi! link rsLibraryMacro OneHue2
-  hi! link rsLibraryType OneHue62 " OneHue1
-  hi! link rsLifetimeDef OneHue62
-  hi! link rsMod OneHue3
-  hi! link rsModule OneMono1
-  hi! link rsMove OneHue3
-  hi! link rsMut OneHue3
-  " hi! link rsNumber OneHue4
-  hi! link rsOperator OneMono1
-  hi! link rsPattern OneHue4
-  hi! link rsPub OneHue3
-  " hi! link rsQuote OneHue4
-  hi! link rsRef OneHue4
-  " hi! link rsRepeat OneHue4
-  hi! link rsReturn OneHue4
-  hi! link rsSelfType OneHue1
-  hi! link rsSelfValue OneHue5
-  hi! link rsSpecialLifetime OneHue4
-  hi! link rsStatic OneHue4
-  hi! link rsStaticLifetime OneHue4
-  " hi! link rsString OneHue4
-  hi! link rsStruct OneHue3
-  hi! link rsSuper OneHue3
-  hi! link rsTrait OneHue3
-  hi! link rsTypeAlias OneHue3
-  hi! link rsTypeDef OneHue1
-  hi! link rsTypeDefParams OneHue4
-  hi! link rsTypeParamDef OneHue1
-  hi! link rsUnderscore OneHue4
-  hi! link rsUnusedFuncDef OneHue4
-  hi! link rsUnusedIdentDef OneMono1
-  hi! link rsUnusedTypeDef OneHue4
-  hi! link rsUnion OneHue4
-  hi! link rsUnsafe OneHue4
-  hi! link rsUse OneHue3
-  hi! link rsUserConst OneHue5
-  hi! link rsUserFunc OneHue2
-  hi! link rsUserIdent OneMono1
-  hi! link rsUserIdentDef OneHue4
-  hi! link rsUserLifetime OneHue62
-  hi! link rsUserMacro OneHue2
-  hi! link rsUserMethod OneHue2
-  hi! link rsUserType OneHue1
-
-  " }}}
-
-  " TeX highlighting ------------------------------------------------------{{{
-  hi! link texStatement OneHue3
-  hi! link texSubscripts OneHue6
-  hi! link texSuperscripts OneHue6
-  hi! link texTodo OneHue52
-  hi! link texBeginEnd OneHue3
-  hi! link texBeginEndName OneHue2
-  hi! link texMathMatcher OneHue2
-  hi! link texMathDelim OneHue2
-  hi! link texDelimiter OneHue6
-  hi! link texSpecialChar OneHue6
-  hi! link texCite OneHue2
-  hi! link texRefZone OneHue2
-  " }}}
-
-  " TypeScript highlighting ---------------------------------------------------{{{
-  hi! link typescriptReserved OneHue3
-  hi! link typescriptEndColons OneMono1
-  hi! link typescriptBraces OneMono1
-
   " }}}
 
   " Spelling highlighting ---------------------------------------------------{{{
@@ -1022,76 +545,30 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   call <sid>X('SpellRare',    '', s:syntax_bg, 'undercurl')
   " }}}
 
-  " Vim highlighting --------------------------------------------------------{{{
-  hi! link vimCommand OneHue3
+  " Vim highlighting -------------------------------------------------------{{{
   call <sid>X('vimCommentTitle', s:mono_3, '', 'bold')
-  hi! link vimFunction OneHue1
-  hi! link vimFuncName OneHue3
-  hi! link vimHighlight OneHue2
   call <sid>X('vimLineComment',  s:mono_3, '', s:italic)
-  hi! link vimParenSep OneMono2
-  hi! link vimSep OneMono2
-  hi! link vimUserFunc OneHue1
-  hi! link vimVar OneHue5
   " }}}
 
-  " XML highlighting --------------------------------------------------------{{{
-  hi! link xmlAttrib OneHue6
-  hi! link xmlEndTag OneHue5
-  hi! link xmlTag OneHue5
-  hi! link xmlTagName OneHue5
-  " }}}
-
-  " ZSH highlighting --------------------------------------------------------{{{
-  hi! link zshCommands OneSyntaxFg
-  hi! link zshDeref OneHue5
-  hi! link zshShortDeref OneHue5
-  hi! link zshFunction OneHue1
-  hi! link zshKeyword OneHue3
-  hi! link zshSubst OneHue5
-  hi! link zshSubstDelim OneMono3
-  hi! link zshTypes OneHue3
-  hi! link zshVariableDef OneHue6
-  " }}}
-
-  " man highlighting --------------------------------------------------------{{{
-  hi! link manTitle String
-  hi! link manFooter OneMono3
-  " }}}
-
-  " Plugin Highlighting {{{
-
-  " ALE (Asynchronous Lint Engine) highlighting -----------------------------{{{
+  " Plugin Highlighting
+  " ALE (Asynchronous Lint Engine) highlighting ----------------------------{{{
   hi! link ALEWarningSign OneHue62
   hi! link ALEErrorSign OneHue5
+  " }}
 
-
-  " Neovim NERDTree Background fix ------------------------------------------{{{
-  hi! link NERDTreeFile OneSyntaxFg
-  " }}}
-
-  " easymotion/vim-easymotion -----------------------------------------------{{{
+  " easymotion/vim-easymotion ----------------------------------------------{{{
   call <sid>X('EasyMotionTarget',    '', s:hue_5, 'bold')
   call <sid>X('EasyMotionTarget2First',    '', s:hue_6_2, 'bold')
   call <sid>X('EasyMotionTarget2Second',    '', s:hue_6, 'bold')
   hi! link EasyMotionShade OneMono3
   " }}}
 
-  " neomake/neomake ---------------------------------------------------------{{{
-  hi! link NeomakeWarningSign OneHue62
-  hi! link NeomakeErrorSign OneHue5
-  hi! link NeomakeInfoSign OneHue2
-
-  " plasticboy/vim-markdown ---------------------------------------------------{{{
-  hi! link mkdDelimiter OneHue3
-  hi! link mkdHeading OneHue5
-  hi! link mkdLink OneHue2
+  " plasticboy/vim-markdown -------------------------------------------------{{{
   call <sid>X('mkdUrl',    '', s:hue_1, 'underline')
 
-  " neoclide/coc.nvim
+  " neoclide/coc.nvim -------------------------------------------------------{{{
   hi! link CocCodeLens OneMono2
 
-  "hi! link rsUserType LocalType
   " }}}
   " Neovim Terminal Colors --------------------------------------------------{{{
   let g:terminal_color_0  = "#353a44"
@@ -1125,13 +602,6 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   " delf <SID>user_color_palette
   " }}}
 
-endif
-"}}}
-" Termdebug highlighting for Vim 8.1+ --------------------------------------{{{
-" See `:h hl-debugPC` and `:h hl-debugBreakpoint`.
-  call <sid>X('debugPC',          '',    s:special_grey, '') " the current position
-  call <sid>X('VertSplit',    s:vertsplit,     s:hue_5,               '') " a breakpoint
-" }}}
 
 " Public API --------------------------------------------------------------{{{
 function! one#highlight(group, fg, bg, attr)
