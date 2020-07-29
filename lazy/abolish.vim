@@ -61,7 +61,15 @@ augroup abbreviationGroup
     autocmd FileType mkd :Abolish -buffer google Google
 augroup END
 
-highlight clear SignColumn
+Abolish Tqbf        The quick, brown fox jumps over the lazy dog
+Abolish Lidsa       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+Abolish scflead     supercalifragilisticexpialidocious
+imap ;date %d %b %Y
+imap ;ea each arm
+imap ;atm at the moment
+Abolish btw by the way
+Abolish ily I love you ❤️
+imap ;rx [runx]
 
 " From
 " https://github.com/davidpdrsn/dotfiles/blob/master/nvim/after/plugin/abolish.vim
@@ -102,6 +110,7 @@ Abolish afterword{,s}                         afterward{}
 Abolish agian	again
 Abolish agaon again
 Abolish aganist	against
+Abolish againstt he	against the
 Abolish aggresive	aggressive
 Abolish agressive	aggressive
 Abolish agreem{,ee}n{,e}t	agreement
@@ -255,6 +264,7 @@ Abolish couldnt	couldn’t
 Abolish creme	crème
 Abolish cu{sot,tso}mer{,s}	cu{sto}mer{}
 Abolish danceing	dancing
+Abolish dardenelles Dardanelles
 Abolish desi{c,s}ion{,s}	deci{s}ion{}
 Abolish decison{,s}	decision{}
 Abolish decor	décor
@@ -272,6 +282,7 @@ Abolish developor{,s}	developer{}
 Abolish develeoprs	developers
 Abolish develpment{,s}	development{}
 Abolish didnot	did not
+Abolish dijktra Dijkstra
 Abolish ddi did
 Abolish did{i,}nt	didn’t
 Abolish dif{ef,fe}r{e,a}n{t,ce,ces}	dif{fe}r{e}n{}
@@ -295,6 +306,7 @@ Abolish do{nig,ign,img,ind}	doing
 Abolish dollers	dollars
 Abolish dont	don’t
 Abolish dont don't
+Abolish dravadian Dravidian
 Abolish drnik	drink
 Abolish driveing	driving
 Abolish eclair	éclair
@@ -304,6 +316,7 @@ Abolish eligable	eligible
 Abolish esle	else
 Abolish embarass{,ing,ed,es}	embarrass{}
 Abolish emigre	émigré
+Abolish enlish English
 Abolish enought	enough
 Abolish entree	entrée
 Abolish equippment	equipment
@@ -311,6 +324,8 @@ Abolish equivalant	equivalent
 Abolish espe{cally,cialyl,sially}	especially
 Abolish etx                                   etc
 Abolish euphamis{m,ms,tic,tically}            euphemis{}
+Abolish eur{opi,pe,poe,e}an European
+Abolish eur{opi,pe,poe,e}ans Europeans
 Abolish everytime every time
 Abolish excellant	excellent
 Abolish exchagne	exchange
@@ -323,9 +338,11 @@ Abolish {,non}existan{ce,t}                   {}existen{}
 Abolish exprience{,d}	experience{}
 Abolish experi{ance,enc}{,es,ed,ing}	experi{enc}{e,es,ed,ing}
 Abolish facade	façade
+Abolish farenheit Fahrenheit
 Abolish fam{,m}il{air,ar,liar,iar}{,ize,ized,ized,izing}	fa{m}il{iar}{}
 Abolish favoritted favourited
 Abolish faeture{,s}	feature{}
+Abolish febu{,r}ary February
 Abolish efel	feel
 Abolish fwe	few
 Abolish feild{,s}	field{}
@@ -333,59 +350,70 @@ Abolish fianlly	finally
 Abolish finalyl	finally
 Abolish fidn	find
 Abolish firts	first
+Abolish flemmish Flemish
 Abolish follwo{,ing}	follow{}
-Abolish fora	for a
-Abolish forthe	for the
+Abolish for{a,the}	for {}
 Abolish foriegn	foreign
+Abolish formalhaut Fomalhaut
 Abolish forwrd{,s,ing,er,most}	forward{}
 Abolish foward{,s,ing,er}	forward{}
 Abolish foudn	found
+Abolish fransiscan{s} Franciscan{s}
 Abolish freind{,ly,s}	friend{}
 Abolish firends	friends
 Abolish frmo	from
 Abolish fromthe	from the
 Abolish frmo from
 Abolish furneral	funeral
+Abolish galations Galatians
+Abolish gameboy Game Boy
 Abolish gemeral	general
 Abolish geting	getting
 Abolish gettin	getting
+Abolish ghandi Gandhi
 Abolish gievn	given
 Abolish giveing	giving
 Abolish gloabl	global
-Abolish goign	going
-Abolish gonig	going
+Abolish godounov Godunov
+Abolish go{ign,nig}	going
 Abolish oging	going
+Abolish gothenberg Gothenburg
+Abolish gottleib Gottlieb
 Abolish gove{n,r}ment	government
 Abolish gerat	great
 Abolish gruop{,s}	group
 Abolish grwo	grow
 Abolish garantee	guarantee
 Abolish gaurd	guard
+Abolish guatamala{,n} Guatemala{}
 Abolish guidlines	guidelines
+Abolish guili{a,o} Giuli{}
+Abolish guiness Guinness
+Abolish guiseppe Giuseppe
+Abolish habsbourg Habsburg
 Abolish hadbeen	had been
 Abolish hda	had
 Abolish ahppen	happen
 Abolish hapen{,ed,ing,s}	happen{}
 Abolish happend	happened
-Abolish hasbeen	has been
+Abolish hallowean Halloween
+Abolish {has,have}been	{} been
 Abolish hsa	has
 Abolish hasnt	hasn’t
 Abolish hva{e,ing}	hav{}
 Abolish ahve	have
 Abolish haev	have
-Abolish havebeen	have been
 Abolish hve have
 Abolish haveing	having
-Abolish havin                                 having
-Abolish hesaid	he said
-Abolish hewas	he was
+Abolish havin   having
+Abolish he{said,was} he {}
 Abolish hge	he
-Abolish againstt he	against the
 Abolish hearign	hearing
 Abolish herat	heart
+Abolish heidelburg Heidelberg
 Abolish hlep	help
 Abolish helpfull	helpful
-Abolish hense                                 hence
+Abolish hense  hence
 Abolish ehr	her
 Abolish hightlight                            highlight
 Abolish hismelf	himself
@@ -426,10 +454,14 @@ Abolish insted	instead
 Abolish insurence	insurance
 Abolish itnerest{,ed,int,s}	interest{}
 Abolish interum	interim
-Abolish isthe	is the
-Abolish itis	it is
-Abolish itwas	it was
+Abolish is{the,is,was}	is {}
+Abolish ihaca Ithaca
+Abolish israelies Israelis
+Abolish januray January
+Abolish japanes Japanese
 Abolish jugment	judgment
+Abolish jospeh Joseph
+Abolish juad{,a}ism Judaism
 Abolish jsut	just
 Abolish k{nwo,onw}{,n,s}	k{now}{}
 Abolish nkow	know
@@ -455,6 +487,7 @@ Abolish liveing	living
 Abolish lonly	lonely
 Abolish lookign	looking
 Abolish loev	love
+Abolish lybia Libya
 Abolish amde	made
 Abolish mantain	maintain
 Abolish maintenence	maintenance
@@ -462,19 +495,29 @@ Abolish mka{e,es,ing}	mak{}
 Abolish amke	make
 Abolish amkes	makes
 Abolish makeing	making
+Abolish malcom Malcolm
 Abolish managment	management
 Abolish marie Marie
 Abolish marraige	marriage
+Abolish massachusset{,t}s Massachusetts
+Abolish mediteranean Mediterranean
 Abolish memeber	member
 Abolish merchent	merchant
 Abolish mesage{,s}	message{}
+Abolish michagan Michigan
+Abolish missisip{,p}i Mississippi
 Abolish mispell{,ing,ings,ed,s}	misspell{}
+Abolish misouri Missouri
 Abolish moeny	money
+Abolish monserrat Montserrat
+Abolish montnana Montana
 Abolish mroe	more
 Abolish omre	more
 Abolish morgage	mortgage
+Abolish mor{,r}isette Morissette
 Abolish myu	my
 Abolish mysefl	myself
+Abolish mythraic Mithraic
 Abolish naive	naïve
 Abolish nec{ass,cess,es}ar{y,ily}	nec{ess}ar{}
 Abolish {,un}nec{ce,ces,e}sar{y,ily}          {}nec{es}sar{}
@@ -482,6 +525,7 @@ Abolish nececsary necessary
 Abolish neseccary necessary
 Abolish negotiaing	negotiating
 Abolish nver	never
+Abolish foundland Newfoundland
 Abolish nothign	nothing
 Abolish llog NSLog(@"%|");
 Abolish fformat [NSString stringWithFormat:@"%|"]
@@ -738,14 +782,3 @@ Abolish yuo{,r}	you{}
 Abolish youare	you are
 Abolish you{re,ve}	you’{}
 
-
-
-Abolish Tqbf        The quick, brown fox jumps over the lazy dog
-Abolish Lidsa       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-Abolish scflead     supercalifragilisticexpialidocious
-imap ;date %d %b %Y
-imap ;ea each arm
-imap ;atm at the moment
-Abolish btw by the way
-Abolish ily I love you ❤️
-imap ;rx [runx]
