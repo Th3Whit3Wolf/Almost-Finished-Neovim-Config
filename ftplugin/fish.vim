@@ -1,4 +1,5 @@
-packadd vim-fish
+packadd neoformat
+
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR
 
@@ -43,3 +44,5 @@ function s:shellbang() abort
 endfunction
 
 command! -bang -nargs=0 -bar ShellBang call <SID>shellbang()
+
+autocmd BufWritePre * undojoin | Neoformat

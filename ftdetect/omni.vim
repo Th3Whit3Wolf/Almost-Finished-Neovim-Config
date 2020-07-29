@@ -3,6 +3,7 @@ au BufNewFile *.awk     0put =\"#!/usr/bin/env awk"
 
 " Fasto setup
 au BufNewFile,BufRead *.fo setlocal ft=fasto
+
 " Pow setup
 au BufNewFile,BufRead *.pow setlocal ft=pow
 au BufNewFile,BufRead */playbooks/*.{yml,yaml} ft=yaml.ansible
@@ -12,6 +13,16 @@ au BufNewFile,BufRead */.kube/config ft=yaml
 
 " C setup, Vim thinks .h is C++
 au BufNewFile,BufRead *.h setlocal ft=c
+
+" Set msproj file extensions
+au BufNewFile,BufRead *.cs
+au BufNewFile,BufRead *.proj set ft=xml
+au BufNewFile,BufRead *.csproj set ft=xml
+au BufNewFile,BufRead *.sln set ft=xml
+au BufNewFile,BufRead *.cshtml set ft=cshtml.html syntax=cshtml
+au BufNewFile,BufRead *.aspx set ft=aspx.html syntax=aspx
+au BufNewFile,BufRead *.ascx set ft=aspx.html syntax=aspx
+au BufNewFile,BufRead *.master set ft=aspx.html syntax=aspx
 
 " Carp
 au BufRead,BufNewFile *.carp set ft=carp
@@ -24,6 +35,7 @@ au BufNewFile,BufRead *._coffee        set ft=coffee
 au BufNewFile,BufRead *.litcoffee      set ft=litcoffee
 au BufNewFile,BufRead *.coffee.md      set ft=litcoffee
 au BufNewFile,BufRead *.csx,*.cjsx     set ft=coffee
+
 " CQL
 au  BufNewFile,BufRead *.cql set ft=cql
 
@@ -129,6 +141,9 @@ au BufNewFile,BufRead *
     \ if getline(1) =~ '^From \x\{40\} Mon Sep 17 00:00:00 2001$' |
     \   set filetype=gitsendemail |
     \ endif
+
+" Gleam
+au BufRead,BufNewFile *.gleam set ft=gleam
 
 " glsl
 au BufNewFile,BufRead *.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp set ft=glsl
@@ -336,6 +351,12 @@ au BufNewFile,BufRead *.sexp set ft=sexplib
 " opencl
 au BufNewFile,BufRead *.cl set ft=opencl
 
+" Pawn
+au BufNewFile,BufRead *.p,*.pwn,*.pawn set ft=pawn
+
+" Pandoc
+au BufNewFile,BufRead,BufFilePost *.pandoc,*.pdk,*.pd,*.pdc set ft=pandoc
+
 " PERL
 au BufNew,BufNewFile,BufRead *.nqp set ft=perl6
 au BufNew *.pl 0put =\"#!/usr/bin/env perl\<nl>\"|$
@@ -388,6 +409,12 @@ au BufNewFile,BufRead *.pro set ft=qmake
 
 " qml
 au BufNewFile,BufRead *.qml set ft=qml
+
+" R
+au BufNewFile,BufRead *.Rout set ft=rout
+au BufNewFile,BufRead *.Rout.save set ft=rout
+au BufNewFile,BufRead *.Rout.fail set ft=rout
+au BufNewFile,BufRead *.Rprofile set ft=r
 
 " racket
 au BufNewFile,BufRead *.rkt,*.rktl set ft=racket
@@ -463,6 +490,12 @@ au BufNewFile,BufRead *.slime set ft=slime
 
 " smt2
 au BufNewFile,BufRead *.smt,*.smt2 set ft=smt2
+
+" Starlark
+au BufNewFile,BufRead *.star set ft=starlark
+au BufNewFile,BufRead BUILD.bazel set ft=starlark
+au BufNewFile,BufRead BUILD set ft=starlark
+au BufNewFile,BufRead Tiltfile* set ft=starlark
 
 " solidity
 au BufNewFile,BufRead *.sol set ft=solidity

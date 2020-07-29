@@ -4,6 +4,7 @@ packadd vim-closetag
 packadd vim-gutentags
 packadd vim-lexical
 packadd vim-pencil
+packadd neoformat
 
 call lexical#init()
 call pencil#init({'wrap': 'soft'})
@@ -25,3 +26,5 @@ let g:lexical#dictionary_key = '<leader>k'
 function! RunMyCode()
 	Bracey
 endfunction
+
+autocmd BufWritePre * undojoin | Neoformat

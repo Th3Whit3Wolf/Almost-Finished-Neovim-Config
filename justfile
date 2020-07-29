@@ -142,8 +142,12 @@ _web:
 		return 1
 	fi
 		#$js_install \
-		#neovim
-		#bash-language-server
+		#neovim \
+		#bash-language-server \
+		#elm \
+		# elm-format \
+		# elm-test \
+		# elm-language-server \
 		#eslint \
 		#prettier \
 		#eslint-config-prettier \
@@ -189,6 +193,7 @@ _pack: _init_pack
 		"reedes/vim-lexical"
 		"reedes/vim-pencil"
 		"dbmrq/vim-ditto"
+		"sbdchd/neoformat"
 	)
 	for i in "${Lazy[@]}"; do
 		pack install $i -o
@@ -201,10 +206,14 @@ _pack: _init_pack
 		"mityu/vim-applescript"                   # AppleScript
 		"sudar/vim-arduino-syntax"                # Arduino
 		"asciidoc/vim-asciidoc"                   # AsciiDoc
+		"bazelbuild/vim-bazel"                    # Bazel
+		"google/vim-maktaba"                      # Bazel
 		"jwalton512/vim-blade"                    # Blade templates
 		"bfontaine/Brewfile.vim"                  # Brewfile
 		"vim-jp/vim-cpp"                          # C++
 		"octol/vim-cpp-enhanced-highlight"        # C++
+		"OrangeT/vim-csharp"                      # C#
+		"OmniSharp/omnisharp-vim"                 # C#
 		"isobit/vim-caddyfile"                    # Caddyfile
 		"nastevens/vim-cargo-make"                # Cargo Make (Rust cargo extension)
 		"mhinz/vim-crates"                        # Cargo.toml (Rust)
@@ -236,9 +245,10 @@ _pack: _init_pack
 		"dcharbon/vim-flatbuffers"                # Flatbuffers
 		"calviken/vim-gdscript3"                  # GDScript 3
 		"tikhomirov/vim-glsl"                     # OpenGL Shading Language
+		"gleam-lang/gleam.vim"                    # Gleam
 		"maelvls/gmpl.vim"                        # GMPL
 		"vim-scripts/gnuplot-syntax-highlighting" # GNUPlot
-		"faith/vim-go"                            # Go
+		"fatih/vim-go"                            # Go
 		"tfnico/vim-gradle"                       # Gradle
 		"jparise/vim-graphql"                     # GraphQL
 		"sheerun/vim-haml"                        # Haml
@@ -263,6 +273,8 @@ _pack: _init_pack
 		"GutenYe/json5.vim"                       # Json5
 		"JuliaEditorSupport/julia-vim"            # Julia
 		"udalov/kotlin-vim"                       # Kotlin
+		"lervag/vimtex"                           # Latex
+		"xuhdev/vim-latex-live-preview"           # Latex
 		"ledger/vim-ledger"                       # Ledger
 		"groenewege/vim-less"                     # Less
 		"sersorrel/vim-lilypond"                  # Lilypond
@@ -274,6 +286,7 @@ _pack: _init_pack
 		"plasticboy/vim-markdown"                 # Markdown
 		"rhysd/vim-gfm-syntax"                    # Markdown (github)
 		"voldikss/vim-mma"                        # Mathematica
+		"daeyun/vim-matlab"                       # Matlab
 		"jxnblk/vim-mdx-js"                       # MDX
 		"leafo/moonscript-vim"                    # MoonScript
 		"chr4/nginx.vim"                          # Nginx
@@ -282,6 +295,9 @@ _pack: _init_pack
 		"b4winckler/vim-objc"                     # Objective-C
 		"ocaml/vim-ocaml"                         # OCaml
 		"McSinyx/vim-octave"                      # Octave
+		"mcnelson/vim-pawn"                       # Pawn
+		"vim-pandoc/vim-pandoc"                   # Pandoc
+		"vim-pandoc/vim-pandoc-syntax"            # Pandoc
 		"vim-perl/vim-perl"                       # PERL
 		"lifepillar/pgsql.vim"                    # PostgreSQL
 		"StanAngeloff/php.vim"                    # PHP
@@ -296,6 +312,7 @@ _pack: _init_pack
 		"Vimjas/vim-python-pep8-indent"           # Python
 		"artoj/qmake-syntax-vim"                  # QMake
 		"peterhoeg/vim-qml"                       # QML
+		"jalvesaq/Nvim-R"                         # R
 		"wlangstroth/vim-racket"                  # Racket
 		"jneen/ragel.vim"                         # Ragel
 		"Raku/vim-raku"                           # Raku
@@ -315,6 +332,11 @@ _pack: _init_pack
 		"slime-lang/vim-slime-syntax"             # Slime
 		"bohlender/vim-smt2"                      # SMT-LIB2
 		"tomlion/vim-solidity"                    # Solidity
+		"tpope/vim-dotenv"                        # SQl
+		"tpope/vim-dadbod"                        # SQl
+		"kristijanhusak/vim-dadbod-completion"    # SQl
+		"kristijanhusak/vim-dadbod-ui"            # SQl
+		"cappyzawa/starlark.vim"                  # Starlark
 		"wavded/vim-stylus"                       # Stylus
 		"leafOfTree/vim-svelte-plugin"            # Svelte
 		"jasonshell/vim-svg-indent"               # SVG

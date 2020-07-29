@@ -4,8 +4,11 @@ packadd vim-gutentags
 packadd vim-lexical
 packadd vim-pencil
 packadd vim-ditto
+packadd neoformat
 
 DittoOn
+
+setlocal spell nofoldenable
 
 call lexical#init()
 call pencil#init({'wrap': 'hard'})
@@ -13,6 +16,8 @@ call LazySource('gutentags')
 
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR
+
+let &makeprg='proselint %'
 
 let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt', '~/.config/nvim/moby_thesaurus.txt']
 let g:lexical#dictionary = ['/usr/share/dict/words']
@@ -31,8 +36,6 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 
 let g:markdown_composer_open_browser = 0
 let g:markdown_composer_custom_css = ['file://' . expand('~/.config/nvim/misc/github.css')]
-setlocal spell nofoldenable
-let &makeprg='proselint %'
 
 let hr = str2nr(strftime('%H'))
 if strftime("%H") >= 7 && strftime("%H") < 19
@@ -46,22 +49,4 @@ function! RunMyCode()
 	ComposerUpdate
 endfunction
 
-" Check if repository
-" If yes change to github flavored markdown
-function! s:CheckIfGithub()
-    " call asyncrun#run('', {'mode': 'async', 'cwd': '<root>', 'raw': 1},'git remote show origin | grep "Push  URL" | grep "github.com/" | wc -l')
-    let cwd = getcwd()
-    let parent_dir = expand('%:p:h')
-    exe 'cd ' . parent_dir
-	let github = system('git remote show origin | grep "Push  URL" | grep "github.com/" | wc -l')
-    exe 'cd ' . cwd
-	" if in a git repo
-	if !v:shell_error && github > 0
-        packadd vim-gfm-syntax
-        let b:gfm_syntax_enable = 1
-        let g:gfm_syntax_enable_always = 0
-        let g:markdown_fenced_languages = ['cpp', 'ruby', 'json']
-	endif
-endfunction
-
-autocmd BufEnter * call s:CheckIfGithub()
+autocmd BufWritePre * undojoin | Neoformat

@@ -3,6 +3,7 @@ packadd vim-closetag
 packadd vim-gutentags
 packadd vim-lexical
 packadd vim-pencil
+packadd neoformat
 
 call lexical#init()
 call pencil#init({'wrap': 'soft', 'autoformat': 1})
@@ -18,3 +19,5 @@ let g:lexical#dictionary = ['/usr/share/dict/words']
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add']
 let g:lexical#thesaurus_key = '<leader>t'
 let g:lexical#dictionary_key = '<leader>k'
+
+autocmd BufWritePre * undojoin | Neoformat

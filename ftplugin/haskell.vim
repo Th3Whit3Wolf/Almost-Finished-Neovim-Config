@@ -1,5 +1,7 @@
 packadd haskell-vim
 packadd vim-endwise
+packadd neoformat
+
 let g:endwise_no_mappings = v:true
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
@@ -28,3 +30,5 @@ function! RunMyCode()
         echo 'Haskell is not installed!'
     endif
 endfunction
+
+autocmd BufWritePre * undojoin | Neoformat

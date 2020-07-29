@@ -5,6 +5,7 @@ packadd vim-jsdoc
 packadd vim-graphql
 packadd bracey.vim
 packadd vim-gutentags
+packadd neoformat
 
 call LazySource('gutentags')
 call LazySource('closetag')
@@ -38,3 +39,5 @@ function! RunMyCode()
         echo 'Node is not installed!'
     endif
 endfunction
+
+autocmd BufWritePre * undojoin | Neoformat

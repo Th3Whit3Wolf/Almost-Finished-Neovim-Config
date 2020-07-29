@@ -1,7 +1,7 @@
 packadd vim-cpp-enhanced-highlight
 packadd vim-endwise
 packadd vim-gutentags
-
+packadd neoformat
 call LazySource('gutentags')
 let g:endwise_no_mappings = v:true
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -25,3 +25,5 @@ function! RunMyCode()
         call Run("g++ -std=c++17 % -o %< -Wall -Wextra -Wshadow -Wdouble-promotion -Wformat=2 -Wformat-truncation -Wformat-overflow -Wundef -fno-common -ffunction-sections -fdata-sections -O0; ./%<")
     endif
 endfunction
+
+autocmd BufWritePre * undojoin | Neoformat

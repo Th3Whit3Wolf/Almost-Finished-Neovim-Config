@@ -1,4 +1,5 @@
 packadd vim-gutentags
+packadd neoformat
 
 call LazySource('gutentags')
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -17,3 +18,5 @@ function! RunMyCode()
         echo 'Java is not installed!'
     endif
 endfunction
+
+autocmd BufWritePre * undojoin | Neoformat

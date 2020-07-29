@@ -3,22 +3,6 @@
     "preferences": {
       "enablePreselect": true,
       "enablePreview": true,
-      "formatOnSaveFiletypes": [
-        "css",
-        "elm",
-        "elixir",
-        "javascript",
-        "javascript.jsx",
-        "javascriptreact",
-        "json",
-        "python",
-        "rust",
-        "typescript",
-        "typescript.tsx",
-        "typescriptreact",
-        "vue",
-        "yaml"
-      ],
       "hoverTarget": "float",
       "previewAutoClose": true,
       "useQuickfixForLocations": true
@@ -89,7 +73,7 @@
   },
   "html": {
     "enable": true,
-    "format.enable": true,
+    "format.enable": false,
     "validate.scripts": true
   },
   "languageserver": {
@@ -140,6 +124,18 @@
         "--stdio"
       ]
     },
+    "elmLS": {
+      "command": "elm-language-server",
+      "filetypes": [
+        "elm"
+      ],
+      "rootPatterns": [
+        "elm.json"
+      ],
+      "initializationOptions": {
+        "elmAnalyseTrigger": "change"
+      }
+    },
     "golang": {
       "command": "gopls",
       "rootPatterns": [
@@ -175,27 +171,11 @@
               "tagCasing": "kebab"
             },
             "format": {
-              "defaultFormatter": {
-                "js": "prettier",
-                "ts": "prettier"
-              },
-              "defaultFormatterOptions": {},
               "scriptInitialIndent": false,
               "styleInitialIndent": false
             }
           },
-          "css": {},
-          "html": {
-            "suggest": {}
-          },
-          "javascript": {
-            "format": {}
-          },
-          "typescript": {
-            "format": {}
-          },
-          "emmet": {},
-          "stylusSupremacy": {}
+          "emmet": {}
         }
       }
     },
@@ -295,7 +275,14 @@
     },
     "ultisnips.directories": [
       "UltiSnips",
-      "~/.config/nvim/ultisnips"
+      "apiblueprint.vim/snippets",
+      "Dockerfile.vim/snippets",
+      "gleam-lang/gleam.vim",
+      "gosnippets/snippets",
+      "mpvim/snippets",
+      "vim-matlab/snippets",
+      "vim-twig/snippets",
+      "vim-velocity/snippets"
     ]
   },
   "suggest": {

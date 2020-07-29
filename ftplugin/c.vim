@@ -1,6 +1,7 @@
 packadd vim-cpp
 packadd vim-endwise
 packadd vim-gutentags
+packadd neoformat
 
 call LazySource('gutentags')
 let g:endwise_no_mappings = v:true
@@ -18,3 +19,5 @@ function! RunMyCode()
         call Run("gcc % -o %<  -Wall -Wextra -Wshadow -Wdouble-promotion -Wformat=2 -Wformat-truncation -Wformat-overflow -Wundef -fno-common -ffunction-sections -fdata-sections -O0 ; ./%<")
     endif
 endfunction
+
+autocmd BufWritePre * undojoin | Neoformat
