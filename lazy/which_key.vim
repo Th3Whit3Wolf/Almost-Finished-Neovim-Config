@@ -12,16 +12,10 @@ let g:which_key_map =  {
 	\ '9'    : 'Switch to Buffer 9'             ,
 	\ '0'    : 'Switch to Buffer 10'            ,
 	\ 'a'    : 'Copy All'                       ,
-	\ 'b'    : 'Move Cursor One Word Back'      , 
-	\ 'e'    : 'Move Cursor to End of Word'     ,          
 	\ 'i'    : 'Indent All'                     ,
-	\ 'h'    : 'Move Cursor Left'               , 
-	\ 'j'    : 'Move Cursor Down'               , 
-	\ 'J'    : 'Goto Definition'                ,
-	\ 'k'    : 'Move Cursor Up'                 ,
-	\ 'p'    : 'Paste From System Clipboard'    , 
+	\ 'j'    : 'Goto Definition in Split'       ,
+	\ 'p'    : 'Paste From System Clipboard'    ,
 	\ 'q'    : 'Exit Split'                     ,
-	\ 'w'    : 'Move Cursor One Word Forward'   ,
 	\ 'y'    : 'Yank Relative Path'             ,
 	\ 'Y'    : 'Yank Absolute Path'             ,
 	\ 'z'    : 'Correct Spelling'               ,
@@ -31,7 +25,7 @@ let g:which_key_map =  {
 let g:which_key_map['c'] = {
 	\ 'name' : '+Code'                       ,
 	\ 'a'    : {
-	\    'name': '+CodeAction'               , 
+	\    'name': '+CodeAction'               ,
 	\    'b'   : 'Current Buffer'            ,
 	\    's'   : 'Selected Region'           ,
 	\ }                                      ,
@@ -88,7 +82,7 @@ let g:which_key_map['t'] = {
 	\ 's'    : 'Spelling'   ,
 	\ 't'    : 'Terminal'   ,
 	\ 'v'    : 'Vista'      ,
-	\ 'w'    : 'wrap(smart)', 
+	\ 'w'    : 'wrap(smart)',
 	\ }
 
 let g:which_key_sep = '=>'
@@ -172,7 +166,7 @@ function s:SetKeyOnFT()
 				call s:WhichKeyCodeNone()
 			endif
 		else
-			if executable('ruby)
+			if executable('ruby')
 				call s:WhichKeyCodeRun()
 			else
 				call s:WhichKeyCodeNone()
@@ -197,7 +191,7 @@ function s:SetKeyOnFT()
 	endif
 endfunction
 
-function! s:SetKeyOnGit()
+function! s:SetKeyOnGitOrProse()
 	let git_dir = system('git rev-parse --git-dir')
 	" if in a git repo
 	if !v:shell_error
@@ -210,17 +204,30 @@ function! s:SetKeyOnGit()
 			let g:which_key_map_git.l = 'Lazy'
 			nnoremap <silent> <leader>gl :call OpenLazyGit()<CR>
 		endif
+
 		let g:which_key_map.g = g:which_key_map_git
+		let g:which_key_map['l'] = {
+				\ 'name' : '+Lexical'   ,
+				\ 'd'    : 'Dictionary' ,
+				\ 't'    : 'Thesaurus'  ,
+				\ }
+	elseif &ft == 'asciidoc' || &ft == 'html' || &ft == 'mail' || &ft == 'markdown' || &ft == 'rst' || &ft == 'tex' || &ft == 'text' || &ft == 'textile' || &ft == 'xml'
+		let g:which_key_map['l'] = {
+				\ 'name' : '+Lexical'   ,
+				\ 'd'    : 'Dictionary' ,
+				\ 't'    : 'Thesaurus'  ,
+				\ }
 	elseif has_key(g:which_key_map, 'g')
 		unlet g:which_key_map.g
+		unlet g:which_key_map.l
 	endif
 endfunction
 
 call s:SetKeyOnFT()
-call s:SetKeyOnGit()
+call s:SetKeyOnGitOrProse()
 
 function! SetWhichKey() abort
-	call s:SetKeyOnGit()
+	call s:SetKeyOnGitOrProse()
 	call s:SetKeyOnFT()
 endfunction
 
