@@ -1,6 +1,10 @@
 packadd vim-perl
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('perltidy')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 

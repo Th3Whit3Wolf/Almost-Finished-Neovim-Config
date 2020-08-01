@@ -5,7 +5,11 @@ packadd vim-jsdoc
 packadd vim-graphql
 packadd bracey.vim
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('js-beautify') || exists('clang-format') || exists('prettydiff') || exists('esformatter') || exists('prettier') || exists('prettier-eslint') || exists('eslint_d') || exists('standard') || exists('deno') || exists('semistandard')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 call LazySource('closetag')
@@ -15,6 +19,7 @@ imap <CR> <Plug>CustomCocCR
 
 set backupcopy=yes
 
+let g:coc_global_extensions += ['coc-emmet', 'coc-tsserver', 'coc-eslint', 'coc-tslint-plugin']
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_ngdoc = 1
 let g:javascript_plugin_flow = 1
@@ -30,6 +35,7 @@ let g:javascript_conceal_super                = "Ω"
 let g:javascript_conceal_arrow_function       = "⇒"
 let g:javascript_conceal_noarg_arrow_function = "🞅"
 let g:javascript_conceal_underscore_arrow_function = "🞅"
+
 nmap <silent> <C-l> <Plug>(jsdoc)
 
 function! RunMyCode()

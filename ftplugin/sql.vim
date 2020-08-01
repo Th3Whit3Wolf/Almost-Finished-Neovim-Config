@@ -1,6 +1,10 @@
 packadd vim-dotenv
 packadd vim-dadbod
-packadd neoformat
+packadd ale
+
+if exists('sqlformat', 'pg_format', 'sqlfmt')
+    packadd neoformat
+endif
 
 setlocal commentstring=--\ %s
 

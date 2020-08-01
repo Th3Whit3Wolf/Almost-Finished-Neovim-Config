@@ -11,6 +11,7 @@
   "codeLens.enable": true,
   "diagnostic": {
     "checkCurrentLine": true,
+    "diagnostic.displayByAle": true,
     "virtualTextLines": 4,
     "errorSign": "✘",
     "hintSign": "ஐ",
@@ -174,8 +175,7 @@
               "scriptInitialIndent": false,
               "styleInitialIndent": false
             }
-          },
-          "emmet": {}
+          }
         }
       }
     },

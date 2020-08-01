@@ -1,6 +1,10 @@
 packadd vim-ps1
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('Edit-DTWBeautifyScript')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 

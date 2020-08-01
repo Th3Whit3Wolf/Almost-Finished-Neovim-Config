@@ -1,6 +1,10 @@
 packadd vim-protobuf
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('clang-format')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 

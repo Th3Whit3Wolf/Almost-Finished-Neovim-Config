@@ -1,6 +1,10 @@
 packadd vim-puppet
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('puppet-lint')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 

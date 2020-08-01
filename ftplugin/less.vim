@@ -1,5 +1,9 @@
 packadd vim-less
-packadd neoformat
+packadd ale
+
+if exists('csscomb') || exists('prettydiff') || exists('prettier') || exists('stylelint')
+    packadd neoformat
+endif
 
 function! CompileMyCode()
     if executable('less')

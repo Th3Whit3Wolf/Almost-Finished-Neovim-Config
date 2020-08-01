@@ -1,12 +1,17 @@
 packadd haskell-vim
 packadd vim-endwise
-packadd neoformat
+packadd ale
+
+if exists('hindent') || exists('stylish-haskell') || exists('hfmt') || exists('brittany') || exists('sort-imports') || exists('floskell') || exists('ormolu')
+    packadd neoformat
+endif
 
 let g:endwise_no_mappings = v:true
+
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR<Plug>DiscretionaryEnd
+
 set colorcolumn=80
-let &makeprg='hdevtools check %'
 
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`

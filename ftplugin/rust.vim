@@ -1,13 +1,20 @@
 packadd rust.vim
 packadd vim-rust-syntax-ext
 packadd vim-gutentags
+packadd ale
 
 call LazySource('gutentags')
+
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR
 
 let g:rustfmt_autosave = 1
 let g:rust_fold = 1
+
+let g:coc_global_extensions +=  ['coc-rust-analyzer']
+
+let b:ale_linters = ['analyzer']
+
 set colorcolumn=9999
 setlocal tags=./rusty-tags.vi;/
 

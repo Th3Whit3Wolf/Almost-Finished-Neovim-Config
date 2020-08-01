@@ -1,4 +1,8 @@
-packadd neoformat
+packadd ale
+
+if exists('fish_indent')
+    packadd neoformat
+endif
 
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 imap <CR> <Plug>CustomCocCR
@@ -40,6 +44,8 @@ function s:shellbang() abort
             set ft=sh
         endif
         0put = '#!/usr/bin/env ' . (options)[choice - 1]
+        call append(line("."), "")
+        call append(line("."), "")
 	endif
 endfunction
 

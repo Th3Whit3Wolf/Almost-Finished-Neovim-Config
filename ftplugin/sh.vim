@@ -1,10 +1,15 @@
 packadd vim-endwise
 packadd vim-sh
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('shfmt')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 
+let g:coc_global_extensions += ['coc-sh']
 let g:endwise_no_mappings = v:true
 
 inoremap <expr> <Plug>CustomCocCR pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -39,6 +44,8 @@ function s:shellbang() abort
             set ft=zsh
         endif
         0put = '#!/usr/bin/env ' . (options)[choice - 1]
+        call append(line("."), "")
+        3
 	endif
 endfunction
 

@@ -1,6 +1,10 @@
 packadd scss-syntax.vim
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('csscomb') || exists('prettydiff') || exists('prettier') || exists('stylelint') || exists('stylefmt') || exists('sass-convert')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 

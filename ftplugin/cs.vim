@@ -1,6 +1,10 @@
 packadd vim-csharp
 packadd omnisharp-vim
-packadd neoformat
+packadd ale
+
+if exists('uncrustify') || exists('clang-format') || exists('astyle')
+    packadd neoformat
+endif
 
 let g:coc_global_extensions = g:coc_global_extensions + ['coc-omnisharp']
 

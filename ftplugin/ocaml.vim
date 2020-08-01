@@ -1,6 +1,10 @@
 packadd vim-ocaml
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('ocamlformat') || exists('ocp-indent')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 

@@ -1,6 +1,11 @@
 packadd vim-endwise
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('uncrustify') || exists('clang-format') || exists('astyle')
+    packadd neoformat
+endif
+
 
 call LazySource('gutentags')
 

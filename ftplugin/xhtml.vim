@@ -1,5 +1,9 @@
 packadd vim-closetag
-packadd neoformat
+packadd ale
+
+if exists('tidy') || exists('prettydiff')
+    packadd neoformat
+endif
 
 call LazySource('closetag')
 

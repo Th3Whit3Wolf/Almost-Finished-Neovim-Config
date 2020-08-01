@@ -1,5 +1,9 @@
 packadd vimtex
 packadd vim-latex-live-preview
+packadd vim-gutentags
+packadd ale
+
+call LazySource('gutentags')
 
 setl updatetime=100
 

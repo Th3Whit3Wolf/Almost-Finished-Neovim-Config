@@ -4,7 +4,11 @@ packadd vim-gutentags
 packadd vim-lexical
 packadd vim-pencil
 packadd vim-ditto
-packadd neoformat
+packadd ale
+
+if exists('remark') || exists('prettier')
+    packadd neoformat
+endif
 
 DittoOn
 
@@ -19,11 +23,13 @@ imap <CR> <Plug>CustomCocCR
 
 let &makeprg='proselint %'
 
+let g:coc_global_extensions += ['coc-markdownlint']
+
 let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt', '~/.config/nvim/moby_thesaurus.txt']
 let g:lexical#dictionary = ['/usr/share/dict/words']
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add']
-let g:lexical#thesaurus_key = '<leader>t'
-let g:lexical#dictionary_key = '<leader>k'
+let g:lexical#thesaurus_key = '<leader>lt'
+let g:lexical#dictionary_key = '<leader>ld'
 
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_toc_autofit = 1
@@ -49,4 +55,4 @@ function! RunMyCode()
 	ComposerUpdate
 endfunction
 
-autocmd BufWritePre * undojoin | Neoformat
+"autocmd BufWritePre * undojoin | Neoformat

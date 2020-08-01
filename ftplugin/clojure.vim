@@ -2,6 +2,7 @@ packadd vim-clojure-static
 packadd vim-fireplace
 packadd vim-clojure-highlight
 packadd vim-gutentags
+packadd ale
 
 call LazySource('gutentags')
 " Note: https://github.com/Olical/conjure looks interesting

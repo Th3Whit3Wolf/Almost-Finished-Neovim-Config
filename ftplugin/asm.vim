@@ -1,5 +1,9 @@
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('asmfmt')
+    packadd neoformat
+endif
 
 call LazySource('gutentags')
 

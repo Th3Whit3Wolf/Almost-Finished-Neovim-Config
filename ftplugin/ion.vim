@@ -39,6 +39,8 @@ function s:shellbang() abort
             set ft=sh
         endif
         0put = '#!/usr/bin/env ' . (options)[choice - 1]
+        call append(line("."), "")
+        call append(line("."), "")
 	endif
 endfunction
 

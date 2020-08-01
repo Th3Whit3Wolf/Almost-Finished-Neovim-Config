@@ -2,9 +2,17 @@ packadd vim-ruby
 packadd vim-endwise
 packadd vim-yardoc
 packadd vim-gutentags
-packadd neoformat
+packadd ale
+
+if exists('rufo') || exists('ruby-beautify') || exists('rubocop')
+	packadd neoformat
+endif
 
 call LazySource('gutentags')
+
+if executable('solargraph')
+	let g:coc_global_extensions += ['coc-solargraph']
+endif
 
 let g:endwise_no_mappings = v:true
 

@@ -2,6 +2,7 @@ packadd vim-lua
 packadd vim-endwise
 packadd vim-gutentags
 packadd neoformat
+packadd ale
 
 call LazySource('gutentags')
 
