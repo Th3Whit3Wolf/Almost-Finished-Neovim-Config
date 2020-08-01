@@ -1,70 +1,3 @@
-"""""""""""""""""""""""""""""
-" Install Coc Extenstions
-"""""""""""""""""""""""""""""
-let g:coc_global_extensions = [
-	\ 'coc-tag',
-	\ 'coc-word',
-	\ 'coc-utils',
-	\ 'coc-marketplace',
-	\ 'coc-diagnostic',
-	\ 'coc-git',
-	\ 'coc-snippets',
-	\ 'coc-yank',
-	\ 'coc-highlight',
-	\ 'coc-explorer',
-	\ 'coc-python',
-	\ 'coc-pairs',
-	\ 'coc-markdownlint',
-	\ 'coc-sh',
-	\ 'coc-yaml',
-	\ 'coc-svg',
-	\ 'coc-vimlsp',
-	\ 'coc-actions',
-	\ 'coc-browser',
-	\ 'coc-rust-analyzer',
-	\ 'coc-emmet',
-	\ 'coc-html',
-	\ 'coc-json',
-	\ 'coc-css',
-	\ 'coc-eslint',
-	\ 'coc-tslint-plugin',
-	\ 'coc-tsserver'
-	\]
-
-if executable('clangd')
-	let g:coc_global_extensions += ['coc-clangd']
-endif
-if executable('docker')
-	let g:coc_global_extensions += ['coc-docker']
-endif
-if executable('elixir') && executable('mix')
-	let g:coc_global_extensions += ['coc-elixir']
-endif
-if executable('erlang_ls')
-	let g:coc_global_extensions += ['coc-erlang_ls']
-endif
-if executable('flutter')
-	let g:coc_global_extensions += ['coc-flutter']
-endif
-if executable('gopls')
-	let g:coc_global_extensions += ['coc-go']
-endif
-if executable('php')
-	let g:coc_global_extensions += ['coc-phpls']
-endif
-if executable('r')
-	let g:coc_global_extensions += ['coc-r-lsp']
-endif
-if executable('ruby')
-	let g:coc_global_extensions += ['coc-solargraph']
-endif
-if executable('texlab')
-	let g:coc_global_extensions += ['coc-texlab']
-endif
-if executable('vls')
-	let g:coc_global_extensions += ['coc-vetur']
-endif
-
 function! CheckBackSpace() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~# '\s'
@@ -76,14 +9,6 @@ function! ShowDocumentation()
 	else
 		call CocAction('doHover')
 	endif
-endfunction
-
-function! UninstallUnusedCocExtensions() abort
-    for e in keys(json_decode(join(readfile(expand('~/.config/coc/extensions/package.json')), "\n"))['dependencies'])
-        if index(s:coc_extensions, e) < 0
-            execute 'CocUninstall ' . e
-        endif
-    endfor
 endfunction
 
 augroup cocNvim
