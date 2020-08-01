@@ -14,8 +14,21 @@ function! InRailsApp(...)
 	return filereadable("app/controllers/application_controller.rb")
 endfunction
 
+function! OnBattery()
+	if system('cat /sys/class/power_supply/BAT0/status | grep Discharging | wc -l') > 0
+		let g:ale_lint_on_text_changed = 'never'
+		let g:ale_lint_on_insert_leave = 0
+		let g:ale_lint_on_enter = 0
+	else
+		let g:ale_lint_on_text_changed = 'never'
+		let g:ale_lint_on_insert_leave = 1
+		let g:ale_lint_on_enter = 1
+	endif
+endfunction
+
 let g:term_buf = 0
 let g:term_win = 0
+
 function! TermToggle(height)
     if win_gotoid(g:term_win)
         hide
@@ -131,7 +144,7 @@ function! Run(executor)
 	packadd asyncrun.vim
 	let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
 	let g:asyncrun_runner.centered = function('s:my_runner')
-	let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml', 'Cargo.toml'] 
+	let g:asyncrun_rootmarks = ['.svn', '.git', '.root', '_darcs', 'build.xml', 'Cargo.toml']
 	exec "AsyncRun -mode=term -pos=centered -rows=30 -post=echo\ " . g:asyncrun_name . " " . a:executor
 endfunction
 
