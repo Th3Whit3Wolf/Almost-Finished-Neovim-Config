@@ -519,6 +519,8 @@ Abolish myu	my
 Abolish mysefl	myself
 Abolish mythraic Mithraic
 Abolish naive	naïve
+Abolish napoleonian Napoleonic
+Abolish nazereth Nazareth
 Abolish nec{ass,cess,es}ar{y,ily}	nec{ess}ar{}
 Abolish {,un}nec{ce,ces,e}sar{y,ily}          {}nec{es}sar{}
 Abolish nececsary necessary
@@ -526,10 +528,13 @@ Abolish neseccary necessary
 Abolish negotiaing	negotiating
 Abolish nver	never
 Abolish foundland Newfoundland
+Abolish newyorker New Yorker
 Abolish nothign	nothing
 Abolish llog NSLog(@"%|");
 Abolish fformat [NSString stringWithFormat:@"%|"]
 Abolish nw{o,e}	n{}w
+Abolish nullabour Nullarbor
+Abolish nuremburg Nuremberg
 Abolish obediant	obedient
 Abolish ocasion	occasion
 Abolish occassion	occasion
@@ -551,6 +556,8 @@ Abolish otu	out
 Abolish outof	out of
 Abolish overthe	over the
 Abolish oxident	oxidant
+Abolish palistian Palestinian
+Abolish palistinian{,s} Palestinian{}
 Abolish papaer	paper
 Abolish parliment	parliament
 Abolish partof	part of
