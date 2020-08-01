@@ -194,6 +194,7 @@ _pack: _init_pack
 		"reedes/vim-pencil"
 		"dbmrq/vim-ditto"
 		"sbdchd/neoformat"
+		"dense-analysis/ale"
 	)
 	for i in "${Lazy[@]}"; do
 		pack install $i -o
@@ -206,6 +207,7 @@ _pack: _init_pack
 		"mityu/vim-applescript"                   # AppleScript
 		"sudar/vim-arduino-syntax"                # Arduino
 		"asciidoc/vim-asciidoc"                   # AsciiDoc
+		"aliou/bats.vim"                          # BATS
 		"bazelbuild/vim-bazel"                    # Bazel
 		"google/vim-maktaba"                      # Bazel
 		"jwalton512/vim-blade"                    # Blade templates
@@ -218,6 +220,7 @@ _pack: _init_pack
 		"nastevens/vim-cargo-make"                # Cargo Make (Rust cargo extension)
 		"mhinz/vim-crates"                        # Cargo.toml (Rust)
 		"hellerve/carp-vim"                       # Carp
+		"vadv/vim-chef"                           # Chef
 		"mtscout6/vim-cjsx"                       # CJSX (JSX equivalent in CoffeeScript)
 		"guns/vim-clojure-static"                 # Clojure
 		"tpope/vim-fireplace"                     # Clojure
@@ -232,7 +235,9 @@ _pack: _init_pack
 		"chrisbra/csv.vim"                        # CSV
 		"tpope/vim-cucumber"                      # Cucumber
 		"mgrabovsky/vim-cuesheet"                 # Cue
+		"jjaderberg/vim-syntax-cipher"            # Cypher
 		"JesseKPhillips/d.vim"                    # D Lang
+		"mlr-msft/vim-loves-dafny"                # Dafny
 		"dart-lang/dart-vim-plugin"               # Dart
 		"vmchale/dhall-vim"                       # Dhall
 		"ekalinin/Dockerfile.vim"                 # Dockerfile
@@ -243,6 +248,7 @@ _pack: _init_pack
 		"vim-scripts/ferm.vim"                    # Ferm
 		"georgewitteman/vim-fish"                 # Fish
 		"dcharbon/vim-flatbuffers"                # Flatbuffers
+		"kblin/vim-fountain"                      # Fountain
 		"calviken/vim-gdscript3"                  # GDScript 3
 		"tikhomirov/vim-glsl"                     # OpenGL Shading Language
 		"gleam-lang/gleam.vim"                    # Gleam
@@ -251,6 +257,7 @@ _pack: _init_pack
 		"fatih/vim-go"                            # Go
 		"tfnico/vim-gradle"                       # Gradle
 		"jparise/vim-graphql"                     # GraphQL
+		"hhvm/vim-hack"                           # Hack
 		"sheerun/vim-haml"                        # Haml
 		"mustache/vim-mustache-handlebars"        # Handlebars
 		"CH-DanReif/haproxy.vim"                  # HAProxy
@@ -263,7 +270,9 @@ _pack: _init_pack
 		"mboughaba/i3config.vim"                  # i3
 		"chutzpah/icalendar.vim"                  # icalendar
 		"idris-hackers/idris-vim"                 # Idris
+		"HiPhish/info.vim"                        # Info
 		"vmchale/ion-vim"                         # Ion
+		"jez/vim-ispc"                            # ISPC
 		"pangloss/vim-javascript"                 # Javascript
 		"briancollins/vim-jst"                    # JST
 		"maxmellon/vim-jsx-pretty"                # JSX
@@ -288,6 +297,7 @@ _pack: _init_pack
 		"voldikss/vim-mma"                        # Mathematica
 		"daeyun/vim-matlab"                       # Matlab
 		"jxnblk/vim-mdx-js"                       # MDX
+		"stewy33/mercury-vim"                     # Mercury
 		"leafo/moonscript-vim"                    # MoonScript
 		"chr4/nginx.vim"                          # Nginx
 		"zah/nim.vim"                             # Nim
@@ -304,6 +314,7 @@ _pack: _init_pack
 		"aklt/plantuml-syntax"                    # PlantUML
 		"jakwings/vim-pony"                       # Ponylang
 		"PProvost/vim-ps1"                        # PowerShell
+		"adimit/prolog.vim"                       # Prolog
 		"uarun/vim-protobuf"                      # Protocol Buffers
 		"digitaltoad/vim-pug"                     # Pug template
 		"rodjek/vim-puppet"                       # Puppet
@@ -330,6 +341,7 @@ _pack: _init_pack
 		"arzg/vim-sh"                             # Shell
 		"slim-template/vim-slim"                  # Slim
 		"slime-lang/vim-slime-syntax"             # Slime
+		"jez/vim-better-sml"                      # SML
 		"bohlender/vim-smt2"                      # SMT-LIB2
 		"tomlion/vim-solidity"                    # Solidity
 		"tpope/vim-dotenv"                        # SQl
@@ -337,6 +349,7 @@ _pack: _init_pack
 		"kristijanhusak/vim-dadbod-completion"    # SQl
 		"kristijanhusak/vim-dadbod-ui"            # SQl
 		"cappyzawa/starlark.vim"                  # Starlark
+		"hhsnopek/vim-sugarss"                    # Sugarss
 		"wavded/vim-stylus"                       # Stylus
 		"leafOfTree/vim-svelte-plugin"            # Svelte
 		"jasonshell/vim-svg-indent"               # SVG
@@ -357,13 +370,15 @@ _pack: _init_pack
 		"arrufat/vala.vim"                        # Vala
 		"vim-scripts/vbnet.vim"                   # VB.NET
 		"smerrill/vcl-vim-plugin"                 # VCL
-		"vifm/vifm.vim"                           # vifm
 		"lepture/vim-velocity"                    # Velocity
+		"vifm/vifm.vim"                           # vifm
+		"suoto/vim-hdl"                           # VHDL
 		"posva/vim-vue"                           # Vue
 		"amal-khailtash/vim-xdc-syntax"           # XDC
 		"vim-scripts/XSLT-syntax"                 # XSL
 		"amadeus/vim-xml"                         # XML
 		"stephpy/vim-yaml"                        # YAML
+		"nathanalderson/yang.vim"                 # YANG
 		"sheerun/vim-yardoc"                      # YARD Documentation
 		"xwsoul/vim-zephir"                       # Zephir
 		"ziglang/zig.vim"                         # Zig
