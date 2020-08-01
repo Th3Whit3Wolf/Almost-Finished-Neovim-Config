@@ -1,6 +1,3 @@
-" Awk
-au BufNewFile *.awk     0put =\"#!/usr/bin/env awk"
-
 " Fasto setup
 au BufNewFile,BufRead *.fo setlocal ft=fasto
 
@@ -11,21 +8,32 @@ au BufNewFile,BufRead */inventory/* ft=ansible_hosts
 au BufNewFile,BufRead */templates/*.{yaml,tpl} ft=yaml.gotexttmpl
 au BufNewFile,BufRead */.kube/config ft=yaml
 
+" Awk
+au BufNewFile *.awk     0put =\"#!/usr/bin/env awk\<nl>\<nl>\"|$
+
+" BATS - Bash Automated Testing System
+au BufNewFile,BufRead *.bats set ft=bats
+
 " C setup, Vim thinks .h is C++
 au BufNewFile,BufRead *.h setlocal ft=c
 
-" Set msproj file extensions
-au BufNewFile,BufRead *.cs
+" C#
 au BufNewFile,BufRead *.proj set ft=xml
 au BufNewFile,BufRead *.csproj set ft=xml
 au BufNewFile,BufRead *.sln set ft=xml
-au BufNewFile,BufRead *.cshtml set ft=cshtml.html syntax=cshtml
 au BufNewFile,BufRead *.aspx set ft=aspx.html syntax=aspx
 au BufNewFile,BufRead *.ascx set ft=aspx.html syntax=aspx
 au BufNewFile,BufRead *.master set ft=aspx.html syntax=aspx
 
 " Carp
 au BufRead,BufNewFile *.carp set ft=carp
+
+" Chef
+au BufRead,BufNewFile */cookbook/*/\(attributes\|definitions\|libraries\|providers\|recipesresources\)/*.rb setft=ruby.chef
+au BufRead,BufNewFile */cookbook/*/templates/*/*.erb set ft=eruby.chef
+au BufRead,BufNewFile */cookbook/*/metadata.rb set ft=ruby.chef
+au BufRead,BufNewFile */chef-repo/environments/*.rb set ft=ruby.chef
+au BufRead,BufNewFile */chef-repo/roles/*.rb set ft=ruby.chef
 
 " Coffeescript
 au BufNewFile,BufRead *.coffee         set ft=coffee
@@ -37,7 +45,7 @@ au BufNewFile,BufRead *.coffee.md      set ft=litcoffee
 au BufNewFile,BufRead *.csx,*.cjsx     set ft=coffee
 
 " CQL
-au  BufNewFile,BufRead *.cql set ft=cql
+au BufNewFile,BufRead *.cql set ft=cql
 
 " Cryptol
 au BufNewFile,BufRead *.cry set ft=cryptol
@@ -58,6 +66,9 @@ au BufNewFile,BufRead *.feature,*.story set ft=cucumber
 
 " cue
 au BufNewFile,BufRead *.cue set ft=cuesheet
+
+" Cypher
+au BufNewFile,BufRead *cypher set ft=cypher
 
 " dart
 au BufNewFile,BufRead *.dart set ft=dart
@@ -99,7 +110,7 @@ au BufNewFile,BufRead *.emblem set ft=emblem
 
 " erlang
 au BufNewFile,BufRead *.erl,*.hrl,rebar.config,*.app,*.app.src,*.yaws,*.xrl,*.escript set ft=erlang
-au BufNewFile         *.escript 0put =\"#!/usr/bin/env escript\<nl>\"|$
+au BufNewFile         *.escript 0put =\"#!/usr/bin/env escript\<nl>\<nl>\"|$
 
 " ferm
 au BufNewFile,BufRead ferm.conf set ft=ferm
@@ -107,11 +118,14 @@ au BufNewFile,BufRead *.ferm set ft=ferm
 
 " fish
 au BufNewFile,BufRead *.fish set ft=fish
-au BufNewFile         *.fish 0put =\"#!/usr/bin/env fish\<nl>\"|$
+au BufNewFile         *.fish 0put =\"#!/usr/bin/env fish\<nl>\<nl>\"|$
 au BufNewFile,BufRead ~/.config/fish/fish_{read_,}history set ft=yaml
 
 " flatbuffers
 au BufNewFile,BufRead *.fbs set ft=fbs
+
+" Fountain
+au BufRead,BufNewFile *.fountain set ft=fountain
 
 " fsharp
 au BufNewFile,BufRead *.fs,*.fsi,*.fsx set ft=fsharp
@@ -206,10 +220,13 @@ au BufNewFile,BufRead *.idr set ft=idris
 au BufNewFile,BufRead idris-response set ft=idris
 au BufNewFile,BufRead *.lidr set ft=lidris
 
+" Info
+au BufRead,BufNewFile *.info set ft=info
+
 " ion
 au BufNewFile,BufRead ~/.config/ion/initrc set ft=ion
 au BufNewFile,BufRead *.ion set ft=ion
-au BufNewFile         *.ion 0put =\"#!/usr/bin/env ion\<nl>\"|$
+au BufNewFile         *.ion 0put =\"#!/usr/bin/env ion\<nl>\<nl>\"|$
 
 " Janus setup
 au BufNewFile,BufRead *.ja setlocal ft=janus
@@ -263,7 +280,7 @@ au BufNewFile,BufRead *.jsx set ft=javascriptreact
 
 " julia
 au BufNewFile,BufRead *.jl set ft=julia
-au BufNewFile         *.jl       0put =\"#!/usr/bin/env julia\<nl>\"|$
+au BufNewFile         *.jl       0put =\"#!/usr/bin/env julia\<nl>\<nl>\"|$
 
 " justfile
 au BufNewFile,BufRead Justfile,justfile ft=make
@@ -297,7 +314,7 @@ au BufNewFile,BufRead *.log set ft=log
 au BufNewFile,BufRead *_log set ft=log
 
 " lua
-au BufNewFile *.lua     0put =\"#!/usr/bin/env lua\<nl>\"|$
+au BufNewFile *.lua     0put =\"#!/usr/bin/env lua\<nl>\<nl>\"|$
 
 " mako
 au BufNewFile *.*.mako execute "do BufNewFile filetypedetect " . expand("<afile>:r") | let b:mako_outer_lang = &filetype
@@ -316,6 +333,9 @@ au BufNewFile,BufRead *.m set ft=mma
 
 " mdx
 au BufNewFile,BufRead *.mdx set ft=markdown.mdx
+
+" Mercury
+au BufRead,BufNewFile *.m,*.moo set ft=mercury
 
 " meson
 au BufNewFile,BufRead meson.build set ft=meson
@@ -359,14 +379,13 @@ au BufNewFile,BufRead,BufFilePost *.pandoc,*.pdk,*.pd,*.pdc set ft=pandoc
 
 " PERL
 au BufNew,BufNewFile,BufRead *.nqp set ft=perl6
-au BufNew *.pl 0put =\"#!/usr/bin/env perl\<nl>\"|$
-au BufNew *.pl 0put =\"#!/usr/bin/env perl\<nl>\"|$
+au BufNew *.pl 0put =\"#!/usr/bin/env perl\<nl>\<nl>\"|$
 
 " PostgreSQL
 au BufNewFile,BufRead *.pgsql let b:sql_type_override='pgsql' | set ft=sql
 
 " PHP
-au BufNewFile *.php     0put =\"#!/usr/bin/env php\<nl>\"|$
+au BufNewFile *.php     0put =\"#!/usr/bin/env php\<nl>\<nl>\"|$
 
 " plantuml
 au BufNewFile,BufRead *.pu,*.uml,*.plantuml,*.puml set ft=plantuml
@@ -386,7 +405,10 @@ au BufNewFile,BufRead *.ps1xml set ft=ps1xml
 au BufNewFile,BufRead *.cdxml set ft=xml
 au BufNewFile,BufRead *.psc1 set ft=xml
 
-" protobuf
+" Prolog
+au BufNewFile,BufRead *.prolog set filetype=prolog
+
+" Protobuf
 au BufNewFile,BufRead *.proto set ft=proto
 
 " pug
@@ -463,7 +485,7 @@ au BufNewFile,BufRead *.rbi set ft=ruby
 au BufNewFile,BufRead [tT]horfile,*.thor set ft=ruby
 au BufNewFile,BufRead [vV]agrantfile set ft=ruby
 au BufNewFile,BufRead Brewfile set ft=ruby
-au BufNewFile         *.rb 0put =\"#!/usr/bin/env ruby\<nl>\"|$
+au BufNewFile         *.rb 0put =\"#!/usr/bin/env ruby\<nl>\<nl>\"|$
 
 " Declared after ruby so that the more general *.rb
 " doesn't override
@@ -475,7 +497,7 @@ au BufNewFile,BufRead *.rs set ft=rust
 
 " scala
 au BufNewFile,BufRead *.scala,*.sc set ft=scala
-au BufNewFile         *.scala   0put =\"#!/usr/bin/env scala\<nl>\"|$
+au BufNewFile         *.scala   0put =\"#!/usr/bin/env scala\<nl>\<nl>\"|$
 au BufNewFile,BufRead *.sbt set ft=sbt.scala
 au BufNewFile,BufRead *.sbt set ft=sbt.scala
 
@@ -491,14 +513,17 @@ au BufNewFile,BufRead *.slime set ft=slime
 " smt2
 au BufNewFile,BufRead *.smt,*.smt2 set ft=smt2
 
+" solidity
+au BufNewFile,BufRead *.sol set ft=solidity
+
 " Starlark
 au BufNewFile,BufRead *.star set ft=starlark
 au BufNewFile,BufRead BUILD.bazel set ft=starlark
 au BufNewFile,BufRead BUILD set ft=starlark
 au BufNewFile,BufRead Tiltfile* set ft=starlark
 
-" solidity
-au BufNewFile,BufRead *.sol set ft=solidity
+" Sugarss
+au BufRead,BufNewFile *.sss set ft=sugarss
 
 " stylus
 au BufNewFile,BufRead *.styl set ft=stylus
@@ -584,6 +609,9 @@ au BufNewFile,BufRead *.vue,*.wpy set ft=vue
 
 " xdc
 au BufNewFile,BufRead *.xdc set ft=xdc
+
+" YANG
+au BufRead,BufNewFile *.yang set ft=yang
 
 " zephir
 au BufNewFile,BufRead *.zep set ft=zephir
@@ -695,6 +723,9 @@ AddShebangPattern! sh            ^#!.*[s]\?bin/bash\>  let\ b:is_bash=1|if\ exis
 AddShebangPattern! sh            ^#!.*\s\+\(ba\|c\|a\|da\|k\|pdk\|mk\|tc\)\?sh\>
 AddShebangPattern! zsh           ^#!.*\s\+zsh\>
 AddShebangPattern! zsh           ^#!.*[s]\?bin/zsh\>
+AddShebangPattern! bats          ^#!.*\<bats\>
+AddShebangPattern! raku          ^#!.*raku
+
 augroup shebang
     au!
     " try to detect filetype after enter to buffer
