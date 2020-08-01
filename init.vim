@@ -278,6 +278,23 @@ if has('termguicolors')
 		set winblend=10
 	endif
 endif
+
+" Coc
+let g:coc_data_home	= $VIMPATH . '/coc'
+" Install Coc Extenstions
+let g:coc_global_extensions = [
+	\ 'coc-tag',
+	\ 'coc-utils',
+	\ 'coc-marketplace',
+	\ 'coc-diagnostic',
+	\ 'coc-snippets',
+	\ 'coc-yank',
+	\ 'coc-highlight',
+	\ 'coc-explorer',
+	\ 'coc-pairs',
+	\ 'coc-actions',
+	\ 'coc-browser',
+	\]
 """""""""""""""""""""""""""""
 " Auto Commands
 """""""""""""""""""""""""""""
@@ -418,10 +435,10 @@ cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
 
 " Toggle fold
-nnoremap <CR> :packadd FastFold <bar> LazySource('fastfold') <bar> packadd FoldText <bar><CR> za
+nnoremap <CR> :packadd FastFold <bar> packadd FoldText <bar> LazySource('fastfold') <CR> za
 
 " Focus the current fold by closing all others
-nnoremap <S-Return> :packadd FastFold <bar> LazySource('fastfold') <bar> packadd FoldText <bar><CR> zMzvzt
+nnoremap <S-Return> :packadd FastFold <bar> packadd FoldText <bar> LazySource('fastfold') <CR> zMzvzt
 
 " Start new line from any cursor position
 inoremap <S-Return> <C-o>o
@@ -557,5 +574,4 @@ nnoremap <F2>       :call RenameFile()<cr>
 """""""""""""""""""""""""""""
 " Other
 """""""""""""""""""""""""""""
-let g:coc_data_home	= '~/.config/nvim/coc'
 nnoremap<C-p> :Clap files<CR>
