@@ -1,6 +1,6 @@
 # Almost Finished Neovim Config
 
-Fast and full featured neovim config that leans heavily on the neovims builtin package feature and
+Fast and full featured neovim config that leans heavily on neovim's builtin package feature and
 modular file structure. Lazy loading where it makes sense.
 
 <details>
@@ -54,17 +54,19 @@ modular file structure. Lazy loading where it makes sense.
 
 - Fast startup time, 27-40ms
 - Robust, yet light-weight
-- Lazy Load 85% of plugins (71/84)
+- Lazy Load 95% of plugins (191/202)
 - Ultimate Linting, Code Formating, & Language Support
 - Central location for tags
 - Awesome Dashboard(thanks to [dashboard.nvim](https://github.com/hardcoreplayers/dashboard-nvim/blob/master/plugin/dashboard.vim))
 - Auto Shebang
+- Shebang Filetype Detection
 - Code Runner, Compiler, & Tester
-- Can determine filetype for files with no extensions(via shebang)
 - Lazygit integration
 - Light & Dark Mode
 - Automatically changes colors at night
-- Automatically adds in pairs (parentheses, brackets, curly brace) and ends (end, endif, fi, etc)
+- Automatically adds in pairs (parentheses, brackets, curly brace) and ends
+- (end, endif, fi, etc)
+- Automatically format code on save
 
 ## Screenshots
 
@@ -96,8 +98,6 @@ cd ~/.config/nvim
 ln -s ~/.config/nvim ~/.vim  # For Vim8, although no promises on this working with vim
 just install
 ```
-
-If you do web development you may also want to run `just web` for linters, formatters, and spell checker.
 
 * _**Note:**_ If your system sets `$XDG_CONFIG_HOME`,
   use that instead of `~/.config` in the code above.
@@ -212,7 +212,7 @@ Looks Like This
 
 ### Auto Shebang
 
-When creating a new shell or python neovim will prompt you for what shebang you would like to use. It is automatic for escript, fish, ion, lua, perl, php, & ruby.
+When creating a new shell or python script neovim will prompt you for what shebang you would like to use. This is automatic for awk, escript, fish, ion, julia, lua, perl, php, ruby, and scala.
 
 You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 
@@ -252,9 +252,9 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 
 **Python**
 
-* python2 - `#!/usr/bin/env python2`
-* python3 - `#!/usr/bin/env python2`
-* pypy     - `#!/usr/bin/env pypy`
+- python2 - `#!/usr/bin/env python2`
+- python3 - `#!/usr/bin/env python2`
+- pypy     - `#!/usr/bin/env pypy`
 - pypy3    - `#!/usr/bin/env pypy3`
 - jython  - `#!/usr/bin/env jython`
 
@@ -268,17 +268,17 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 
 **Shell**
 
-- ash   - `#!/usr/bin/env ash`
-- bash  - `#!/usr/bin/env bash`
-- csh   - `#!/usr/bin/env csh`
-- dash  - `#!/usr/bin/env dash`
-- fish  - `#!/usr/bin/env fish`
-- ksh   - `#!/usr/bin/env ksh`
-- ion   - `#!/usr/bin/env ion`
-- mksh  - `#!/usr/bin/env mksh`
-- dksh  - `#!/usr/bin/env pdksh`
-- tcsh  - `#!/usr/bin/env tcsh`
-- zsh   - `#!/usr/bin/env zsh`
+- ash    - `#!/usr/bin/env ash`
+- bash   - `#!/usr/bin/env bash`
+- csh    - `#!/usr/bin/env csh`
+- dash   - `#!/usr/bin/env dash`
+- fish   - `#!/usr/bin/env fish`
+- ksh    - `#!/usr/bin/env ksh`
+- ion    - `#!/usr/bin/env ion`
+- mksh   - `#!/usr/bin/env mksh`
+- pdksh  - `#!/usr/bin/env pdksh`
+- tcsh   - `#!/usr/bin/env tcsh`
+- zsh    - `#!/usr/bin/env zsh`
 
 ### Code Compile
 
@@ -316,12 +316,10 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 | [vim-buffet](https://github.com/bagrat/vim-buffet)  |               |
 | [vim-clap](https://github.com/liuchengxu/vim-clap) | |
 | [vim-devicons](https://github.com/ryanoasis/vim-devicons) |
-| [vim-shebang](https://github.com/Th3Whit3Wolf/vim-shebang) | |
 | [dashboard-nvim](https://github.com/hardcoreplayers/dashboard-nvim) ||
 | [FastFold](https://github.com/Konfekt/FastFold) ||
 | [vim-commentary](https://github.com/tpope/vim-commentary) ||
 | [vim-surround](https://github.com/tpope/vim-surround) ||
-| [vim-endwise](https://github.com/tpope/vim-endwise) ||
 | [vim-snippets](https://github.com/honza/vim-snippets) ||
 | [vim-which-key](https://github.com/liuchengxu/vim-which-key) ||
 | [coc.nvim](https://github.com/neoclide/coc.nvim) ||
@@ -350,6 +348,8 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 | [vista.vim](https://github.com/liuchengxu/vista.vim)||
 | [rainbow_parentheses.vim](https://github.com/alok/rainbow_parentheses.vim)||
 | [git-messenger.vim](https://github.com/rhysd/git-messenger.vim) ||
+| [vim-endwise](https://github.com/tpope/vim-endwise) ||
+
 
 #### Completion & Code-Analysis
 
@@ -366,7 +366,6 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 | Name | Description |
 | ---- | ----------- |
 | [vim-eunuch](https://github.com/tpope/vim-eunuch) | Makes it easier to use unix commands in vim|
-| [vim-startuptime](https://github.com/dstein64/vim-startuptime) | Visually profile Vim's startup time |
 | [gina.vim](https://github.com/lambdalisue/gina.vim) ||
 | [committia.vim](https://github.com/rhysd/committia.vim) ||
 
@@ -466,3 +465,13 @@ I owe a special thanks to the following projects:
   - Extraordinarily fast interactive finder and dispatcher
 
 - [Rafi's Vim Config](https://github.com/rafi/vim-config) - For help with some of the configs and ideas for a good readme
+
+## TODO
+
+- [ ] Better Autocorrect
+- [ ] Pandoc as a Compiler
+- [x] Ale Integration
+- [x] Fix vim which keys
+- [x] Move Filetype specific `coc_global_extension` into that filetypes ftplugin file
+- [x] Neoformat Integration
+- [x] Filetype specific syntax moved into after/syntax/<filetype>.vim
