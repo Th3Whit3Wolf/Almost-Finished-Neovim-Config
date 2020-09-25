@@ -35,7 +35,7 @@ local lua_plugins = {"neovim/nvim-lspconfig", -- Collection of common configurat
 "mhartington/formatter.nvim" -- A format runner for neovim, written in lua
 }
 
-local lazy_plugins = {"tpope/vim-endwise", -- plugin that ends certain structures automatically (ex. if endif)
+local lazy_plugins = {
 "tpope/vim-eunuch", -- Vim sugar for the UNIX shell commands
 "rhysd/committia.vim", -- improves the git commit buffer
 "tpope/vim-git", -- Vim Git runtime files

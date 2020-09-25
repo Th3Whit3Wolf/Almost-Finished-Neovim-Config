@@ -75,7 +75,7 @@ function mapping:load_plugin_define()
         ["i|<S-TAB>"] = map_cmd([[pumvisible() ? "\<C-p>" : "\<S-Tab>"]]):with_noremap():with_expr():with_silent(),
             -- Allows completions to work with plugins that also map to enter
         ["i|''"] = map_cmd([[pumvisible() ? complete_info()["selected"] != "-1" ? "<Plug>(completion_confirm_completion)"  : "<c-e><CR>" :  "<CR>"]]):with_noremap():with_expr():with_silent(),
-
+        
         -- dein
         -- ["n|<Leader>tr"] = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
         -- ["n|<Leader>tf"] = map_cu('DashboardNewFile'):with_noremap():with_silent(),

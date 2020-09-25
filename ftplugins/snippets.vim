@@ -1,3 +1,3 @@
-packadd vim-endwise
-
-let g:endwise_no_mappings = v:true
+let b:endwise_addition = 'endsnippet'
+let b:endwise_words = 'snippet'
+let b:endwise_syngroups = 'snipSnippet,snipSnippetHeader,snipSnippetHeaderKeyword'

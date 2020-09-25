@@ -32,7 +32,7 @@ function variables:load_variables()
     -- Fix for completion with other plugins mapped to enter
     self.completion_confirm_key = ""
     -- Fix for endwise with other plugins mapped to enter
-    self.endwise_no_mappings = "v:true"
+    --self.endwise_no_mappings = "v:true"
 
     -- Disable provider for perl, python2, & ruby
     self.loaded_python_provider = 0

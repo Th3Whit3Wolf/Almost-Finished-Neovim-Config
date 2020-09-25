@@ -1,6 +1,8 @@
 packadd vim-elixir
-packadd vim-endwise
 packadd completion-tags
 " packadd ale
 
-let g:endwise_no_mappings = v:true
+let b:endwise_addition = 'end'
+let b:endwise_words = 'do,fn'
+let b:endwise_pattern = '.*[^.:@$]\zs\<\%(do\(:\)\@!\|fn\)\>\ze\%(.*[^.:@$]\<end\>\)\@!'
+let b:endwise_syngroups = 'elixirBlockDefinition'

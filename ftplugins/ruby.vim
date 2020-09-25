@@ -1,5 +1,4 @@
 packadd vim-ruby
-packadd vim-endwise
 packadd vim-yardoc
 packadd completion-tags
 " packadd ale
@@ -9,7 +8,10 @@ lua require 'plugins/tree-sitter'
 setlocal foldmethod=expr 
 setlocal foldexpr=nvim_treesitter#foldexpr()
 
-let g:endwise_no_mappings = v:true
+let b:endwise_addition='end'
+let b:endwise_words='module,class,def,if,unless,case,while,until,begin,do'
+let b:endwise_pattern='^\(.*=\)\?\s*\%(private\s\+\|protected\s\+\|public\s\+\|module_function\s\+\)*\zs\%(module\|class\|def\|if\|unless\|case\|while\|until\|for\|\|begin\)\>\%(.*[^.:@$]\<end\>\)\@!\|\<do\ze\%(\s*|.*|\)\=\s*$'
+let b:endwise_syngroups='rubyModule,rubyClass,rubyDefine,rubyControl,rubyConditional,rubyRepeat'
 
 function! RunMyCode()
     if InRailsApp()
@@ -26,3 +28,4 @@ function! RunMyCode()
         endif
     endif
 endfunction
+
