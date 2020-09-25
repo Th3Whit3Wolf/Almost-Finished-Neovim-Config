@@ -1,0 +1,2 @@
+packadd vim-arduino-syntax
+

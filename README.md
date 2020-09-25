@@ -3,6 +3,19 @@
 Fast and full featured neovim config that leans heavily on neovim's builtin package feature and
 modular file structure. Lazy loading where it makes sense.
 
+## Dev Focus
+
+- Take full advantage of builting LSP
+- Take full advantage of builting tree-sitter
+- Take full advantage of lua based plugins
+- Remove need for just to be installed
+  - `plug.lua`, thanks to neopack can install plugins
+  - `settings`, can create directories and install python virtualenv and lsp
+  - Might create a `makefile` for update(or bake in that functionality)
+- All neovim settings set in lua
+- Put as much in lua as possible
+- Stay fast & keep lazy loading
+
 <details>
   <summary>
     <strong>Table of Contents</strong>
@@ -52,9 +65,9 @@ modular file structure. Lazy loading where it makes sense.
 
 ## Features
 
-- Fast startup time, 27-40ms
+- Fast startup time, 27-40ms (much slower right now 62[nvim]-100[nvim <file>]ms)
 - Robust, yet light-weight
-- Lazy Load 95% of plugins (191/202)
+- Lazy Load 96% of plugins (202/211)
 - Ultimate Linting, Code Formating, & Language Support
 - Central location for tags
 - Awesome Dashboard(thanks to [dashboard.nvim](https://github.com/hardcoreplayers/dashboard-nvim/blob/master/plugin/dashboard.vim))
@@ -81,8 +94,8 @@ modular file structure. Lazy loading where it makes sense.
 - Python 3
 - Rust (curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)
 - Neovim
-- [Just](https://github.com/casey/just)
-- yarn (for coc.vim)
+- git
+- yarn (for vim-jsdoc)
 - Your Compiler and/or Interpreter
 - Your favorite Language Servers, Linters, and/or Code Formatters
 
@@ -94,14 +107,14 @@ we'll also symlink it for Vim:
 ```sh
 mkdir ~/.config
 git clone https://github.com/Th3Whit3Wolf/Almost-Finished-Neovim-Config.git ~/.config/nvim
-cd ~/.config/nvim
-ln -s ~/.config/nvim ~/.vim  # For Vim8, although no promises on this working with vim
-just install
 ```
 
-* _**Note:**_ If your system sets `$XDG_CONFIG_HOME`,
-  use that instead of `~/.config` in the code above.
-  Nvim follows the XDG base-directories convention.
+[1.] Run `nvim` so that:
+
+- Plugins get installed
+- Python virtualenv & lsp are set up
+- Create swap, backup, session, tags, and undo directories
+- Install all tree-sitter files
 
 [1.] Install extensions from below to get better autocompletion and linting
 
@@ -109,9 +122,7 @@ Enjoy!
 
 ## Upgrade
 
-```sh
-just upgrade
-```
+Might add a `Makefile` to update
 
 ### Recommended Fonts
 
@@ -184,19 +195,7 @@ Looks Like This
 
 ## Structure
 
-```sh
-    .
-    ├── after
-    │   └── plugin   # Get loaded after plugin
-    ├── autoload     # Get loaded automatically
-    ├── colors       # Colorscheme
-    ├── ftdetect     # Identifies filetypes
-    ├── ftplugin     # Filetype specific and loaded on filetype
-    ├── lazy         # Configs for lazy loaded plugins
-    ├── plugin       # Plugins loaded automatically
-    ├ init.vim       # Configuration
-    └ function.vim   # Convenience functions
-```
+Changes too much to add in here
 
 ## Plugin Highlights
 
@@ -304,174 +303,3 @@ You can press <kbd>space</kbd>+<kbd>cs</kbd> to change shebangs
 
 </details>
 
-## Plugins Included
-
-<details open>
-  <summary><strong>List</strong> <small><i>(🔎 Click to expand/collapse)</i></small></summary>
-
-### Non Lazy-Loaded Plugins
-
-| Name | Description |
-| ---- | ----------- |
-| [vim-buffet](https://github.com/bagrat/vim-buffet)  |               |
-| [vim-clap](https://github.com/liuchengxu/vim-clap) | |
-| [vim-devicons](https://github.com/ryanoasis/vim-devicons) |
-| [dashboard-nvim](https://github.com/hardcoreplayers/dashboard-nvim) ||
-| [FastFold](https://github.com/Konfekt/FastFold) ||
-| [vim-commentary](https://github.com/tpope/vim-commentary) ||
-| [vim-surround](https://github.com/tpope/vim-surround) ||
-| [vim-snippets](https://github.com/honza/vim-snippets) ||
-| [vim-which-key](https://github.com/liuchengxu/vim-which-key) ||
-| [coc.nvim](https://github.com/neoclide/coc.nvim) ||
-| [Spaceline.vim](https://github.com/hardcoreplayers/spaceline.vim) ||
-
-### Lazy-Loaded Plugins
-
-#### Language
-
-| Name | Description |
-| ---- | ----------- |
-| [rust-vim](https://github.com/rust-lang/rust.vim) | Rust Support |
-| [vim-rust-syntax-ext](https://github.com/arzg/vim-rust-syntax-ext) | Extend Rust Syntax |
-| [vim-go](https://github.com/faith/vim-go) | Go Support |
-| [vim-toml](cespare/vim-toml) | Syntax for TOML |
-| [vim-crates](https://github.com/mhinz/vim-crates)| Makes updating `Cargo.toml` a breeze |
-| [vim-eunuch](https://github.com/tpope/vim-eunuch) | Makes it easier to use unix commands from vm|
-
-#### Interface
-
-| Name | Description |
-| ---- | ----------- |
-| [vim-FoldText](https://github.com/Konfekt/FoldText)||
-| [vim-closetag](https://github.com/alvan/vim-closetag) ||
-| [vim-signify](https://github.com/mhinz/vim-signify) | |
-| [vista.vim](https://github.com/liuchengxu/vista.vim)||
-| [rainbow_parentheses.vim](https://github.com/alok/rainbow_parentheses.vim)||
-| [git-messenger.vim](https://github.com/rhysd/git-messenger.vim) ||
-| [vim-endwise](https://github.com/tpope/vim-endwise) ||
-
-
-#### Completion & Code-Analysis
-
-| Name | Description |
-| ---- | ----------- |
-| [vim-markdown-composer](https://github.com/euclio/vim-markdown-composer)||
-| [bracey.vim](https://github.com/turbio/bracey.vim)||
-| [asyncrun](https://github.com/skywind3000/asyncrun.vim) ||
-| [vim-gutentags](https://github.com/ludovicchabant/vim-gutentags) | Manages your tag files |
-| [vim-abolish](https://github.com/tpope/vim-abolish) ||
-
-#### Command
-
-| Name | Description |
-| ---- | ----------- |
-| [vim-eunuch](https://github.com/tpope/vim-eunuch) | Makes it easier to use unix commands in vim|
-| [gina.vim](https://github.com/lambdalisue/gina.vim) ||
-| [committia.vim](https://github.com/rhysd/committia.vim) ||
-
-</details>
-
-## Custom Mappings
-
-Note that,
-
-Leader key set as <kbd>Space</kbd>
-
-<details open>
-  <summary><strong>Key Mappings</strong> <small><i>(🔎 Click to expand/collapse)</i></small></summary>
-
-Modes: 𝐍=normal 𝐕=visual 𝐒=select 𝐈=insert 𝐂=command
-
-### Leader Key Mappings
-
-#### Navigation
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### File Operations
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### Edit
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### Search & Replace
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### Clipboard
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### Command & History
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### Editory UI
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### Custom Tools & Plugins
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### Window Management
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ---- | --- | ---- |
-| | | | |
-
-#### Git Version Control
-
-| Key | 	Mode |	Action |	Plugin or Mapping |
-| ----------------------------------------- | ------------ |
-| <kbd>Space</kbd>+<kbd>gm</kbd> | *N*  | Show git blame of line under cursor in preview window |GitMessenger |
-
-</details>
-
-## Credits
-
-I owe a special thanks to the following projects:
-
-- [Pack](https://github.com/maralla/pack) - Package Manager that works outside of vim
-
-  - This config is designed to utilize neovim even though this package manager doesn't support neovim. This package manger is being used as a utility to install and update packages. This config utilizes (neo)vim's builtin plugin runtime management to load plugin(mostly lazily).
-
-- [Coc](https://github.com/neoclide/coc.nvim) - Intellisense engine for vim8 & neovim, full language server protocol support as VSCode
-
-- [Vim Buffet](https://github.com/bagrat/vim-buffet) and [Spaceline](https://github.com/hardcoreplayers/spaceline.vim) - Provide an IDE-like Vim tabline & vim statusline like spacemacs
-
-  - Provides beautiful UI
-
-- [Vim Clap](https://github.com/liuchengxu/vim-clap) - Modern generic interactive finder and dispatcher for Vim and NeoVim
-
-  - Extraordinarily fast interactive finder and dispatcher
-
-- [Rafi's Vim Config](https://github.com/rafi/vim-config) - For help with some of the configs and ideas for a good readme
-
-## TODO
-
-- [ ] Better Autocorrect
-- [ ] Pandoc as a Compiler
-- [x] Ale Integration
-- [x] Fix vim which keys
-- [x] Move Filetype specific `coc_global_extension` into that filetypes ftplugin file
-- [x] Neoformat Integration
-- [x] Filetype specific syntax moved into after/syntax/<filetype>.vim
