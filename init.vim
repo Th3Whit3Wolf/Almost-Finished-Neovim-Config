@@ -51,3 +51,5 @@ cnoreabbrev W! w!
 cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
 
+" Commands to install plugins
+command! -nargs=* InstallPlug :lua plug.install( '<args>' )
