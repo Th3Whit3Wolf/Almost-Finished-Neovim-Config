@@ -11,7 +11,8 @@ function Split(s, delimiter)
     return result;
 end
 
-local normal_plugins = {"tpope/vim-dadbod", -- plugin for interacting with databases
+local normal_plugins = {"jiangmiao/auto-pairs", -- Vim plugin, insert or delete brackets, parens, quotes in pair 
+"tpope/vim-dadbod", -- plugin for interacting with databases
 "kristijanhusak/vim-dadbod-ui", -- Like pgadmin but for vim
 "glepnir/spaceline.vim", -- Most beautiful & fastest statusline
 "ryanoasis/vim-devicons", -- Devicons (requirement for spaceline)
@@ -19,7 +20,7 @@ local normal_plugins = {"tpope/vim-dadbod", -- plugin for interacting with datab
 }
 
 local lua_plugins = {"neovim/nvim-lspconfig", -- Collection of common configurations for the Nvim LSP client.
-"tjdevries/lsp_extensions.nvim",  -- bunch of info & extension callbacks for built-in LSP (provides inlay hints)
+"tjdevries/lsp_extensions.nvim", -- bunch of info & extension callbacks for built-in LSP (provides inlay hints)
 "nvim-lua/completion-nvim", -- auto completion framework that aims to provide a better completion experience with neovim's built-in LSP
 "nvim-lua/diagnostic-nvim", -- wrapsthe diagnostics setting to make it more user friendly
 "nvim-treesitter/nvim-treesitter", -- Treesitter configurations and abstraction layer for Neovim. 
@@ -27,16 +28,15 @@ local lua_plugins = {"neovim/nvim-lspconfig", -- Collection of common configurat
 "steelsojka/completion-buffers", -- completion for buffers word.
 "kristijanhusak/vim-dadbod-completion", -- completion sources for vim-dadbod
 "kristijanhusak/completion-tags", -- Slightly improved ctags completion
-"kyazdani42/nvim-web-devicons",  -- devicons in lua
+"kyazdani42/nvim-web-devicons", -- devicons in lua
 "kyazdani42/nvim-tree.lua", -- A File Explorer For Neovim Written In Lua
 "tjdevries/colorbuddy.nvim", -- A colorscheme helper for Neovim
-"norcalli/snippets.nvim",  -- Snippets tool written in lua
+"norcalli/snippets.nvim", -- Snippets tool written in lua
 "norcalli/nvim-colorizer.lua", -- high-performance color highlighter for Neovim
 "mhartington/formatter.nvim" -- A format runner for neovim, written in lua
 }
 
-local lazy_plugins = {
-"tpope/vim-eunuch", -- Vim sugar for the UNIX shell commands
+local lazy_plugins = {"tpope/vim-eunuch", -- Vim sugar for the UNIX shell commands
 "rhysd/committia.vim", -- improves the git commit buffer
 "tpope/vim-git", -- Vim Git runtime files
 "mhinz/vim-signify", -- uses the sign column to indicate added, modified and removed lines in a file that is managed by a version control system
@@ -50,7 +50,7 @@ local lazy_plugins = {
 "reedes/vim-wordy", -- Uncover usage problems in your writing
 "reedes/vim-lexical", -- Building on Vim’s spell-check and thesaurus/dictionary completion
 "reedes/vim-pencil", -- handful of tweaks needed to smooth the path to writing prose
-"dbmrq/vim-ditto", -- highlights overused words
+"dbmrq/vim-ditto" -- highlights overused words
 }
 
 local ft_plugins = {"martinlroth/vim-acpi-asl", -- ACPI ASL
@@ -246,9 +246,8 @@ local build_plugins = {
     ["heavenshell/vim-jsdoc"] = "make clean && make install"
 }
 
-function plug.install()
+function plug.install_default()
     local pack = home .. '/.cargo/bin/npack'
-    local plugins = home .. '/.local/share/nvim/site/pack/default/'
     local opt_plugins = {}
 
     for _, v in pairs(lua_plugins) do
@@ -267,7 +266,7 @@ function plug.install()
 
     if global.exists(pack) then
         for _, plugin in ipairs(opt_plugins) do
-            if not global.exists(plugins .. 'opt/' .. Split(plugin, '/')[2]) then
+            if not global.exists(global.plugins .. 'opt/' .. Split(plugin, '/')[2]) then
                 vim.cmd("silent !npack install " .. plugin .. " -o")
                 if Split(plugin, '/')[2] == 'nvim-treesitter' then
                     vim.cmd('TSInstall all')
@@ -275,16 +274,18 @@ function plug.install()
             end
         end
         for _, plugin in ipairs(normal_plugins) do
-            if not global.exists(plugins .. 'start/' .. Split(plugin, '/')[2]) then
+            if not global.exists(global.plugins .. 'start/' .. Split(plugin, '/')[2]) then
                 vim.cmd("silent !npack install " .. plugin)
             end
         end
         for plugin, build_cmd in ipairs(build_plugins) do
-            if not global.exists(plugins .. 'opt/' .. Split(plugin, '/')[2]) then
+            if not global.exists(global.plugins .. 'opt/' .. Split(plugin, '/')[2]) then
                 vim.cmd("silent !npack " .. plugin .. " --build '" .. build_cmd .. "' -o")
             end
         end
     end
+
+    print('All default plugins installed')
 end
 
 function plug.load_lua()
@@ -295,6 +296,20 @@ function plug.load_lua()
             vim.cmd('packadd ' .. plugin)
         end
     end
+end
+
+function plug.install( arg )
+    local plugin = Split(arg, ' ')[1]
+    if string.match(arg, "-o") then
+        if not global.exists(global.plugins .. 'opt/' .. Split(plugin, '/')[2]) then
+            vim.cmd("silent !npack install " .. plugin .. " -o")
+        end
+    else
+        if not global.exists(global.plugins .. 'start/' .. Split(plugin, '/')[2]) then
+            vim.cmd("silent !npack install " .. plugin)
+        end
+    end
+    print('Installed '.. Split(plugin, '/')[2])
 end
 
 return plug
