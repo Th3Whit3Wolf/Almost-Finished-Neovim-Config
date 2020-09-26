@@ -15,6 +15,12 @@ modular file structure. Lazy loading where it makes sense.
 - All neovim settings set in lua
 - Put as much in lua as possible
 - Stay fast & keep lazy loading
+- More Custom plugins (in lua)
+  - Async builder/compiler/transpiler, runner, tester
+  - Async linter
+  - Async formatter
+  - Async (maybe incremental) tag generator (w/ [ptags](https://github.com/dalance/ptags))
+
 
 <details>
   <summary>
@@ -101,12 +107,11 @@ modular file structure. Lazy loading where it makes sense.
 
 ## Install
 
-[1.] Let's clone this repo! Clone to `~/.config/nvim`,
-we'll also symlink it for Vim:
+[1.] Let's clone this repo! Clone to `~/.config/nvim`
 
 ```sh
 mkdir ~/.config
-git clone https://github.com/Th3Whit3Wolf/Almost-Finished-Neovim-Config.git ~/.config/nvim
+git clone https://github.com/Th3Whit3Wolf/Almost-Finished-Neovim-Config.git ~/.config/nvim -c "lua plug.install_default()" -c "qa"
 ```
 
 [1.] Run `nvim` so that:
@@ -184,7 +189,7 @@ Looks Like This
 * [Universal ctags](https://ctags.io/)
   * for syntax tokenization
 
-- [Lazy Git](https://github.com/jesseduffield/lazygit)
+- [LazyGit](https://github.com/jesseduffield/lazygit)
 
   - Simple terminal UI for git commands
   - Makes using git insanely easy
