@@ -47,6 +47,8 @@ function variables:load_variables()
 
     self.rg_derive_root = true
 
+    self.rainbow_guifgs = "'#ca754b', '#d26487', '#a15ea7', '#6981c5'"
+
     -- DB env variables for vim-dadbod-ui 
     self.db_ui_env_variable_url = 'DATABASE_URL'
     self.db_ui_env_variable_name = 'DATABASE_NAME'
