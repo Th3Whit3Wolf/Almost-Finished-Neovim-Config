@@ -25,12 +25,17 @@ function autocmd.load_autocmds()
                 {"BufWritePre", "*.bak", "setlocal noundofile"}, {"BufLeave", "*", "silent! update"},
                 {"BufWinEnter,WinEnter", "term://*", "startinsert"}, {"BufLeave", "term://*", "stopinsert"}},
 
-        completion = {{"BufEnter", "*", "lua require'completion'.on_attach()"}},
+        completion = {{"BufEnter", "*", "lua require'completion'.on_attach()"},
+        -- Show diagnostic popup on cursor hold
+                      {"CursorHold", "*", "lua vim.lsp.util.show_line_diagnostics()"},
+        -- Enable type inlay hints
+                      {"CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost", "*",
+                       [[lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }]]}},
 
         gitlens = {{"CursorHold", "*", "lua require'plugins/gitlens'.blameVirtText()"},
                    {"CursorMoved", "*", "lua require'plugins/gitlens'.clearBlameVirtText()"},
                    {"CursorMovedI", "*", "lua require'plugins/gitlens'.clearBlameVirtText()"}},
-        --lazy_plugs = {},
+        -- lazy_plugs = {},
         niceties = {{"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]},
                     {"WinEnter,InsertLeave", "*", "set cursorline"}, {"WinLeave,InsertEnter", "*", "set nocursorline"},
                     {"BufWritePost", "*",
@@ -43,6 +48,7 @@ function autocmd.load_autocmds()
                 {"VimResized", "*", [[tabdo wincmd =]]}, {"VimLeave", "*", "wshada!"},
         -- Check if file changed when its window is focus, more eager than 'autoread'
                 {"BufEnter,FocusGained", "*", "checktime"}},
+
         yank = {{"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]}}
     }
 
