@@ -53,3 +53,10 @@ cnoreabbrev Qall! qall!
 
 " Commands to install plugins
 command! -nargs=* InstallPlug :lua plug.install( '<args>' )
+
+function! GetHighlight()
+	let l:gp_nm = synIDattr(synID(line("."), col("."), 1), "name")
+  	let l:fg = synIDattr(synIDtrans(hlID(l:gp_nm)), "fg#")
+  	let l:bg = synIDattr(synIDtrans(hlID(l:gp_nm)), "bg#")
+	echo "Group(bg,fg): "l:gp_nm"("l:fg","l:bg")"
+endfunction
