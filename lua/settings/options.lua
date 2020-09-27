@@ -123,7 +123,6 @@ function options:load_options()
     self.shortmess = "filnxtToOFc"; -- Don't pass messages to |ins-completion-menu|.
     self.scrolloff = 3; -- Keep at least 3 lines above/below
     self.sidescrolloff = 5; -- Keep at least 5 lines left/right
-    self.number = true; -- Show line numbers
     self.relativenumber = true; -- Show line number relative to current line
     self.numberwidth = 4; -- The width of the number column
     self.ruler = false; -- Disable default status ruler
@@ -161,6 +160,8 @@ function options:load_options()
 
     for name, value in pairs(self) do
         vim.o[name] = value
+        -- Show line numbers, surprisingly not a global options
+        vim.wo.number = true
     end
 end
 
