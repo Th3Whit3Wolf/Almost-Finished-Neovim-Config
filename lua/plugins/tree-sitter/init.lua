@@ -5,10 +5,10 @@ require'nvim-treesitter.configs'.setup {
             enable = true
         },
         highlight_current_scope = {
-            enable = true
+            -- enable = true
         },
         highlight_definitions = {
-            enable = true
+            -- enable = true
         },
         smart_rename = {
             enable = true,
