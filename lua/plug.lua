@@ -183,8 +183,9 @@ local ft_plugins = {"martinlroth/vim-acpi-asl", -- ACPI ASL
 "IN3D/vim-raml", -- RAML
 "adamclerk/vim-razor", -- Razor view engine
 "reasonml-editor/vim-reason-plus", -- Reason
-"keith/rspec.vim", -- RSpec
 "marshallward/vim-restructuredtext", -- reStructuredText
+"keith/rspec.vim", -- RSpec
+"ron-rs/ron.vim", -- RON
 "vim-ruby/vim-ruby", -- Ruby
 "rust-lang/rust.vim", -- Rust
 "arzg/vim-rust-syntax-ext", -- Rust

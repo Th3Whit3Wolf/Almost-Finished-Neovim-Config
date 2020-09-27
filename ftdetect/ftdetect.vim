@@ -455,6 +455,9 @@ au BufNewFile,BufRead *.re set ft=reason
 au BufNewFile,BufRead *.rei set ft=reason
 au BufNewFile,BufRead .merlin set ft=merlin
 
+" RON
+au BufRead,BufNewFile *.ron set ft=ron
+
 " ruby
 au BufNewFile,BufRead *.erb,*.rhtml set ft=eruby
 au BufNewFile,BufRead .irbrc,irbrc set ft=ruby
