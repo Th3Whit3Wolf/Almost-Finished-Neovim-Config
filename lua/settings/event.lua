@@ -31,7 +31,8 @@ function autocmd.load_autocmds()
         -- Enable type inlay hints
                       {"CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost", "*",
                        [[lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }]]}},
-
+        ScrollbarInit = {{"WinEnter,FocusGained,CursorMoved,VimResized", "*", "silent! lua require('scrollbar').show()"},
+                         {"WinLeave,FocusLost,CursorHold", "*", "silent! lua require('scrollbar').clear()"}},
         gitlens = {{"CursorHold", "*", "lua require'plugins/gitlens'.blameVirtText()"},
                    {"CursorMoved", "*", "lua require'plugins/gitlens'.clearBlameVirtText()"},
                    {"CursorMovedI", "*", "lua require'plugins/gitlens'.clearBlameVirtText()"}},

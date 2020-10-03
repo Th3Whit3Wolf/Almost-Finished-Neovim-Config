@@ -1,15 +1,3 @@
-packadd vim-restructuredtext
-packadd vim-lexical
-packadd vim-pencil
-packadd vim-ditto
-packadd completion-tags
-" packadd ale
-packadd nvim-treesitter 
-packadd completion-treesitter 
-lua require 'plugins/tree-sitter' 
-setlocal foldmethod=expr 
-setlocal foldexpr=nvim_treesitter#foldexpr()
-
 " DittoOn
 
 call lexical#init()

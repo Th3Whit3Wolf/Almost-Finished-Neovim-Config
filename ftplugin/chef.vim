@@ -1,6 +1,3 @@
-" packadd ale
-
-
 " Taken from https://github.com/dougireton/vim-chef
 let s:cpo_save = &cpo
 set cpo&vim

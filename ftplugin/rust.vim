@@ -1,18 +1,5 @@
-packadd rust.vim
-packadd vim-rust-syntax-ext
-" packadd ale
-packadd nvim-treesitter 
-packadd completion-treesitter
-packadd completion-tags 
-lua require 'plugins/tree-sitter' 
-setlocal foldmethod=expr 
-setlocal foldexpr=nvim_treesitter#foldexpr()
-
-
 let g:rustfmt_autosave = 1
 let g:rust_fold = 1
-
-let b:ale_linters = ['analyzer']
 
 set colorcolumn=9999
 setlocal tags=./rusty-tags.vi;/

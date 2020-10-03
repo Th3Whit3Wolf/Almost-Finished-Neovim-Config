@@ -1,2 +1,0 @@
-packadd d.vim
-

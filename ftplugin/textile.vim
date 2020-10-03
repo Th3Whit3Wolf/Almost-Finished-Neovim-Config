@@ -1,8 +1,3 @@
-packadd textile.vim
-packadd vim-lexical
-packadd vim-pencil
-packadd vim-ditto
-
 "DittoOn
 
 call lexical#init()

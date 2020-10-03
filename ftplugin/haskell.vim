@@ -1,11 +1,3 @@
-packadd haskell-vim
-"packadd ale
-packadd nvim-treesitter 
-packadd completion-treesitter 
-lua require 'plugins/tree-sitter' 
-setlocal foldmethod=expr 
-setlocal foldexpr=nvim_treesitter#foldexpr()
-
 let b:endwise_addition = '#endif'
 let b:endwise_words = 'if,ifdef,ifndef'
 let b:endwise_pattern = '^\s*#\%(if\|ifdef\|ifndef\)\>'
@@ -28,6 +20,7 @@ function! CompileMyCode()
         echo 'Haskell is not installed!'
     endif
 endfunction
+
 function! RunMyCode()
     if executable('ghc')
         call Run("ghc % -o %<")
@@ -36,7 +29,7 @@ function! RunMyCode()
     endif
 endfunction
 
-if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/git.vim'))) == 0
+if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/vim-endwise.vim'))) == 0
     execute 'source' fnameescape(resolve(expand('~/.config/nvim/lazy/vim-endwise.vim')))
 endif
 

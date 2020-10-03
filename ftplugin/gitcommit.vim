@@ -1,5 +1,3 @@
-"packadd ale
-
 setlocal spell
 setlocal textwidth=72
 

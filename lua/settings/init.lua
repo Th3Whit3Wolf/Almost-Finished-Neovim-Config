@@ -29,6 +29,9 @@ function M.createdir()
         -- install neovim node host
         os.execute("npm install -g neovim")
     end
+    if not global.isdir(os.getenv("HOME") .. '/.local/share/nvim/site/pack/packer/opt/packer.nvim') then
+        os.execute("git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/opt/packer.nvim")
+    end
 end
 
 function M.disable_distribution_plugins()

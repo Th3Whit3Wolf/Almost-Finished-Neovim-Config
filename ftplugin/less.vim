@@ -1,6 +1,3 @@
-packadd vim-less
-" packadd ale
-
 function! CompileMyCode()
     if executable('less')
         call Run("lessc % > %:t:r.css")

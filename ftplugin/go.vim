@@ -1,13 +1,3 @@
-packadd vim-go
-packadd completion-tags
-" packadd ale
-packadd nvim-treesitter 
-packadd completion-treesitter 
-lua require 'plugins/tree-sitter' 
-setlocal foldmethod=expr 
-setlocal foldexpr=nvim_treesitter#foldexpr()
-
-
 let g:go_highlight_structs = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_methods = 1
@@ -30,6 +20,7 @@ function! CompileMyCode()
         echo 'Go is not installed!'
     endif
 endfunction
+
 function! RunMyCode()
     if executable('go')
         call Run("go run %")

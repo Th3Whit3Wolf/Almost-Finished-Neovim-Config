@@ -1,6 +1,3 @@
-packadd vim-zsh
-packadd zinit-vim-syntax
-
 let b:endwise_addition = '\=submatch(0)=="then" ? "fi" : submatch(0)=="case" ? "esac" : "done"'
 let b:endwise_words = 'then,case,do'
 let b:endwise_pattern = '\%(^\s*\zscase\>\ze\|\zs\<\%(do\|then\)\ze\s*$\)'
@@ -50,7 +47,7 @@ endfunction
 
 command! -bang -nargs=0 -bar ShellBang call <SID>shellbang()
 
-if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/git.vim'))) == 0
+if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/vim-endwise.vim'))) == 0
     execute 'source' fnameescape(resolve(expand('~/.config/nvim/lazy/vim-endwise.vim')))
 endif
 

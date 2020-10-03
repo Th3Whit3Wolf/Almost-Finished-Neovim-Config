@@ -1,16 +1,3 @@
-packadd vim-markdown
-packadd vim-markdown-composer
-packadd completion-tags
-" packadd ale
-packadd vim-lexical
-packadd vim-pencil
-packadd vim-ditto
-packadd nvim-treesitter 
-packadd completion-treesitter 
-lua require 'plugins/tree-sitter' 
-setlocal foldmethod=expr 
-setlocal foldexpr=nvim_treesitter#foldexpr()
-
 " DittoOn
 
 setlocal spell nofoldenable

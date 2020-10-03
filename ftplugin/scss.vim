@@ -1,8 +1,3 @@
-packadd scss-syntax.vim
-packadd completion-tags
-" packadd ale
-
-
 function! CompileMyCode()
     if executable('scssc')
         call Run("scssc  % > %:t:r.css")

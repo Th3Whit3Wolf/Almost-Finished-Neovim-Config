@@ -1,5 +1,6 @@
 syntax enable
 filetype plugin indent on
+" set background=light
 
 lua << EOF
 require('init')
@@ -60,3 +61,16 @@ function! GetHighlight()
   	let l:bg = synIDattr(synIDtrans(hlID(l:gp_nm)), "bg#")
 	echo "Group(bg,fg): "l:gp_nm"("l:fg","l:bg")"
 endfunction
+
+highlight link Crates Comment
+call sign_define("LspDiagnosticsErrorSign", {"text" : "✘", "texthl" : "LspDiagnosticsError"})
+call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})
+call sign_define("LspDiagnosticsInformationSign", {"text" : "", "texthl" : "LspDiagnosticsInformation"})
+call sign_define("LspDiagnosticsHintSign", {"text" : "ஐ", "texthl" : "LspDiagnosticsHint"})
+
+execute 'luafile ' . stdpath('config') . '/lua/plug.lua'
+command! PackerInstall packadd packer.nvim | lua require('plug').install()
+command! PackerUpdate packadd packer.nvim | lua require('plug').update()
+command! PackerSync packadd packer.nvim | lua require('plug').sync()
+command! PackerClean packadd packer.nvim | lua require('plug').clean()
+command! PackerCompile packadd packer.nvim | lua require('plug').compile()

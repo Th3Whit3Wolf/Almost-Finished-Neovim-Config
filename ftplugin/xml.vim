@@ -1,7 +1,5 @@
 packadd vim-xml
-packadd vim-closetag
-packadd completion-tags
-" packadd ale
+
 
 call lexical#init()
 call pencil#init({'wrap': 'soft', 'autoformat': 1})

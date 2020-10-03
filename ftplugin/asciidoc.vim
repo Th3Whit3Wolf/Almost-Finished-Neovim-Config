@@ -1,10 +1,3 @@
-packadd vim-asciidoc
-packadd completion-tags
-" packadd ale
-packadd vim-lexical
-packadd vim-pencil
-packadd vim-ditto
-
 " DittoOn
 
 call lexical#init()

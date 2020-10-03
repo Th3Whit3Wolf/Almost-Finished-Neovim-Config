@@ -1,316 +1,1318 @@
-local home = os.getenv("HOME")
-local global = require 'settings/global'
-
-plug = {}
-
-function Split(s, delimiter)
-    result = {};
-    for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
-        table.insert(result, match);
+local packer = nil
+local function init()
+    if packer == nil then
+        packer = require('packer')
+        packer.init()
     end
-    return result;
+
+    local use = packer.use
+    packer.reset()
+
+    -- Packer
+    use {
+        'wbthomason/packer.nvim',
+        opt = true
+    }
+
+    -- Vim plugin, insert or delete brackets, parens, quotes in pair 
+    use {'jiangmiao/auto-pairs'}
+
+    -- plugin for interacting with databases
+    use {'tpope/vim-dadbod'}
+
+    -- Like pgadmin but for vim
+    use {'kristijanhusak/vim-dadbod-ui'}
+
+    -- Most beautiful & fastest statusline
+    use {'glepnir/spaceline.vim'}
+
+    -- Devicons (requirement for spaceline)
+    use {'ryanoasis/vim-devicons'}
+
+    -- Modern vim-startify
+    use {'hardcoreplayers/dashboard-nvim'}
+
+    --  Modern performant generic finder and dispatcher for NeoVim 
+    use {
+        'liuchengxu/vim-clap',
+        run = ':Clap install-binary!'
+    }
+
+    ---------
+    -- Lua --
+    ---------
+
+    -- Collection of common configurations for the Nvim LSP client.
+    use {
+        'neovim/nvim-lspconfig',
+        event = 'InsertEnter *'
+    }
+
+    -- bunch of info & extension callbacks for built-in LSP (provides inlay hints)
+    use {
+        'tjdevries/lsp_extensions.nvim',
+        event = 'InsertEnter *'
+    }
+
+    -- auto completion framework that aims to provide a better completion experience with neovim's built-in LSP
+    use {'nvim-lua/completion-nvim'}
+
+    -- wraps the diagnostics setting to make it more user friendly
+    use {
+        'nvim-lua/diagnostic-nvim',
+        event = 'InsertEnter *'
+    }
+
+    -- Treesitter configurations and abstraction layer for Neovim. 
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        ft = {'sh', 'c', 'cs', 'cpp', 'css', 'dart', 'elm', 'fennel', 'go', 'haskell', 'html', 'java', 'javascript',
+              'jsdoc', 'julia', 'lua', 'markdown', 'nix', 'ocaml', 'php', 'python', 'ql', 'rst', 'ruby', 'rust',
+              'scala', 'swift', 'toml', 'tsx', 'typescript', 'vue', 'yaml'},
+        config = function()
+            vim.cmd [[ setlocal foldmethod=expr ]]
+            vim.cmd [[ setlocal foldexpr=nvim_treesitter#foldexpr() ]]
+        end
+    }
+
+    -- Treesitter based completion sources.
+    use {
+        'nvim-treesitter/completion-treesitter',
+        ft = {'sh', 'c', 'cs', 'cpp', 'css', 'dart', 'elm', 'fennel', 'go', 'haskell', 'html', 'java', 'javascript',
+              'jsdoc', 'julia', 'lua', 'markdown', 'nix', 'ocaml', 'php', 'python', 'ql', 'rst', 'ruby', 'rust',
+              'scala', 'swift', 'toml', 'tsx', 'typescript', 'vue', 'yaml'},
+        run = 'TSInstall all'
+    }
+
+    -- Completion for buffers word.
+    use {'steelsojka/completion-buffers'}
+
+    -- Completion sources for vim-dadbod
+    use {'tpope/vim-dadbod"'}
+    use {'kristijanhusak/vim-dadbod-ui'}
+    use {'kristijanhusak/vim-dadbod-completion'}
+
+    -- Slightly improved ctags completion
+    use {
+        'kristijanhusak/completion-tags',
+        ft = {'ada', 'ansible', 'asm', 'awk', 'bib', 'c', 'clojure', 'cobol', 'cmake', 'cpp', 'cs', 'css', 'd',
+              'elixir', 'elm', 'erlang', 'fortan', 'go', 'html', 'java', 'json', 'lisp', 'lua', 'm4', 'make',
+              'markdown', 'matlab', 'objc', 'ocaml', 'pascal', 'perl', 'perl6', 'php', 'ps1', 'ps1xml', 'proto',
+              'python', 'r', 'rst', 'ruby', 'rust', 'scss', 'sh', 'sql', 'svg', 'systemd', 'tex', 'typescript',
+              'verilog', 'vhdl', 'vim', 'xml', 'xsl', 'yaml', 'zephir'}
+    }
+
+    -- devicons in lua
+    use {'kyazdani42/nvim-web-devicons'}
+
+    -- A File Explorer For Neovim Written In Lua
+    use {'kyazdani42/nvim-tree.lua'}
+
+    -- Snippets tool written in lua
+    use {'norcalli/snippets.nvim'}
+
+    -- A format runner for neovim, written in lua
+    use {'mhartington/formatter.nvim'}
+
+    -- My spacemacs colorscheme
+    use {'Th3Whit3Wolf/space-nvim-theme'}
+
+    ----------
+    -- Lazy --
+    ----------
+
+    -- uses the sign column to indicate added, modified and removed lines in a file that is managed by a version control system
+    use {
+        'mhinz/vim-signify',
+        opt = true
+    }
+
+    -- Vim sugar for the UNIX shell commands
+    use {
+        'tpope/vim-eunuch',
+        cmd = {'Delete', 'Unlink', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Cfind', 'Clocate', 'Lfind', 'Llocate', 'Wall',
+               'SudoWrite', 'SudoEdit'}
+    }
+
+    -- shows the history of commits under the cursor in popup window
+    use {
+        'rhysd/git-messenger.vim',
+        opt = true
+    }
+
+    -- Vim plugin that shows keybindings in popup 
+    use {
+        'liuchengxu/vim-which-key',
+        opt = true
+    }
+
+    -- improves the git commit buffer
+    use {
+        'rhysd/committia.vim',
+        opt = true
+    }
+
+    -- easily search for, substitute, and abbreviate multiple variants of a word 
+    use {
+        'tpope/vim-abolish',
+        event = 'InsertEnter *'
+    }
+
+    -- Asynchronously control git repositories in Neovim
+    use {
+        'lambdalisue/gina.vim',
+        opt = true
+    }
+
+    -- Vim script for text filtering and alignment 
+    use {
+        'godlygeek/tabular',
+        opt = true
+    }
+
+    -- Viewer & Finder for LSP symbols and tags
+    use {
+        'liuchengxu/vista.vim',
+        cmd = 'Vista'
+    }
+
+    -- Auto close (X)HTML tags 
+    use {
+        'alvan/vim-closetag',
+        ft = {'html', 'javascript', 'xhtml', 'phtml', 'xml'}
+    }
+
+    -- live edit html, css, and javascript in vim 
+    use {
+        'turbio/bracey.vim',
+        run = 'yarn --prefix server',
+        ft = {'html', 'css', 'javascript'}
+    }
+
+    -- An asynchronous markdown preview plugin for Neovim
+    use {
+        'euclio/vim-markdown-composer',
+        run = 'cargo build --release',
+        ft = {'markdown'},
+        cmd = {'ComposerOpen', 'ComposerUpdate'}
+    }
+
+    -- Minimap for vim
+    use {
+        'wfxr/minimap.vim',
+        run = 'cargo install --locked code-minimap'
+    }
+
+    -- Simpler Rainbow Parentheses 
+    use {
+        'alok/rainbow_parentheses.vim',
+        event = 'InsertEnter *',
+        run = 'git checkout fix-spell'
+    }
+
+    -- Read DotEnv
+    use {
+        'tpope/vim-dotenv',
+        cmd = 'Dotenv'
+    }
+    
+    -- Profiling
+    use {
+        'dstein64/vim-startuptime',
+        cmd = 'StartupTime'
+    }
+
+    -----------
+    -- Prose --
+    -----------
+
+    -- Add all of these in  `lazy/git`
+    -- Uncover usage problems in your writing
+    use {
+        'reedes/vim-wordy',
+        cmd = {'PrevWordy', 'Wordy', 'NextWordy'}
+    }
+
+    -- Highlights overused words
+    use {
+        'dbmrq/vim-ditto',
+        cmd = {'DittoNext', 'DittoPrev', 'DittoGood', 'DittoBad', 'DittoMore', 'DittoLess', 'DittoOn'}
+    }
+
+    -- Building on Vim’s spell-check and thesaurus/dictionary completion
+    use {
+        'reedes/vim-lexical',
+        ft = {'asciidoc', 'rst', 'mail', 'html', 'text', 'textile', 'markdown', 'tex', 'xml'}
+    }
+    -- handful of tweaks needed to smooth the path to writing prose
+    use {
+        'reedes/vim-pencil',
+        ft = {'asciidoc', 'rst', 'mail', 'html', 'text', 'textile', 'markdown', 'tex', 'xml'}
+    }
+
+    ---------------
+    -- FTPlugins --
+    ---------------
+
+    -- ACPI ASL
+    use {
+        'martinlroth/vim-acpi-asl',
+        ft = {'asl'}
+    }
+
+    -- Ansible 2.x
+    use {
+        'pearofducks/ansible-vim',
+        ft = {'ansible'}
+    }
+
+    -- API Blueprint
+    use {
+        'sheerun/apiblueprint.vim',
+        ft = {'apiblueprint'}
+    }
+
+    -- AppleScript
+    use {
+        'mityu/vim-applescript',
+        ft = {'applescript'}
+    }
+
+    -- Arduino
+    use {
+        'sudar/vim-arduino-syntax',
+        ft = {'arduino'}
+    }
+
+    -- AsciiDoc
+    use {
+        'asciidoc/vim-asciidoc',
+        ft = {'asciidoc'}
+    }
+
+    -- BATS
+    use {
+        'aliou/bats.vim',
+        ft = {'bats'}
+    }
+
+    -- Bazel
+    use {
+        'bazelbuild/vim-bazel',
+        ft = {'bzl'}
+    }
+
+    -- Bazel
+    use {
+        'google/vim-maktaba',
+        ft = {'bzl'}
+    }
+
+    -- Blade templates
+    use {
+        'jwalton512/vim-blade',
+        ft = {'blade'}
+    }
+
+    -- Brewfile
+    use {
+        'bfontaine/Brewfile.vim',
+        ft = {'brewfile'}
+    }
+
+    -- C#
+    use {
+        'OrangeT/vim-csharp',
+        ft = {'cs', 'xml', 'cshtml.html', 'aspx.html'}
+    }
+
+    -- C#
+    use {
+        'OmniSharp/omnisharp-vim',
+        ft = {'cs', 'omnisharplog'}
+    }
+
+    -- Caddyfile
+    use {
+        'isobit/vim-caddyfile',
+        ft = {'caddyfile'}
+    }
+
+    -- Cargo Make (Rust cargo extension)
+    use {
+        'nastevens/vim-cargo-make',
+        ft = {'cargo-make'}
+    }
+
+    -- Cargo.toml (Rust)
+    use {
+        'mhinz/vim-crates',
+        opt = true
+    }
+
+    -- Carp
+    use {
+        'hellerve/carp-vim',
+        ft = {'carp'}
+    }
+
+    -- Chef
+    use {
+        'vadv/vim-chef',
+        ft = {'chef'}
+    }
+
+    -- Clojure
+    use {
+        'guns/vim-clojure-static',
+        ft = {'clojure'}
+    }
+
+    -- Clojure
+    use {
+        'tpope/vim-fireplace',
+        ft = {'clojure'}
+    }
+
+    -- Clojure
+    use {
+        'guns/vim-clojure-highlight',
+        ft = {'clojure'}
+    }
+
+    -- Clojure
+    use {
+        'Olical/conjure',
+        ft = {'clojure', 'fennel'}
+    }
+
+    -- LISP languages
+    use {
+        'eraserhd/parinfer-rust',
+        ft = {'clojure', 'lisp', 'scheme', 'racket', 'jbuild', 'fennel', 'pddl'},
+        run = 'cargo build --release'
+    }
+
+    -- Cmake
+    use {
+        'pboettch/vim-cmake-syntax',
+        ft = {'cmake'}
+    }
+
+    -- Cmake
+    use {
+        'vhdirk/vim-cmake',
+        ft = {'cmake'}
+    }
+
+    -- CoffeScript
+    use {
+        'kchmck/vim-coffee-script',
+        ft = {'coffee'}
+    }
+
+    -- CJSX (JSX equivalent in CoffeeScript)
+    use {
+        'mtscout6/vim-cjsx',
+        ft = {'coffee'}
+    }
+
+    -- Cassandra CQL
+    use {
+        'elubow/cql-vim',
+        ft = {'cql'}
+    }
+
+    -- Cryptol
+    use {
+        'victoredwardocallaghan/cryptol.vim',
+        ft = {'cryptol'}
+    }
+
+    -- Crystal
+    use {
+        'vim-crystal/vim-crystal',
+        ft = {'crystal'}
+    }
+
+    -- CSS
+    use {
+        'hail2u/vim-css3-syntax',
+        ft = {'css'},
+        config = function()
+            vim.cmd [[ set backupcopy=yes ]]
+            vim.cmd [[ setlocal iskeyword+=- ]]
+        end
+    }
+
+    -- CSV
+    use {
+        'chrisbra/csv.vim',
+        ft = {'csv'}
+    }
+
+    -- Cucumber
+    use {
+        'tpope/vim-cucumber',
+        ft = {'cucumber'}
+    }
+
+    -- Cue
+    use {
+        'mgrabovsky/vim-cuesheet',
+        ft = {'cue'}
+    }
+
+    -- Cypher
+    use {
+        'jjaderberg/vim-syntax-cipher',
+        ft = {'cypher'}
+    }
+
+    -- D Lang
+    use {
+        'JesseKPhillips/d.vim',
+        ft = {'d', 'dcov', 'dd', 'ddoc', 'dsdl'}
+    }
+
+    -- Dafny
+    use {
+        'mlr-msft/vim-loves-dafny',
+        ft = {'dafny'}
+    }
+
+    -- Dart
+    use {
+        'dart-lang/dart-vim-plugin',
+        ft = {'dart'}
+    }
+
+    -- Dhall
+    use {
+        'vmchale/dhall-vim',
+        ft = {'dhall'}
+    }
+
+    -- Dockerfile
+    use {
+        'ekalinin/Dockerfile.vim',
+        ft = {'docker-compose', 'dockerfile'}
+    }
+
+    -- Duckscript
+    use {
+        'ekalinin/Dockerfile.vim',
+        ft = {'cargo-make', 'duckscript'}
+    }
+
+    -- Elixir
+    use {
+        'elixir-editors/vim-elixir',
+        ft = {'elixir'}
+    }
+
+    -- Emblem
+    use {
+        'yalesov/vim-emblem',
+        ft = {'emblem'}
+    }
+
+    -- Erlang
+    use {
+        'vim-erlang/vim-erlang-runtime',
+        ft = {'erlang'}
+    }
+
+    -- Fennel
+    use {
+        'bakpakin/fennel.vim',
+        ft = {'fennel'}
+    }
+
+    -- Ferm
+    use {
+        'vim-scripts/ferm.vim',
+        ft = {'ferm'}
+    }
+
+    -- Fish
+    use {
+        'georgewitteman/vim-fish',
+        ft = {'fish'}
+    }
+
+    -- Flatbuffers
+    use {
+        'dcharbon/vim-flatbuffers',
+        ft = {'fbs'}
+    }
+
+    -- Fountain
+    use {
+        'kblin/vim-fountain',
+        ft = {'fountain'}
+    }
+
+    -- GDScript 3
+    use {
+        'calviken/vim-gdscript3',
+        ft = {'gdscript3', 'gsl'}
+    }
+
+    -- Git
+    use {
+        'tpope/vim-git',
+        ft = {'git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail'}
+    }
+
+    -- OpenGL Shading Language
+    use {
+        'tikhomirov/vim-glsl',
+        ft = {'glsl'}
+    }
+
+    -- Gleam
+    use {
+        'gleam-lang/gleam.vim',
+        ft = {'gleam'}
+    }
+
+    -- GMPL
+    use {
+        'maelvls/gmpl.vim',
+        ft = {'gmpl'}
+    }
+
+    -- GNUPlot
+    use {
+        'vim-scripts/gnuplot-syntax-highlighting',
+        ft = {'gnuplot'}
+    }
+
+    -- Go
+    use {
+        'fatih/vim-go',
+        ft = {'go'},
+        run = ':GoUpdateBinaries'
+    }
+
+    -- Gradle
+    use {
+        'tfnico/vim-gradle',
+        ft = {'groovy'}
+    }
+
+    -- GraphQL
+    use {
+        'jparise/vim-graphql',
+        ft = {'graphql', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue'}
+    }
+
+    -- Hack
+    use {
+        'hhvm/vim-hack',
+        ft = {'hack'}
+    }
+
+    -- Haml
+    use {
+        'sheerun/vim-haml',
+        ft = {'haml', 'sass'}
+    }
+
+    -- Handlebars
+    use {
+        'mustache/vim-mustache-handlebars',
+        ft = {'handlebars', 'mustache'}
+    }
+
+    -- HAProxy
+    use {
+        'CH-DanReif/haproxy.vim',
+        ft = {'haproxy'}
+    }
+
+    -- Haskel
+    use {
+        'neovimhaskell/haskell-vim',
+        ft = {'haskell'}
+    }
+
+    -- Haxe
+    use {
+        'yaymukund/vim-haxe',
+        ft = {'haxe'}
+    }
+
+    -- HCL
+    use {
+        'b4b4r07/vim-hcl',
+        ft = {'hcl'}
+    }
+
+    -- Helm Templates
+    use {
+        'towolf/vim-helm',
+        ft = {'helm'}
+    }
+
+    -- Hive
+    use {
+        'zebradil/hive.vim',
+        ft = {'hive'}
+    }
+
+    -- HTML5
+    use {
+        'othree/html5.vim',
+        ft = {'html'}
+    }
+
+    -- i3
+    use {
+        'mboughaba/i3config.vim',
+        ft = {'i3config'}
+    }
+
+    -- icalendar
+    use {
+        'chutzpah/icalendar.vim',
+        ft = {'icalendar'}
+    }
+
+    -- Idris
+    use {
+        'idris-hackers/idris-vim',
+        ft = {'idris'}
+    }
+
+    -- Info
+    use {
+        'HiPhish/info.vim',
+        ft = {'info'}
+    }
+
+    -- Ion
+    use {
+        'vmchale/ion-vim',
+        ft = {'ion'}
+    }
+
+    -- ISPC
+    use {
+        'jez/vim-ispc',
+        ft = {'ispc'}
+    }
+
+    -- JST
+    use {
+        'briancollins/vim-jst',
+        ft = {'jst'}
+    }
+
+    -- JSX
+    use {
+        'maxmellon/vim-jsx-pretty',
+        ft = {'javascript', 'javascriptreact', 'typescript', 'typescriptreact'}
+    }
+
+    -- Jenkins
+    use {
+        'martinda/Jenkinsfile-vim-syntax',
+        ft = {'jenkins'}
+    }
+
+    -- Jinja
+    use {
+        'lepture/vim-jinja',
+        ft = {'jinja'}
+    }
+
+    -- Json
+    use {
+        'elzr/vim-json',
+        ft = {'json'}
+    }
+
+    -- Json5
+    use {
+        'GutenYe/json5.vim',
+        ft = {'json5'}
+    }
+
+    -- Julia
+    use {
+        'JuliaEditorSupport/julia-vim',
+        ft = {'julia'}
+    }
+
+    -- Kotlin
+    use {
+        'udalov/kotlin-vim',
+        ft = {'kotlin'}
+    }
+
+    -- Latex
+    use {
+        'lervag/vimtex',
+        ft = {'tex', 'bib'}
+    }
+
+    -- Latex
+    use {
+        'xuhdev/vim-latex-live-preview',
+        ft = {'tex'}
+    }
+
+    -- Ledger
+    use {
+        'ledger/vim-ledger',
+        ft = {'ledger'}
+    }
+
+    -- Less
+    use {
+        'groenewege/vim-less',
+        ft = {'less'}
+    }
+
+    -- Lilypond
+    use {
+        'sersorrel/vim-lilypond',
+        ft = {'lilypond'}
+    }
+
+    -- LiveScript
+    use {
+        'gkz/vim-ls',
+        ft = {'ls'}
+    }
+
+    -- Log
+    use {
+        'MTDL9/vim-log-highlighting',
+        ft = {'log'}
+    }
+
+    -- Macports
+    use {
+        'jstrater/mpvim',
+        ft = {'portfile'}
+    }
+
+    -- Mako
+    use {
+        'sophacles/vim-bundle-mako',
+        ft = {'mako'}
+    }
+
+    -- Markdown
+    use {
+        'plasticboy/vim-markdown',
+        ft = {'markdown'}
+    }
+
+    -- Markdown (Github)
+    use {
+        'rhysd/vim-gfm-syntax',
+        opt = true
+    }
+
+    -- Mathematica
+    use {
+        'voldikss/vim-mma',
+        ft = {'mma'}
+    }
+
+    -- Matlab
+    use {
+        'daeyun/vim-matlab',
+        ft = {'matlab'}
+    }
+
+    -- MDX
+    use {
+        'jxnblk/vim-mdx-js',
+        ft = {'mdx'}
+    }
+
+    -- Mercury
+    use {
+        'stewy33/mercury-vim',
+        ft = {'mercury'}
+    }
+
+    -- MoonScript
+    use {
+        'leafo/moonscript-vim',
+        ft = {'moon'}
+    }
+
+    -- Nginx
+    use {
+        'chr4/nginx.vim',
+        ft = {'nginx'}
+    }
+
+    -- Nim
+    use {
+        'zah/nim.vim',
+        ft = {'nim'}
+    }
+
+    -- Nix
+    use {
+        'LnL7/vim-nix',
+        ft = {'nix'}
+    }
+
+    -- Objective-C
+    use {
+        'b4winckler/vim-objc',
+        ft = {'objc'}
+    }
+
+    -- OCaml
+    use {
+        'ocaml/vim-ocaml',
+        ft = {'dune', 'oasis', 'ocaml', 'ocamlbuild_tags', 'omake', 'sexplib'}
+    }
+
+    -- Octave
+    use {
+        'McSinyx/vim-octave',
+        ft = {'octave'}
+    }
+
+    -- Pawn
+    use {
+        'mcnelson/vim-pawn',
+        ft = {'pawn'}
+    }
+
+    -- Pandoc
+    use {
+        'vim-pandoc/vim-pandoc',
+        ft = {'pandoc'}
+    }
+
+    -- Pandoc
+    use {
+        'vim-pandoc/vim-pandoc-syntax',
+        ft = {'pandoc'}
+    }
+
+    -- PERL
+    use {
+        'vim-perl/vim-perl',
+        ft = {'perl', 'perl6'}
+    }
+
+    -- PostgreSQL
+    use {
+        'lifepillar/pgsql.vim',
+        ft = {'pgsql'}
+    }
+
+    -- PHP
+    use {
+        'StanAngeloff/php.vim',
+        ft = {'php'}
+    }
+
+    -- PlantUML
+    use {
+        'aklt/plantuml-syntax',
+        ft = {'plantuml'}
+    }
+
+    -- Ponylang
+    use {
+        'jakwings/vim-pony',
+        ft = {'pony'}
+    }
+
+    -- PowerShell
+    use {
+        'PProvost/vim-ps1',
+        ft = {'ps1', 'ps1xml'}
+    }
+
+    -- Prolog
+    use {
+        'adimit/prolog.vim',
+        ft = {'prolog'}
+    }
+
+    -- Protocol Buffers
+    use {
+        'uarun/vim-protobuf',
+        ft = {'proto'}
+    }
+
+    -- Pug
+    use {
+        'digitaltoad/vim-pug',
+        ft = {'pug'}
+    }
+
+    -- Puppet
+    use {
+        'rodjek/vim-puppet',
+        ft = {'puppet', 'embeddedpuppet'}
+    }
+
+    -- PureScript
+    use {
+        'purescript-contrib/purescript-vim',
+        ft = {'purescript'}
+    }
+
+    -- QMake
+    use {
+        'artoj/qmake-syntax-vim',
+        ft = {'qmake'}
+    }
+
+    -- QML
+    use {
+        'peterhoeg/vim-qml',
+        ft = {'qml'}
+    }
+
+    -- R
+    use {
+        'jalvesaq/Nvim-R',
+        ft = {'r'}
+    }
+
+    -- Racket
+    use {
+        'wlangstroth/vim-racket',
+        ft = {'racket'}
+    }
+
+    -- Ragel
+    use {
+        'jneen/ragel.vim',
+        ft = {'ragel'}
+    }
+
+    -- Raku
+    use {
+        'Raku/vim-raku',
+        ft = {'raku'}
+    }
+
+    -- RAML
+    use {
+        'IN3D/vim-raml',
+        ft = {'raml'}
+    }
+
+    -- Razor view engine
+    use {
+        'adamclerk/vim-razor',
+        ft = {'razor'}
+    }
+
+    -- Reason
+    use {
+        'reasonml-editor/vim-reason-plus',
+        ft = {'reason'}
+    }
+
+    -- reStructuredText
+    use {
+        'marshallward/vim-restructuredtext',
+        ft = {'rst'}
+    }
+
+    -- RSpec
+    use {
+        'keith/rspec.vim',
+        ft = {'rspec'}
+    }
+
+    -- RON
+    use {
+        'ron-rs/ron.vim',
+        ft = {'ron'}
+    }
+
+    -- Ruby
+    use {
+        'vim-ruby/vim-ruby',
+        ft = {'eruby' ,'ruby'}
+    }
+
+    -- Rust
+    use {
+        'rust-lang/rust.vim',
+        ft = {'rust'}
+    }
+
+    -- SBT
+    use {
+        'derekwyatt/vim-sbt',
+        ft = {'sbt'}
+    }
+
+    -- Scala
+    use {
+        'derekwyatt/vim-scala',
+        ft = {'scala'}
+    }
+
+    -- SCSS
+    use {
+        'cakebaker/scss-syntax.vim',
+        ft = {'scss'}
+    }
+
+    -- Shell
+    use {
+        'arzg/vim-sh',
+        ft = {'sh'}
+    }
+
+    -- Slim
+    use {
+        'slim-template/vim-slim',
+        ft = {'slim'}
+    }
+
+    -- Slime
+    use {
+        'slime-lang/vim-slime-syntax',
+        ft = {'slime'}
+    }
+
+    -- SML
+    use {
+        'jez/vim-better-sml',
+        ft = {'sml'}
+    }
+
+    -- SMT-LIB2
+    use {
+        'bohlender/vim-smt2',
+        ft = {'smt2'}
+    }
+
+    -- Solidity
+    use {
+        'tomlion/vim-solidity',
+        ft = {'solidity'}
+    }
+
+    -- Starlark
+    use {
+        'cappyzawa/starlark.vim',
+        ft = {'starlark'}
+    }
+
+    -- Sugarss
+    use {
+        'hhsnopek/vim-sugarss',
+        ft = {'sugarss'}
+    }
+
+    -- Stylus
+    use {
+        'wavded/vim-stylus',
+        ft = {'stylus'}
+    }
+
+    -- Svelte
+    use {
+        'leafOfTree/vim-svelte-plugin',
+        ft = {'svelte'},
+        config = function()
+            vim.cmd [[ let g:vim_svelte_plugin_load_full_syntax = 1 ]]
+        end
+    }
+
+    -- SVG
+    use {
+        'jasonshell/vim-svg-indent',
+        ft = {'svg'}
+    }
+
+    -- SVG
+    use {
+        'vim-scripts/svg.vim',
+        ft = {'svg'}
+    }
+
+    -- Swift
+    use {
+        'keith/swift.vim',
+        ft = {'swift'}
+    }
+
+    -- Systemd
+    use {
+        'wgwoods/vim-systemd-syntax',
+        ft = {'systemd'}
+    }
+
+    -- SXHKD (bspwm)
+    use {
+        'baskerville/vim-sxhkdrc',
+        ft = {'sxhkdrc'}
+    }
+
+    -- Terraform
+    use {
+        'hashivim/vim-terraform',
+        ft = {'terraform'}
+    }
+
+    -- Textile
+    use {
+        'timcharper/textile.vim',
+        ft = {'textile'}
+    }
+
+    -- Thrift
+    use {
+        'solarnz/thrift.vim',
+        ft = {'thrift'}
+    }
+
+    -- TomDoc
+    use {
+        'wellbredgrapefruit/tomdoc.vim',
+        ft = {'tomdoc'}
+    }
+
+    -- TPTP
+    use {
+        'c-cube/vim-tptp',
+        ft = {'tptp'}
+    }
+
+    -- Twig
+    use {
+        'lumiliet/vim-twig',
+        ft = {'twig'}
+    }
+
+    -- V
+    use {
+        'ollykel/v-vim',
+        ft = {'v', 'vlang'}
+    }
+
+    -- Vala
+    use {
+        'arrufat/vala.vim',
+        ft = {'vala'}
+    }
+
+    -- VB.NET
+    use {
+        'vim-scripts/vbnet.vim',
+        ft = {'vb.net'}
+    }
+
+    -- VCL
+    use {
+        'smerrill/vcl-vim-plugin',
+        ft = {'vcl'}
+    }
+
+    -- Velocity
+    use {
+        'lepture/vim-velocity',
+        ft = {'velocity'}
+    }
+
+    -- vifm
+    use {
+        'vifm/vifm.vim',
+        ft = {'vifm', 'vifm-rename'}
+    }
+
+    -- VHDL
+    use {
+        'suoto/vim-hdl',
+        ft = {'vhdl'}
+    }
+
+    -- Vue
+    use {
+        'posva/vim-vue',
+        ft = {'vue'}
+    }
+
+    -- XDC
+    use {
+        'amal-khailtash/vim-xdc-syntax',
+        ft = {'xdc'}
+    }
+
+    -- XSL
+    use {
+        'vim-scripts/XSLT-syntax',
+        ft = {'xsl'}
+    }
+
+    -- XML
+    use {
+        'amadeus/vim-xml',
+        ft = {'xml'}
+    }
+
+    -- YAML
+    use {
+        'stephpy/vim-yaml',
+        ft = {'yaml'}
+    }
+
+    -- YANG
+    use {
+        'nathanalderson/yang.vim',
+        ft = {'yang'}
+    }
+
+    -- YARD Documentation
+    use {
+        'sheerun/vim-yardoc',
+        ft = {'eruby' ,'ruby'}
+    }
+
+    -- Zephir
+    use {
+        'xwsoul/vim-zephir',
+        ft = {'zephir'}
+    }
+
+    -- Zig
+    use {
+        'ziglang/zig.vim',
+        ft = {'zig'}
+    }
+
+    -- Zinit
+    use {
+        'zinit-zsh/zinit-vim-syntax',
+        ft = {'zsh'}
+    }
+
+    -- Zsh
+    use {
+        'chrisbra/vim-zsh',
+        ft = {'zsh'}
+    }
 end
 
-local normal_plugins = {"jiangmiao/auto-pairs", -- Vim plugin, insert or delete brackets, parens, quotes in pair 
-"tpope/vim-dadbod", -- plugin for interacting with databases
-"kristijanhusak/vim-dadbod-ui", -- Like pgadmin but for vim
-"glepnir/spaceline.vim", -- Most beautiful & fastest statusline
-"ryanoasis/vim-devicons", -- Devicons (requirement for spaceline)
-"hardcoreplayers/dashboard-nvim" -- Modern vim-startify
-}
-
-local lua_plugins = {"neovim/nvim-lspconfig", -- Collection of common configurations for the Nvim LSP client.
-"tjdevries/lsp_extensions.nvim", -- bunch of info & extension callbacks for built-in LSP (provides inlay hints)
-"nvim-lua/completion-nvim", -- auto completion framework that aims to provide a better completion experience with neovim's built-in LSP
-"nvim-lua/diagnostic-nvim", -- wrapsthe diagnostics setting to make it more user friendly
-"nvim-treesitter/nvim-treesitter", -- Treesitter configurations and abstraction layer for Neovim. 
-"nvim-treesitter/completion-treesitter", -- treesitter based completion sources.
-"steelsojka/completion-buffers", -- completion for buffers word.
-"kristijanhusak/vim-dadbod-completion", -- completion sources for vim-dadbod
-"kristijanhusak/completion-tags", -- Slightly improved ctags completion
-"kyazdani42/nvim-web-devicons", -- devicons in lua
-"kyazdani42/nvim-tree.lua", -- A File Explorer For Neovim Written In Lua
-"tjdevries/colorbuddy.nvim", -- A colorscheme helper for Neovim
-"norcalli/snippets.nvim", -- Snippets tool written in lua
-"norcalli/nvim-colorizer.lua", -- high-performance color highlighter for Neovim
-"mhartington/formatter.nvim" -- A format runner for neovim, written in lua
-}
-
-local lazy_plugins = {"tpope/vim-eunuch", -- Vim sugar for the UNIX shell commands
-"rhysd/committia.vim", -- improves the git commit buffer
-"tpope/vim-git", -- Vim Git runtime files
-"mhinz/vim-signify", -- uses the sign column to indicate added, modified and removed lines in a file that is managed by a version control system
-"rhysd/git-messenger.vim", -- shows the history of commits under the cursor in popup window
-"liuchengxu/vim-which-key", -- Vim plugin that shows keybindings in popup 
-"tpope/vim-abolish", -- easily search for, substitute, and abbreviate multiple variants of a word 
-"alvan/vim-closetag", -- Auto close (X)HTML tags 
-"lambdalisue/gina.vim", -- Asynchronously control git repositories in Neovim
-"liuchengxu/vista.vim", -- Viewer & Finder for LSP symbols and tags
-"godlygeek/tabular", -- Vim script for text filtering and alignment 
-"reedes/vim-wordy", -- Uncover usage problems in your writing
-"reedes/vim-lexical", -- Building on Vim’s spell-check and thesaurus/dictionary completion
-"reedes/vim-pencil", -- handful of tweaks needed to smooth the path to writing prose
-"dbmrq/vim-ditto" -- highlights overused words
-}
-
-local ft_plugins = {"martinlroth/vim-acpi-asl", -- ACPI ASL
-"pearofducks/ansible-vim", -- Ansible 2.x
-"sheerun/apiblueprint.vim", -- API Blueprint
-"mityu/vim-applescript", -- AppleScript
-"sudar/vim-arduino-syntax", -- Arduino
-"asciidoc/vim-asciidoc", -- AsciiDoc
-"aliou/bats.vim", -- BATS
-"bazelbuild/vim-bazel", -- Bazel
-"google/vim-maktaba", -- Bazel
-"jwalton512/vim-blade", -- Blade templates
-"bfontaine/Brewfile.vim", -- Brewfile
-"vim-jp/vim-cpp", -- C++
-"octol/vim-cpp-enhanced-highlight", -- C++
-"OrangeT/vim-csharp", -- C#
-"OmniSharp/omnisharp-vim", -- C#
-"isobit/vim-caddyfile", -- Caddyfile
-"nastevens/vim-cargo-make", -- Cargo Make (Rust cargo extension)
-"mhinz/vim-crates", -- Cargo.toml (Rust)
-"hellerve/carp-vim", -- Carp
-"vadv/vim-chef", -- Chef
-"mtscout6/vim-cjsx", -- CJSX (JSX equivalent in CoffeeScript)
-"guns/vim-clojure-static", -- Clojure
-"tpope/vim-fireplace", -- Clojure
-"guns/vim-clojure-highlight", -- Clojure
-"pboettch/vim-cmake-syntax", -- Cmake
-"vhdirk/vim-cmake", -- Cmake
-"kchmck/vim-coffee-script", -- CoffeScript
-"elubow/cql-vim", -- Cassandra CQL
-"victoredwardocallaghan/cryptol.vim", -- Cryptol
-"vim-crystal/vim-crystal", -- Crystal
-"hail2u/vim-css3-syntax", -- CSS
-"chrisbra/csv.vim", -- CSV
-"tpope/vim-cucumber", -- Cucumber
-"mgrabovsky/vim-cuesheet", -- Cue
-"jjaderberg/vim-syntax-cipher", -- Cypher
-"JesseKPhillips/d.vim", -- D Lang
-"mlr-msft/vim-loves-dafny", -- Dafny
-"dart-lang/dart-vim-plugin", -- Dart
-"vmchale/dhall-vim", -- Dhall
-"ekalinin/Dockerfile.vim", -- Dockerfile
-"nastevens/vim-duckscript", -- Duckscript
-"elixir-editors/vim-elixir", -- Elixir
-"yalesov/vim-emblem", -- Emblem
-"vim-erlang/vim-erlang-runtime", -- Erlang
-"bakpakin/fennel.vim", -- Fennel
-"vim-scripts/ferm.vim", -- Ferm
-"georgewitteman/vim-fish", -- Fish
-"dcharbon/vim-flatbuffers", -- Flatbuffers
-"kblin/vim-fountain", -- Fountain
-"calviken/vim-gdscript3", -- GDScript 3
-"tikhomirov/vim-glsl", -- OpenGL Shading Language
-"gleam-lang/gleam.vim", -- Gleam
-"maelvls/gmpl.vim", -- GMPL
-"vim-scripts/gnuplot-syntax-highlighting", -- GNUPlot
-"fatih/vim-go", -- Go
-"tfnico/vim-gradle", -- Gradle
-"jparise/vim-graphql", -- GraphQL
-"hhvm/vim-hack", -- Hack
-"sheerun/vim-haml", -- Haml
-"mustache/vim-mustache-handlebars", -- Handlebars
-"CH-DanReif/haproxy.vim", -- HAProxy
-"neovimhaskell/haskell-vim", -- Haskel
-"yaymukund/vim-haxe", -- Haxe
-"b4b4r07/vim-hcl", -- HCL
-"towolf/vim-helm", -- Helm Templates
-"zebradil/hive.vim", -- Hive
-"othree/html5.vim", -- HTML5
-"mboughaba/i3config.vim", -- i3
-"chutzpah/icalendar.vim", -- icalendar
-"idris-hackers/idris-vim", -- Idris
-"HiPhish/info.vim", -- Info
-"vmchale/ion-vim", -- Ion
-"jez/vim-ispc", -- ISPC
-"pangloss/vim-javascript", -- Javascript
-"briancollins/vim-jst", -- JST
-"maxmellon/vim-jsx-pretty", -- JSX
-"martinda/Jenkinsfile-vim-syntax", -- Jenkins
-"lepture/vim-jinja", -- Jinja
-"elzr/vim-json", -- Json
-"GutenYe/json5.vim", -- Json5
-"JuliaEditorSupport/julia-vim", -- Julia
-"udalov/kotlin-vim", -- Kotlin
-"lervag/vimtex", -- Latex
-"xuhdev/vim-latex-live-preview", -- Latex
-"ledger/vim-ledger", -- Ledger
-"groenewege/vim-less", -- Less
-"sersorrel/vim-lilypond", -- Lilypond
-"gkz/vim-ls", -- LiveScript
-"MTDL9/vim-log-highlighting", -- Log
-"tbastos/vim-lua", -- Lua
-"jstrater/mpvim", -- Macports
-"sophacles/vim-bundle-mako", -- Mako
-"plasticboy/vim-markdown", -- Markdown
-"rhysd/vim-gfm-syntax", -- Markdown (github)
-"voldikss/vim-mma", -- Mathematica
-"daeyun/vim-matlab", -- Matlab
-"jxnblk/vim-mdx-js", -- MDX
-"stewy33/mercury-vim", -- Mercury
-"leafo/moonscript-vim", -- MoonScript
-"chr4/nginx.vim", -- Nginx
-"zah/nim.vim", -- Nim
-"LnL7/vim-nix", -- Nix
-"b4winckler/vim-objc", -- Objective-C
-"ocaml/vim-ocaml", -- OCaml
-"McSinyx/vim-octave", -- Octave
-"mcnelson/vim-pawn", -- Pawn
-"vim-pandoc/vim-pandoc", -- Pandoc
-"vim-pandoc/vim-pandoc-syntax", -- Pandoc
-"vim-perl/vim-perl", -- PERL
-"lifepillar/pgsql.vim", -- PostgreSQL
-"StanAngeloff/php.vim", -- PHP
-"aklt/plantuml-syntax", -- PlantUML
-"jakwings/vim-pony", -- Ponylang
-"PProvost/vim-ps1", -- PowerShell
-"adimit/prolog.vim", -- Prolog
-"uarun/vim-protobuf", -- Protocol Buffers
-"digitaltoad/vim-pug", -- Pug template
-"rodjek/vim-puppet", -- Puppet
-"purescript-contrib/purescript-vim", -- PureScript
-"vim-python/python-syntax", -- Python
-"Vimjas/vim-python-pep8-indent", -- Python
-"artoj/qmake-syntax-vim", -- QMake
-"peterhoeg/vim-qml", -- QML
-"jalvesaq/Nvim-R", -- R
-"wlangstroth/vim-racket", -- Racket
-"jneen/ragel.vim", -- Ragel
-"Raku/vim-raku", -- Raku
-"IN3D/vim-raml", -- RAML
-"adamclerk/vim-razor", -- Razor view engine
-"reasonml-editor/vim-reason-plus", -- Reason
-"marshallward/vim-restructuredtext", -- reStructuredText
-"keith/rspec.vim", -- RSpec
-"ron-rs/ron.vim", -- RON
-"vim-ruby/vim-ruby", -- Ruby
-"rust-lang/rust.vim", -- Rust
-"arzg/vim-rust-syntax-ext", -- Rust
-"derekwyatt/vim-sbt", -- SBT
-"derekwyatt/vim-scala", -- Scala
-"cakebaker/scss-syntax.vim", -- SCSS
-"arzg/vim-sh", -- Shell
-"slim-template/vim-slim", -- Slim
-"slime-lang/vim-slime-syntax", -- Slime
-"jez/vim-better-sml", -- SML
-"bohlender/vim-smt2", -- SMT-LIB2
-"tomlion/vim-solidity", -- Solidity
-"tpope/vim-dotenv", -- SQl
-"tpope/vim-dadbod", -- SQl
-"kristijanhusak/vim-dadbod-completion", -- SQl
-"kristijanhusak/vim-dadbod-ui", -- SQl
-"cappyzawa/starlark.vim", -- Starlark
-"hhsnopek/vim-sugarss", -- Sugarss
-"wavded/vim-stylus", -- Stylus
-"leafOfTree/vim-svelte-plugin", -- Svelte
-"jasonshell/vim-svg-indent", -- SVG
-"vim-scripts/svg.vim", -- SVG
-"keith/swift.vim", -- Swift
-"wgwoods/vim-systemd-syntax", -- Systemd
-"baskerville/vim-sxhkdrc", -- SXHKD (bspwm)
-"hashivim/vim-terraform", -- Terraform
-"timcharper/textile.vim", -- Textile
-"solarnz/thrift.vim", -- Thrift
-"ericpruitt/tmux.vim", -- Tmux
-"wellbredgrapefruit/tomdoc.vim", -- TomDoc
-"cespare/vim-toml", -- TOML
-"c-cube/vim-tptp", -- TPTP
-"lumiliet/vim-twig", -- Twig
-"HerringtonDarkholme/yats.vim", -- TypeScript
-"ollykel/v-vim", -- V
-"arrufat/vala.vim", -- Vala
-"vim-scripts/vbnet.vim", -- VB.NET
-"smerrill/vcl-vim-plugin", -- VCL
-"lepture/vim-velocity", -- Velocity
-"vifm/vifm.vim", -- vifm
-"suoto/vim-hdl", -- VHDL
-"posva/vim-vue", -- Vue
-"amal-khailtash/vim-xdc-syntax", -- XDC
-"vim-scripts/XSLT-syntax", -- XSL
-"amadeus/vim-xml", -- XML
-"stephpy/vim-yaml", -- YAML
-"nathanalderson/yang.vim", -- YANG
-"sheerun/vim-yardoc", -- YARD Documentation
-"xwsoul/vim-zephir", -- Zephir
-"ziglang/zig.vim", -- Zig
-"zinit-zsh/zinit-vim-syntax", -- Zinit
-"chrisbra/vim-zsh" -- Zsh
-}
-
-local build_plugins = {
-    ["alok/rainbow_parentheses.vim"] = "git checkout fix-spell",
-    ["turbio/bracey.vim"] = "yarn --prefix server",
-    ["euclio/vim-markdown-composer"] = "cargo build --release",
-    ["heavenshell/vim-jsdoc"] = "make clean && make install"
-}
-
-function plug.install_default()
-    local pack = home .. '/.cargo/bin/npack'
-    local opt_plugins = {}
-
-    for _, v in pairs(lua_plugins) do
-        table.insert(opt_plugins, v)
+local plugins = setmetatable({}, {
+    __index = function(_, key)
+        init()
+        return packer[key]
     end
-    for _, v in pairs(lazy_plugins) do
-        table.insert(opt_plugins, v)
-    end
-    for _, v in pairs(ft_plugins) do
-        table.insert(opt_plugins, v)
-    end
+})
 
-    if not global.exists(pack) then
-        os.execute("cargo install --git https://github.com/Th3Whit3Wolf/neopack.git")
-    end
-
-    if global.exists(pack) then
-        for _, plugin in ipairs(opt_plugins) do
-            if not global.exists(global.plugins .. 'opt/' .. Split(plugin, '/')[2]) then
-                vim.cmd("silent !npack install " .. plugin .. " -o")
-                if Split(plugin, '/')[2] == 'nvim-treesitter' then
-                    vim.cmd('TSInstall all')
-                end
-            end
-        end
-        for _, plugin in ipairs(normal_plugins) do
-            if not global.exists(global.plugins .. 'start/' .. Split(plugin, '/')[2]) then
-                vim.cmd("silent !npack install " .. plugin)
-            end
-        end
-        for plugin, build_cmd in ipairs(build_plugins) do
-            if not global.exists(global.plugins .. 'opt/' .. Split(plugin, '/')[2]) then
-                vim.cmd("silent !npack " .. plugin .. " --build '" .. build_cmd .. "' -o")
-            end
-        end
-    end
-
-    print('All default plugins installed')
-end
-
-function plug.load_lua()
-    for _, plugins in ipairs(lua_plugins) do
-        local plugin = Split(plugins, '/')[2]
-        -- Actual lazy loaded lua plugins
-        if plugin ~= 'nvim-treesitter' or plugin ~= 'completion-treesitter' or plugin ~= 'completion-tags' then
-            vim.cmd('packadd ' .. plugin)
-        end
-    end
-end
-
-function plug.install( arg )
-    local plugin = Split(arg, ' ')[1]
-    if string.match(arg, "-o") then
-        if not global.exists(global.plugins .. 'opt/' .. Split(plugin, '/')[2]) then
-            vim.cmd("silent !npack install " .. plugin .. " -o")
-        end
-    else
-        if not global.exists(global.plugins .. 'start/' .. Split(plugin, '/')[2]) then
-            vim.cmd("silent !npack install " .. plugin)
-        end
-    end
-    print('Installed '.. Split(plugin, '/')[2])
-end
-
-return plug
+return plugins

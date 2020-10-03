@@ -1,11 +1,3 @@
-packadd vimtex
-packadd vim-latex-live-preview
-packadd vim-lexical
-packadd vim-pencil
-packadd vim-ditto
-packadd completion-tags
-" packadd ale
-
 let b:endwise_addition = '\="\\end" . matchstr(submatch(0), "{.\\{-}}")'
 let b:endwise_words = 'begin'
 let b:endwise_pattern = '\\begin{.\{-}}'
@@ -42,6 +34,7 @@ function! CompileMyCode()
         call Run("textonic %")
     endif
 endfunction
+
 function! RunMyCode()
     LLPStartPreview
 endfunction

@@ -1,5 +1,3 @@
-" packadd ale
-
 " Snippets from vim-help
 " Credits: https://github.com/dahu/vim-help
 

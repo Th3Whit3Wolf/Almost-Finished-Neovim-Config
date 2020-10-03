@@ -1,5 +1,3 @@
-packadd ale
-
 function! RunMyCode()
     if executable('fish')
         call Run("fish %")

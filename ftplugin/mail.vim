@@ -1,8 +1,3 @@
-packadd vim-lexical
-packadd vim-pencil
-packadd vim-ditto
-"packadd ale
-
 "DittoOn
 
 call lexical#init()

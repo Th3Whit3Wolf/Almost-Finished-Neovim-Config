@@ -53,6 +53,10 @@ function variables:load_variables()
     self.db_ui_env_variable_url = 'DATABASE_URL'
     self.db_ui_env_variable_name = 'DATABASE_NAME'
     self.db_ui_save_location = global.cache_dir .. 'db_ui_queries'
+
+    -- Minimap
+    self.minimap_auto_start = 1
+    --self.minimap_highlight
     for name, value in pairs(self) do
         vim.g[name] = value
     end

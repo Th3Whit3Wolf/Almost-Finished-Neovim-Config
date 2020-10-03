@@ -1,6 +1,3 @@
-packadd vim-dotenv
-"packadd ale
-
 setlocal commentstring=--\ %s
 let g:completion_trigger_character = ['.', '\"']
 

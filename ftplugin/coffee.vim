@@ -1,7 +1,3 @@
-packadd vim-coffee-script
-packadd vim-cjsx
-" packadd ale
-
 function! CompileMyCode()
     if executable('coffee')
         call Run("coffee %")
