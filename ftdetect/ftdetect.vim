@@ -11,6 +11,9 @@ au BufNewFile,BufRead */.kube/config ft=yaml
 " Awk
 au BufNewFile *.awk     0put =\"#!/usr/bin/env awk\<nl>\<nl>\"|$
 
+" Bash
+au BufNewFile *.sh     0put =\"#!/usr/bin/env bash\<nl>\<nl>\"|$
+
 " BATS - Bash Automated Testing System
 au BufNewFile,BufRead *.bats set ft=bats
 

@@ -37,10 +37,6 @@ function s:shellbang() abort
 	endif
 endfunction
 
-if line('$') == 1 && getline(1) == ''
-    call <SID>shellbang()
-endif
-
 command! -bang -nargs=0 -bar ShellBang call <SID>shellbang()
 
 function! RunMyCode()
