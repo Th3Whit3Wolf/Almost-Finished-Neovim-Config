@@ -423,6 +423,9 @@ au BufNewFile,BufRead Puppetfile set ft=ruby
 " purescript
 au BufNewFile,BufRead *.purs set ft=purescript
 
+" Python
+au BufNewFile *.py     0put =\"#!/usr/bin/env python3\<nl>\<nl>\"|$
+
 " qmake
 au BufNewFile,BufRead *.pri set ft=qmake
 
