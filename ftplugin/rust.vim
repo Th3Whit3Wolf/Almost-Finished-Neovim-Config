@@ -51,6 +51,6 @@ function! TestMyCode()
     endif
 endfunction!
 
--- Enable type inlay hints
+" Enable type inlay hints
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
 \ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
