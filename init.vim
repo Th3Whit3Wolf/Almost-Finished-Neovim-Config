@@ -69,8 +69,8 @@ call sign_define("LspDiagnosticsInformationSign", {"text" : "", "texthl" : "L
 call sign_define("LspDiagnosticsHintSign", {"text" : "ஐ", "texthl" : "LspDiagnosticsHint"})
 
 execute 'luafile ' . stdpath('config') . '/lua/plug.lua'
-command! PackerInstall packadd packer.nvim | lua require('plug').install()
-command! PackerUpdate packadd packer.nvim | lua require('plug').update()
-command! PackerSync packadd packer.nvim | lua require('plug').sync()
-command! PackerClean packadd packer.nvim | lua require('plug').clean()
-command! PackerCompile packadd packer.nvim | lua require('plug').compile()
+command! PlugInstall packadd packer.nvim | lua require('plug').install()
+command! PlugUpdate packadd packer.nvim | lua require('plug').update()
+command! PlugSync packadd packer.nvim | lua require('plug').sync()
+command! PlugClean packadd packer.nvim | lua require('plug').clean()
+command! PlugCompile packadd packer.nvim | lua require('plug').compile()
