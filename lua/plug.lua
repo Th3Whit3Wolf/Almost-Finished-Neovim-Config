@@ -2,7 +2,34 @@ local packer = nil
 local function init()
     if packer == nil then
         packer = require('packer')
-        packer.init()
+        packer.init({
+            compile_path = '~/.local/share/nvim/site/plugin/packges.vim',
+            config = {
+                display = {
+                    _open_fn = function(name)
+                        -- Can only use plenary when we have our plugins.
+                        --  We can only get plenary when we don't have our plugins ;)
+                        local ok, float_win = pcall(function()
+                            return require('plenary.window.float').percentage_range_window(0.8, 0.8)
+                        end)
+
+                        if not ok then
+                            vim.cmd [[65vnew  [packer] ]]
+
+                            return vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf()
+                        end
+
+                        local bufnr = float_win.buf
+                        local win = float_win.win
+
+                        vim.api.nvim_buf_set_name(bufnr, name)
+                        vim.api.nvim_win_set_option(win, 'winblend', 10)
+
+                        return win, bufnr
+                    end
+                }
+            }
+        })
     end
 
     local use = packer.use
@@ -45,22 +72,31 @@ local function init()
     -- Collection of common configurations for the Nvim LSP client.
     use {
         'neovim/nvim-lspconfig',
-        event = 'InsertEnter *'
+        opt = true
     }
 
     -- bunch of info & extension callbacks for built-in LSP (provides inlay hints)
     use {
         'tjdevries/lsp_extensions.nvim',
-        event = 'InsertEnter *'
+        opt = true
     }
 
     -- auto completion framework that aims to provide a better completion experience with neovim's built-in LSP
-    use {'nvim-lua/completion-nvim'}
+    use {
+        'nvim-lua/completion-nvim',
+        opt = true
+    }
+
+    -- All the lua functions I don't want to write twice.
+    use {
+        'nvim-lua/plenary.nvim',
+        opt = true
+    }
 
     -- wraps the diagnostics setting to make it more user friendly
     use {
         'nvim-lua/diagnostic-nvim',
-        event = 'InsertEnter *'
+        opt = true
     }
 
     -- Treesitter configurations and abstraction layer for Neovim. 
@@ -72,7 +108,8 @@ local function init()
         config = function()
             vim.cmd [[ setlocal foldmethod=expr ]]
             vim.cmd [[ setlocal foldexpr=nvim_treesitter#foldexpr() ]]
-        end
+        end,
+        opt = true
     }
 
     -- Treesitter based completion sources.
@@ -81,15 +118,14 @@ local function init()
         ft = {'sh', 'c', 'cs', 'cpp', 'css', 'dart', 'elm', 'fennel', 'go', 'haskell', 'html', 'java', 'javascript',
               'jsdoc', 'julia', 'lua', 'markdown', 'nix', 'ocaml', 'php', 'python', 'ql', 'rst', 'ruby', 'rust',
               'scala', 'swift', 'toml', 'tsx', 'typescript', 'vue', 'yaml'},
-        run = 'TSInstall all'
+        run = 'TSInstall all',
+        opt = true
     }
 
     -- Completion for buffers word.
     use {'steelsojka/completion-buffers'}
 
     -- Completion sources for vim-dadbod
-    use {'tpope/vim-dadbod"'}
-    use {'kristijanhusak/vim-dadbod-ui'}
     use {'kristijanhusak/vim-dadbod-completion'}
 
     -- Slightly improved ctags completion
@@ -99,23 +135,45 @@ local function init()
               'elixir', 'elm', 'erlang', 'fortan', 'go', 'html', 'java', 'json', 'lisp', 'lua', 'm4', 'make',
               'markdown', 'matlab', 'objc', 'ocaml', 'pascal', 'perl', 'perl6', 'php', 'ps1', 'ps1xml', 'proto',
               'python', 'r', 'rst', 'ruby', 'rust', 'scss', 'sh', 'sql', 'svg', 'systemd', 'tex', 'typescript',
-              'verilog', 'vhdl', 'vim', 'xml', 'xsl', 'yaml', 'zephir'}
+              'verilog', 'vhdl', 'vim', 'xml', 'xsl', 'yaml', 'zephir'},
+        opt = true
     }
 
     -- devicons in lua
-    use {'kyazdani42/nvim-web-devicons'}
+    use {
+        'kyazdani42/nvim-web-devicons',
+        opt = true
+    }
 
     -- A File Explorer For Neovim Written In Lua
-    use {'kyazdani42/nvim-tree.lua'}
+    use {
+        'kyazdani42/nvim-tree.lua',
+        opt = true
+    }
 
     -- Snippets tool written in lua
-    use {'norcalli/snippets.nvim'}
+    use {
+        'norcalli/snippets.nvim',
+        opt = true
+    }
+
+    -- high-performance color highlighter for Neovim
+    use {
+        'norcalli/nvim-colorizer.lua',
+        opt = true
+    }
 
     -- A format runner for neovim, written in lua
-    use {'mhartington/formatter.nvim'}
+    use {
+        'mhartington/formatter.nvim',
+        opt = true
+    }
 
     -- My spacemacs colorscheme
-    use {'Th3Whit3Wolf/space-nvim-theme'}
+    use {
+        'Th3Whit3Wolf/space-nvim-theme',
+        opt = true
+    }
 
     ----------
     -- Lazy --
@@ -198,12 +256,12 @@ local function init()
     }
 
     -- Minimap for vim
-    use {
-        'wfxr/minimap.vim',
-        run = 'cargo install --locked code-minimap'
-    }
+    -- use {
+    --     'wfxr/minimap.vim',
+    --     run = 'cargo install --locked code-minimap'
+    -- }
 
-    -- Simpler Rainbow Parentheses 
+    -- Simpler Rainbow Parentheses
     use {
         'alok/rainbow_parentheses.vim',
         event = 'InsertEnter *',
@@ -215,7 +273,7 @@ local function init()
         'tpope/vim-dotenv',
         cmd = 'Dotenv'
     }
-    
+
     -- Profiling
     use {
         'dstein64/vim-startuptime',
@@ -463,12 +521,6 @@ local function init()
         ft = {'cue'}
     }
 
-    -- Cypher
-    use {
-        'jjaderberg/vim-syntax-cipher',
-        ft = {'cypher'}
-    }
-
     -- D Lang
     use {
         'JesseKPhillips/d.vim',
@@ -501,7 +553,7 @@ local function init()
 
     -- Duckscript
     use {
-        'ekalinin/Dockerfile.vim',
+        'nastevens/vim-duckscript',
         ft = {'cargo-make', 'duckscript'}
     }
 
@@ -1043,7 +1095,7 @@ local function init()
     -- Ruby
     use {
         'vim-ruby/vim-ruby',
-        ft = {'eruby' ,'ruby'}
+        ft = {'eruby', 'ruby'}
     }
 
     -- Rust
@@ -1280,7 +1332,7 @@ local function init()
     -- YARD Documentation
     use {
         'sheerun/vim-yardoc',
-        ft = {'eruby' ,'ruby'}
+        ft = {'eruby', 'ruby'}
     }
 
     -- Zephir

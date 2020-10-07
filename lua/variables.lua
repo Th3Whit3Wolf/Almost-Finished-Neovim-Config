@@ -1,4 +1,4 @@
-local global = require 'settings/global'
+local global = require 'global'
 local vim = vim
 local variables = {}
 
@@ -7,7 +7,7 @@ local variables = {}
 -- Global Variables           | vim.g
 -- Buffer Variables           | vim.b
 -- Window Variables           | vim.w
--- TabPage Variables          | vim.t 
+-- TabPage Variables          | vim.t
 -- Vim Variables (predefined) | vim.v
 
 function variables:new()
@@ -18,21 +18,21 @@ function variables:new()
 end
 
 function variables:load_variables()
-    if global.isdir(global.cache_dir .. 'venv/neovim3/bin/python') then
-        self.python3_host_prog = global.cache_dir .. 'venv/neovim3/bin/python'
+    if global.isdir(global.python3 .. 'python') then
+        self.python3_host_prog = global.python3 .. 'python'
     end
-    if global.exists(os.getenv("HOME") .. '/.node_modules/bin/neovim-node-host') then
-        self.node_host_prog = os.getenv("HOME") .. "/.node_modules/bin/neovim-node-host"
+    if global.exists(global.node) then
+        self.node_host_prog = global.node
     end
     -- Diagnostic-nvim settings
     self.diagnostic_insert_delay = 1
     self.diagnostic_show_sign = 1
+    self.diagnostic_enable_underline = 0
+    self.diagnostic_auto_popup_while_jump = 1
     self.diagnostic_enable_virtual_text = 1
 
     -- Fix for completion with other plugins mapped to enter
     self.completion_confirm_key = ""
-    -- Fix for endwise with other plugins mapped to enter
-    --self.endwise_no_mappings = "v:true"
 
     -- Disable provider for perl, python2, & ruby
     self.loaded_python_provider = 0

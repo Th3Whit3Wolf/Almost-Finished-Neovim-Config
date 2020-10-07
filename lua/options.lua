@@ -1,4 +1,4 @@
-local global = require 'settings/global'
+local global = require 'global'
 local vim = vim
 local options = {}
 
@@ -114,7 +114,7 @@ function options:load_options()
     self.showfulltag = true; -- Show tag and tidy search in completion
     self.complete = ".,w,b,k"; -- No wins, buffs, tags, include scanning
     self.inccommand = "nosplit";
-    self.completeopt = "menu,menuone,noselect,noinsert,preview,longest"; -- Set completeopt to have a better completion experience
+    self.completeopt = "menu,menuone,noselect,noinsert,preview"; -- Set completeopt to have a better completion experience
     self.joinspaces = false; -- Insert only one space when joining lines that contain sentence-terminating punctuation like `.`.
     self.jumpoptions = "stack"; -- list of words that change the behavior of the jumplist
 

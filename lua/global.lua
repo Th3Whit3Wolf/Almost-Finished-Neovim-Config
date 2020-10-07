@@ -6,9 +6,11 @@ function global.load_variables()
     global.is_mac = jit.os == 'OSX'
     global.is_linux = jit.os == 'Linux'
     global.is_windows = jit.os == 'Windows'
-    global.vim_path = home .. path_sep .. '.config' .. path_sep .. 'nvim'
+    global.vim_path = home .. path_sep .. '.config' .. path_sep .. 'nvim' .. path_sep
     global.cache_dir = home .. path_sep .. '.cache' .. path_sep .. 'nvim' .. path_sep
-    global.modules_dir = global.vim_path .. path_sep .. 'modules'
+    global.modules_dir = global.vim_path .. 'modules'
+    global.python3 = global.cache_dir .. 'venv/neovim3/bin/python' .. path_sep .. 'bin' .. path_sep
+    global.node = home .. path_sep .. ".node_modules/bin/neovim-node-host"
     global.path_sep = path_sep
     global.home = home
     global.plugins = home .. path_sep .. '.local' .. path_sep .. 'share' .. path_sep .. 'nvim' .. path_sep .. 'site' .. path_sep .. 'pack' .. path_sep .. 'default' .. path_sep

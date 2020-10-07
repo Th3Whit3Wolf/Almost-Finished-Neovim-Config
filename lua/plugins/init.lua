@@ -1,5 +1,33 @@
+local plugins = {
+"nvim-lspconfig", -- Collection of common configurations for the Nvim LSP client.
+"lsp_extensions.nvim", -- bunch of info & extension callbacks for built-in LSP (provides inlay hints)
+"completion-nvim", -- auto completion framework that aims to provide a better completion experience with neovim's built-in LSP
+"diagnostic-nvim", -- wrapsthe diagnostics setting to make it more user friendly
+"nvim-treesitter", -- Treesitter configurations and abstraction layer for Neovim. 
+"completion-treesitter", -- treesitter based completion sources.
+"completion-buffers", -- completion for buffers word.
+"vim-dadbod-completion", -- completion sources for vim-dadbod
+"completion-tags", -- Slightly improved ctags completion
+"nvim-web-devicons", -- devicons in lua
+"nvim-tree.lua", -- A File Explorer For Neovim Written In Lua
+"snippets.nvim", -- Snippets tool written in lua
+"nvim-colorizer.lua", -- high-performance color highlighter for Neovim
+"formatter.nvim", -- A format runner for neovim, written in lua
+"space-nvim-theme" -- My spacemacs inspired theme
+}
+
+for _, plugin in ipairs(plugins) do
+    -- Actual lazy loaded lua plugins
+    if plugin ~= 'nvim-treesitter' or plugin ~= 'completion-treesitter' or plugin ~= 'completion-tags' then
+        vim.cmd('packadd ' .. plugin)
+    end
+end
+
 require 'plugins/lsp'
 require 'plugins/snippets'
+
+require 'space-nvim-theme'
+vim.cmd('colorscheme space-nvim-theme')
 
 -- Requires termguicolors to be set
 require'colorizer'.setup {
