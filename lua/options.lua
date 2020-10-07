@@ -133,7 +133,7 @@ function options:load_options()
 
     self.signcolumn = "yes"; -- Always show signcolumns
     self.laststatus = 2; -- Always show a status line
-    self.showtabline = 2; -- Always show the tabs line
+    --self.showtabline = 2; -- Always show the tabs line
     self.winwidth = 30;
     self.winminwidth = 10;
     self.pumheight = 15; -- Pop-up menu's line height
