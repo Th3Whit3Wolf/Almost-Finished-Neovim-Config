@@ -27,10 +27,7 @@ function autocmd.load_autocmds()
 
         completion = {{"BufEnter", "*", "lua require'completion'.on_attach()"},
         -- Show diagnostic popup on cursor hold
-                      {"CursorHold", "*", "lua vim.lsp.util.show_line_diagnostics()"},
-        -- Enable type inlay hints
-                      {"CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost", "*",
-                       [[lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }]]}},
+                      {"CursorHold", "*", "lua vim.lsp.util.show_line_diagnostics()"}},
         ScrollbarInit = {{"WinEnter,FocusGained,CursorMoved,VimResized", "*", "silent! lua require('scrollbar').show()"},
                          {"WinLeave,FocusLost,CursorHold", "*", "silent! lua require('scrollbar').clear()"}},
         gitlens = {{"CursorHold", "*", "lua require'plugins/gitlens'.blameVirtText()"},
