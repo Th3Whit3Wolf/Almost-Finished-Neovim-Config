@@ -57,6 +57,7 @@ function mapping:load_vim_define()
         ["n|<leader>ts"] = map_cr('setlocal spell!'):with_noremap(),
         ["n|<leader>tn"] = map_cr('setlocal nonumber!'):with_noremap(),
         ["n|<leader>tl"] = map_cr('setlocal nolist!'):with_noremap(),
+        -- tf toggles files
         -- :: Session Management
         ["n|<Leader>ss"] = map_cu('SessionSave'):with_noremap(),
         ["n|<Leader>sl"] = map_cu('SessionLoad'):with_noremap(),
@@ -75,13 +76,8 @@ function mapping:load_plugin_define()
         ["i|<S-TAB>"] = map_cmd([[pumvisible() ? "\<C-p>" : "\<S-Tab>"]]):with_noremap():with_expr():with_silent(),
             -- Allows completions to work with plugins that also map to enter
         ["i|''"] = map_cmd([[pumvisible() ? complete_info()["selected"] != "-1" ? "<Plug>(completion_confirm_completion)"  : "<c-e><CR>" :  "<CR>"]]):with_noremap():with_expr():with_silent(),
-        
-        -- dein
-        -- ["n|<Leader>tr"] = map_cr("call dein#recache_runtimepath()"):with_noremap():with_silent(),
-        -- ["n|<Leader>tf"] = map_cu('DashboardNewFile'):with_noremap():with_silent(),
-        -- mhinz/vim-signify
-        -- ["n|[g"] = map_cmd("<plug>(signify-next-hunk)"),
-        -- ["n|]g"] = map_cmd("<plug>(signify-prev-hunk)"),
+        -- Plugin Clap
+        ["n|<Leader>ff"] = map_cu('Clap files ++finder=rg --ignore --hidden --files'):with_noremap():with_silent(),
         -- a magic bind for regex [0-9]
         -- ["n|<Leader>,0,9"] = "<Plug>BuffetSwitch(+)",
         -- Plugin MarkdownPreview
@@ -92,16 +88,12 @@ function mapping:load_plugin_define()
         -- ["n|<A-d>"] = map_cu('FloatermToggle'):with_noremap():with_silent(),
         -- ["t|<A-d>"] = map_cu([[<C-\><C-n>:FloatermToggle<CR>]]):with_noremap():with_silent(),
         -- ["n|<Leader>g"] = map_cu('FloatermNew height=0.7 width=0.8 lazygit'):with_noremap():with_silent(),
-        -- Far.vim
-        -- ["n|<Leader>fz"] = map_cr('Farf'):with_noremap():with_silent(),
-        -- ["v|<Leader>fz"] = map_cr('Farf'):with_noremap():with_silent(),
         -- Plugin Clap
         -- ["n|<Leader>tc"] = map_cu('Clap colors'):with_noremap():with_silent(),
         -- ["n|<Leader>bb"] = map_cu('Clap buffers'):with_noremap():with_silent(),
         -- ["n|<Leader>fa"] = map_cu('Clap grep'):with_noremap():with_silent(),
         -- ["n|<Leader>fb"] = map_cu('Clap marks'):with_noremap():with_silent(),
         -- ["n|<C-x><C-f>"] = map_cu('Clap filer'):with_noremap():with_silent(),
-        -- ["n|<Leader>ff"] = map_cu('Clap files ++finder=rg --ignore --hidden --files'):with_noremap():with_silent(),
         -- ["n|<Leader>fg"] = map_cu('Clap gfiles'):with_noremap():with_silent(),
         -- ["n|<Leader>fw"] = map_cu('Clap grep ++query=<Cword>'):with_noremap():with_silent(),
         -- ["n|<Leader>fh"] = map_cu('Clap history'):with_noremap():with_silent(),
@@ -111,18 +103,12 @@ function mapping:load_plugin_define()
         -- ["n|<Leader>fv"] = map_cu('Clap grep ++query=@visual'):with_noremap():with_silent(),
         -- ["n|<Leader>oc"] = map_cu('Clap dotfiles'):with_noremap():with_silent(),
         -- ["n|<Leader>s"] = map_cu('Clap gosource'):with_noremap():with_silent(),
-        -- Plugin acceleratedjk
-        -- ["n|j"] = map_cmd('<Plug>(accelerated_jk_gj)'):with_silent(),
-        -- ["n|k"] = map_cmd('<Plug>(accelerated_jk_gk)'):with_silent(),
-        -- Plugin QuickRun
-        -- ["n|<Leader>r"] = map_cr("<cmd> lua require'quickrun'.run_command()"):with_noremap():with_silent(),
+
         -- Plugin Vista
         -- ["n|<Leader>v"] = map_cu('Vista!!'):with_noremap():with_silent(),
         -- Plugin SplitJoin
         -- ["n|sj"] = map_cr('SplitjoinJoin'),
         -- ["n|sk"] = map_cr('SplitjoinSplit'),
-        -- Plugin go-nvim
-        -- ["n|gcg"] = map_cr('GoAutoComment'):with_noremap():with_silent(),
         -- Plugin vim-operator-replace
         -- ["x|p"] = map_cmd("<Plug>(operator-replace)"),
         -- Plugin vim-operator-surround
