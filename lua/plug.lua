@@ -1,9 +1,11 @@
+local global = require 'global'
+
 local packer = nil
 local function init()
     if packer == nil then
         packer = require('packer')
         packer.init({
-            compile_path = '~/.local/share/nvim/site/plugin/packges.vim',
+            compile_path = global.local_nvim .. 'site' .. global.path_sep .. 'plugin' .. global.path_sep .. 'packges.vim',
             config = {
                 display = {
                     _open_fn = function(name)
@@ -240,12 +242,20 @@ local function init()
         ft = {'html', 'javascript', 'xhtml', 'phtml', 'xml'}
     }
 
-    -- live edit html, css, and javascript in vim 
-    use {
-        'turbio/bracey.vim',
-        run = 'yarn --prefix server',
-        ft = {'html', 'css', 'javascript'}
-    }
+    -- live edit html, css, and javascript in vim
+    if vim.fn.executable('yarn') then
+        use {
+            'turbio/bracey.vim',
+            run = 'yarn --prefix server',
+            ft = {'html', 'css', 'javascript'}
+        }
+    elseif vim.fn.executable('npm') then
+        use {
+            'turbio/bracey.vim',
+            run = 'npm install --prefix server',
+            ft = {'html', 'css', 'javascript'}
+        }
+    end
 
     -- An asynchronous markdown preview plugin for Neovim
     use {
@@ -256,10 +266,10 @@ local function init()
     }
 
     -- Minimap for vim
-    -- use {
-    --     'wfxr/minimap.vim',
-    --     run = 'cargo install --locked code-minimap'
-    -- }
+    use {
+        'wfxr/minimap.vim',
+        run = 'cargo install --locked code-minimap'
+    }
 
     -- Simpler Rainbow Parentheses
     use {
