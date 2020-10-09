@@ -19,22 +19,38 @@ function M.createdir()
             os.execute("mkdir -p " .. v)
         end
     end
-    if not global.isdir(global.python3) and global.exists('/usr/bin/python3') then
+    if not global.isdir(global.python3) and vim.fn.executable('python3') then
         os.execute("mkdir -p " .. global.cache_dir .. 'venv/neovim3/')
         os.execute("python3 -m venv " .. global.python3)
         -- install python language server and neovim host
-        os.execute(global.python3 .. 'bin ' .. global.path_sep .. 'pip install -U setuptools pynvim jedi python-language-server[all] isort pyls-isort')
+        os.execute(global.python3 .. 'bin ' .. global.path_sep ..
+                       'pip install -U setuptools pynvim jedi python-language-server[all] isort pyls-isort')
     end
-    if not global.exists(global.node) and global.exists('/usr/bin/npm') then
+    if not global.exists(global.node) and vim.fn.executable('npm') then
         -- install neovim node host
         os.execute("npm install -g neovim")
     end
-    if not global.isdir(os.getenv("HOME") .. '/.local/share/nvim/site/pack/packer/opt/packer.nvim') then
-        os.execute("git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/opt/packer.nvim")
-        require 'plug'.install()
+    if not global.isdir(global.local_nvim .. 'site' .. global.path_sep .. 'pack' .. global.path_sep .. 'packer' ..
+                            global.path_sep .. 'opt' .. global.path_sep .. 'packer.nvim') then
+        os.execute(
+            "git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/opt/packer.nvim")
+        require'plug'.install()
     end
-    if not global.exists(os.getenv("HOME") .. '/.cargo/bin/pquote') then
-        os.execute("cargo install --git https://github.com/Th3Whit3Wolf/pquote")
+    if not global.exists(global.local_nvim .. 'bin/') then
+        os.execute("mkdir -p " .. global.local_nvim .. 'bin/')
+        if vim.fn.executable('curl') then
+            os.execute(
+                "curl -o ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz -LJO https://github.com/Th3Whit3Wolf/pquote/releases/download/0.2.0/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
+            os.execute("tar tzf ~/.local/share/nvim/bin/pq.tar.gz --directory ~/.local/share/nvim/bin/")
+            os.execute("rm ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
+            os.execute("mv ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc ~/.local/share/nvim/bin/pq")
+        elseif vim.fn.executable('wget') then
+            os.execute(
+                "wget --no-check-certificate --content-disposition -P ~/.local/share/nvim/bin/ https://github.com/Th3Whit3Wolf/pquote/releases/download/0.2.0/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
+            os.execute("tar tzf ~/.local/share/nvim/bin/pq.tar.gz --directory ~/.local/share/nvim/bin/")
+            os.execute("rm ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
+            os.execute("mv ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc ~/.local/share/nvim/bin/pq")
+        end
     end
 end
 
