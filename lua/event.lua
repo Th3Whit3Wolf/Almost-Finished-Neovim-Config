@@ -50,7 +50,7 @@ function autocmd.load_autocmds()
                        {"TermEnter", "*",
                         [[ if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/terminal.vim'))) == 0 | execute 'source' fnameescape(resolve(expand('~/.config/nvim/lazy/terminal.vim'))) | endif ]]}},
         yank = {{"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]}},
-        git = {{"WinEnter,BufEnter,VimEnter", "*", "if is_vcs#is_git() == 1 | packadd vim-signify | packadd gina.vim | packadd git-messenger.vim | packadd committia.vim | SignifyEnableAll | endif"}}
+        git = {{"BufEnter", "*", "if is_vcs#is_git() == 1 | packadd vim-signify | packadd gina.vim | packadd git-messenger.vim | packadd committia.vim | SignifyEnableAll | endif"}}
     }
 
     autocmd.nvim_create_augroups(definitions)

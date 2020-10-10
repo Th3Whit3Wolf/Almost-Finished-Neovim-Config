@@ -100,3 +100,12 @@ function! s:ClapSymbolHL() abort
 endfunction
 
 autocmd User ClaqpOnEnter call s:ClapSymbolHL()
+
+if has('nvim') && executable('nvr')
+	let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
+endif
+
+
+command! LazyGit lua require'myplugins/lazygit'.lazygit()
+command! LazyGitFilter lua require'myplugins/lazygit'.lazygitfilter()
+command! LazyGitConfig lua require'myplugins/lazygit'.lazygitconfig()
