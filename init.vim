@@ -86,3 +86,17 @@ hi link gitmessengerHash CursorLine
 
 " History number at 'History:' header with 'Title' highlight group
 hi link gitmessengerHistory CursorLine
+
+let g:clap_layout = { 'relative': 'editor' }
+let g:clap_current_selection_sign= { 'text': '●', 'texthl': "StatusLineNC", "linehl": "PmenuSel"}
+let g:clap_spinner_frames = ['⠋', '⠙', '⠚', '⠞', '⠖', '⠦', '⠴', '⠲', '⠳', '⠓']
+" A funtion to config highlight of ClapSymbol
+" when the background color is opactiy
+function! s:ClapSymbolHL() abort
+	let s:current_bgcolor = synIDattr(hlID("Normal"), "bg")
+	if s:current_bgcolor == ''
+		hi ClapSymbol guibg=NONE ctermbg=NONE
+	endif
+endfunction
+
+autocmd User ClaqpOnEnter call s:ClapSymbolHL()

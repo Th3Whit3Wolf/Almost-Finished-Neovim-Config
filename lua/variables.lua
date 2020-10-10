@@ -82,6 +82,13 @@ function variables:load_variables()
     self.signify_sign_change = ''
     self.signify_sign_change = ''
 
+    -- Vim Clap
+    self.clap_cache_directory = global.cache_dir .. '/clap'
+    self.clap_enable_icon = 1
+    self.clap_search_box_border_style = 'curve'
+    self.clap_provider_grep_enable_icon = 1
+    self.clap_prompt_format = '%spinner%%forerunner_status% %provider_id%: '
+
     for name, value in pairs(self) do
         vim.g[name] = value
     end
