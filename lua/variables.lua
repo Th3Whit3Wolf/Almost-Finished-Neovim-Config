@@ -48,6 +48,8 @@ function variables:load_variables()
     self.loaded_ruby_provider = 0
     self.loaded_perl_provider = 0
 
+    -- Spaceline settings
+    self.spaceline_colorscheme = 'spacer'
     self.spaceline_seperate_style = 'slant'
     self.spaceline_diagnostic_tool = 'nvim_lsp'
 
@@ -66,6 +68,20 @@ function variables:load_variables()
     -- Minimap
     self.minimap_auto_start = 1
     --self.minimap_highlight
+
+    -- Set Color
+    self.setcolor_morning_time = 7
+    self.setcolor_night_time = 19
+    self.setcolor_change_automatically = 1
+    self.setcolor_autocmd_allowed = 0
+
+    -- Vim Signify
+    self.signify_sign_add = ''
+    self.signify_sign_delete = ''
+    self.signify_sign_delete_first_line = ''
+    self.signify_sign_change = ''
+    self.signify_sign_change = ''
+
     for name, value in pairs(self) do
         vim.g[name] = value
     end
