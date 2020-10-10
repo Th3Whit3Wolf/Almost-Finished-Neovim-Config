@@ -13,7 +13,6 @@ local plugins = {
     "snippets.nvim", -- Snippets tool written in lua
     "nvim-colorizer.lua", -- high-performance color highlighter for Neovim
     "formatter.nvim", -- A format runner for neovim, written in lua
-    "space-nvim-theme", -- My spacemacs inspired theme
     "plenary.nvim"
 }
 
@@ -24,9 +23,6 @@ end
 
 require 'plugins/lsp'
 require 'plugins/snippets'
-
-require 'space-nvim-theme'
-vim.cmd('colorscheme space-nvim-theme')
 
 -- Requires termguicolors to be set
 require'colorizer'.setup {
