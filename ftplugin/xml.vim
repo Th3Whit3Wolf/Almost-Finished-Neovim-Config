@@ -1,9 +1,7 @@
 packadd vim-xml
 
-
 call lexical#init()
 call pencil#init({'wrap': 'soft', 'autoformat': 1})
-call LazySource('closetag')
 
 let g:lexical#thesaurus_key = '<leader>t'
 let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt', '~/.config/nvim/moby_thesaurus.txt']
