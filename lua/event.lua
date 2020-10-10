@@ -22,9 +22,7 @@ function autocmd.load_autocmds()
                 {"BufWritePre", "/tmp/*", "setlocal noundofile"},
                 {"BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile"},
                 {"BufWritePre", "MERGE_MSG", "setlocal noundofile"}, {"BufWritePre", "*.tmp", "setlocal noundofile"},
-                {"BufWritePre", "*.bak", "setlocal noundofile"}, {"BufLeave", "*", "silent! update"},
-                {"BufWinEnter,WinEnter", "term://*", "startinsert"}, {"BufLeave", "term://*", "stopinsert"}},
-
+                {"BufWritePre", "*.bak", "setlocal noundofile"}, {"BufLeave", "*", "silent! update"}},
         completion = {{"BufEnter", "*", "lua require'completion'.on_attach()"},
         -- Show diagnostic popup on cursor hold
                       {"CursorHold", "*", "lua vim.lsp.util.show_line_diagnostics()"}},
@@ -46,8 +44,13 @@ function autocmd.load_autocmds()
                 {"VimResized", "*", [[tabdo wincmd =]]}, {"VimLeave", "*", "wshada!"},
         -- Check if file changed when its window is focus, more eager than 'autoread'
                 {"BufEnter,FocusGained", "*", "checktime"}},
-
-        yank = {{"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]}}
+        better_diff = {{"FilterWritePost", "*",
+                        [[ if (&diff) | if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/diff.vim'))) == 0 | execute 'source' fnameescape(resolve(expand('~/.config/nvim/lazy/diff.vim'))) | endif | DiffOrig | endif ]]}},
+        better_term = {{"BufWinEnter,WinEnter", "term://*", "startinsert"}, {"BufLeave", "term://*", "stopinsert"},
+                       {"TermEnter", "*",
+                        [[ if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/terminal.vim'))) == 0 | execute 'source' fnameescape(resolve(expand('~/.config/nvim/lazy/terminal.vim'))) | endif ]]}},
+        yank = {{"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]}},
+        git = {{"WinEnter,BufEnter,VimEnter", "*", "if is_vcs#is_git() == 1 | packadd vim-signify | packadd gina.vim | packadd git-messenger.vim | packadd committia.vim | SignifyEnableAll | endif"}}
     }
 
     autocmd.nvim_create_augroups(definitions)
