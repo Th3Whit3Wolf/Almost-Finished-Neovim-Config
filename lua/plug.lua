@@ -61,7 +61,7 @@ local function init()
     -- Modern vim-startify
     use {'hardcoreplayers/dashboard-nvim'}
 
-    --  Modern performant generic finder and dispatcher for NeoVim 
+    --  Modern performant generic finder and dispatcher for NeoVim
     use {
         'liuchengxu/vim-clap',
         run = ':Clap install-binary!'
@@ -184,7 +184,7 @@ local function init()
     -- uses the sign column to indicate added, modified and removed lines in a file that is managed by a version control system
     use {
         'mhinz/vim-signify',
-        opt = true
+        opt = true,
     }
 
     -- Vim sugar for the UNIX shell commands
@@ -197,7 +197,9 @@ local function init()
     -- shows the history of commits under the cursor in popup window
     use {
         'rhysd/git-messenger.vim',
-        opt = true
+        opt = true,
+        cmd = 'GitMessenger',
+        keys = '<Plug>(git-messenger)'
     }
 
     -- Vim plugin that shows keybindings in popup 
@@ -209,13 +211,16 @@ local function init()
     -- improves the git commit buffer
     use {
         'rhysd/committia.vim',
-        opt = true
+        ft = 'gitcommit'
     }
 
     -- easily search for, substitute, and abbreviate multiple variants of a word 
     use {
         'tpope/vim-abolish',
-        event = 'InsertEnter *'
+        event = 'InsertEnter *',
+        config = function ()
+            vim.cmd [[ if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/abolish.vim'))) == 0 | execute 'source' fnameescape(resolve(expand('~/.config/nvim/lazy/abolish.vim'))) | endif ]]
+        end
     }
 
     -- Asynchronously control git repositories in Neovim
@@ -224,7 +229,7 @@ local function init()
         opt = true
     }
 
-    -- Vim script for text filtering and alignment 
+    -- Vim script for text filtering and alignment
     use {
         'godlygeek/tabular',
         opt = true
@@ -233,10 +238,28 @@ local function init()
     -- Viewer & Finder for LSP symbols and tags
     use {
         'liuchengxu/vista.vim',
-        cmd = 'Vista'
+        cmd = 'Vista',
+        config = function()
+            -- How each level is indented and what to prepend.
+            -- This could make the display more compact or more spacious.
+            -- e.g., more compact: ["▸ ", ""]
+            -- Note: this option only works the LSP executives, doesn't work for `:Vista ctags`
+            vim.cmd [[ let g:vista_icon_indent = ["╰─▸ ", "├─▸ "] ]]
+            -- Executive used when opening vista sidebar without specifying it.
+            -- See all the avaliable executives via `:echo g:vista#executives`.
+            vim.cmd [[ let g:vista_default_executive = 'ctags' ]]
+            -- To enable fzf's preview window set g:vista_fzf_preview.
+            -- The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
+            -- For example:
+            vim.cmd [[ let g:vista_fzf_preview = ['right:50%'] ]]
+            -- Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
+            vim.cmd [[ let g:vista#renderer#enable_icon = 1 ]]
+            -- The default icons can't be suitable for all the filetypes, you can extend it as you wish.
+            vim.cmd [[ let g:vista#renderer#icons = { "function": "\uf794", "variable": "\uf71b" } ]]
+        end
     }
 
-    -- Auto close (X)HTML tags 
+    -- Auto close (X)HTML tags
     use {
         'alvan/vim-closetag',
         ft = {'html', 'javascript', 'xhtml', 'phtml', 'xml'}
@@ -273,9 +296,11 @@ local function init()
 
     -- Simpler Rainbow Parentheses
     use {
-        'alok/rainbow_parentheses.vim',
+        'junegunn/rainbow_parentheses.vim',
         event = 'InsertEnter *',
-        run = 'git checkout fix-spell'
+        config = function()
+            vim.cmd [[ RainbowParentheses ]]
+        end
     }
 
     -- Read DotEnv
@@ -286,7 +311,7 @@ local function init()
 
     -- Profiling
     use {
-        'dstein64/vim-startuptime',
+        'tweekmonster/startuptime.vim',
         cmd = 'StartupTime'
     }
 
@@ -310,12 +335,12 @@ local function init()
     -- Building on Vim’s spell-check and thesaurus/dictionary completion
     use {
         'reedes/vim-lexical',
-        ft = {'asciidoc', 'rst', 'mail', 'html', 'text', 'textile', 'markdown', 'tex', 'xml'}
+        ft = {'asciidoc', 'html', 'text', 'textile', 'mail', 'markdown', 'rst', 'tex', 'xml'}
     }
     -- handful of tweaks needed to smooth the path to writing prose
     use {
         'reedes/vim-pencil',
-        ft = {'asciidoc', 'rst', 'mail', 'html', 'text', 'textile', 'markdown', 'tex', 'xml'}
+        ft = {'asciidoc',  'git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendmail', 'html', 'mail', 'markdown', 'rst', 'text', 'textile', 'tex', 'xml'}
     }
 
     ---------------
