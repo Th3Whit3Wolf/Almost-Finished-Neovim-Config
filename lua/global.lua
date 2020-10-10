@@ -9,7 +9,7 @@ function global.load_variables()
     global.vim_path = home .. path_sep .. '.config' .. path_sep .. 'nvim' .. path_sep
     global.cache_dir = home .. path_sep .. '.cache' .. path_sep .. 'nvim' .. path_sep
     global.modules_dir = global.vim_path .. 'modules'
-    global.python3 = global.cache_dir .. 'venv/neovim3/bin/python' .. path_sep .. 'bin' .. path_sep
+    global.python3 = global.cache_dir .. 'venv' .. path_sep .. 'python' .. path_sep
     global.node = home .. path_sep .. ".node_modules/bin/neovim-node-host"
     global.path_sep = path_sep
     global.home = home
