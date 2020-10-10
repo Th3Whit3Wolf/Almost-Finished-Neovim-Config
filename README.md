@@ -20,8 +20,7 @@ modular file structure. Lazy loading where it makes sense.
   - Async linter
   - Async formatter
   - Async (maybe incremental) tag generator
-  - Maybe rework npack to be more easily used from neovim, with a plugin with an interface similiar to [vim-plug](https://github.com/junegunn/vim-plug) and [packer.nvim](https://github.com/wbthomason/packer.nvim)
-
+  - ~~Maybe rework npack to be more easily used from neovim, with a plugin with an interface similiar to [vim-plug](https://github.com/junegunn/vim-plug) and [packer.nvim](https://github.com/wbthomason/packer.nvim)~~ [packer.nvim](https://github.com/wbthomason/packer.nvim) works great, creating a binary wouldn't provide much if any benefit
 
 <details>
   <summary>
