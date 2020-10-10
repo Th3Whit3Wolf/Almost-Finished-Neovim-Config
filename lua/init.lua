@@ -22,17 +22,9 @@ function M.createdir()
     if not global.isdir(global.python3) and vim.fn.executable('python3') then
         os.execute("mkdir -p " .. global.python3)
         os.execute("python3 -m venv " .. global.python3)
-        -- install python language server and neovim host
-        handle = vim.loop.spawn(global.python3 .. 'bin' .. global.path_sep .. 'pip', {
-            args = {'install -U setuptools pynvim jedi python-language-server[all] isort pyls-isort neovim-remote'}
-          },
-          function()
-            print('Python installation complete')
-            handle:close()
-          end
-        )
-        --os.execute(global.python3 .. 'bin' .. global.path_sep ..
-                       --'pip install -U setuptools pynvim jedi python-language-server[all] isort pyls-isort neovim-remote')
+        -- install python language server, neovim host, and neovim remote
+        vim.cmd("!" .. global.python3 .. "bin" .. global.path_sep ..
+                    "pip install -U setuptools pynvim jedi 'python-language-server[all]' isort pyls-isort neovim-remote")
     end
     if not global.exists(global.node) and vim.fn.executable('npm') then
         -- install neovim node host
