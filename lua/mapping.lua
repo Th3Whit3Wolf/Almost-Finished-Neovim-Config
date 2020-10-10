@@ -58,6 +58,7 @@ function mapping:load_vim_define()
         ["n|<leader>tn"] = map_cr('setlocal nonumber!'):with_noremap(),
         ["n|<leader>tl"] = map_cr('setlocal nolist!'):with_noremap(),
         -- tf toggles files
+        -- tv toggles vista
         -- :: Session Management
         ["n|<Leader>ss"] = map_cu('SessionSave'):with_noremap(),
         ["n|<Leader>sl"] = map_cu('SessionLoad'):with_noremap(),
@@ -78,37 +79,21 @@ function mapping:load_plugin_define()
         ["i|''"] = map_cmd([[pumvisible() ? complete_info()["selected"] != "-1" ? "<Plug>(completion_confirm_completion)"  : "<c-e><CR>" :  "<CR>"]]):with_noremap():with_expr():with_silent(),
         -- Plugin Clap
         ["n|<Leader>ff"] = map_cu('Clap files ++finder=rg --ignore --hidden --files'):with_noremap():with_silent(),
+        ["n|<Leader>fh"] = map_cu('Clap history'):with_noremap():with_silent(),
+        ["n|<Leader>fa"] = map_cu('Clap grep2'):with_noremap():with_silent(),
+        ["n|<Leader>fb"] = map_cu('Clap marks'):with_noremap():with_silent(),
+
         -- a magic bind for regex [0-9]
         -- ["n|<Leader>,0,9"] = "<Plug>BuffetSwitch(+)",
-        -- Plugin MarkdownPreview
-        -- ["n|<Leader>om"] = map_cu('MarkdownPreview'):with_noremap():with_silent(),
         -- Plugin DadbodUI
         -- ["n|<Leader>od"] = map_cr('DBUIToggle'):with_noremap():with_silent(),
         -- Plugin Floaterm
         -- ["n|<A-d>"] = map_cu('FloatermToggle'):with_noremap():with_silent(),
         -- ["t|<A-d>"] = map_cu([[<C-\><C-n>:FloatermToggle<CR>]]):with_noremap():with_silent(),
         -- ["n|<Leader>g"] = map_cu('FloatermNew height=0.7 width=0.8 lazygit'):with_noremap():with_silent(),
-        -- Plugin Clap
-        -- ["n|<Leader>tc"] = map_cu('Clap colors'):with_noremap():with_silent(),
-        -- ["n|<Leader>bb"] = map_cu('Clap buffers'):with_noremap():with_silent(),
-        -- ["n|<Leader>fa"] = map_cu('Clap grep'):with_noremap():with_silent(),
-        -- ["n|<Leader>fb"] = map_cu('Clap marks'):with_noremap():with_silent(),
-        -- ["n|<C-x><C-f>"] = map_cu('Clap filer'):with_noremap():with_silent(),
-        -- ["n|<Leader>fg"] = map_cu('Clap gfiles'):with_noremap():with_silent(),
-        -- ["n|<Leader>fw"] = map_cu('Clap grep ++query=<Cword>'):with_noremap():with_silent(),
-        -- ["n|<Leader>fh"] = map_cu('Clap history'):with_noremap():with_silent(),
-        -- ["n|<Leader>fW"] = map_cu('Clap windows'):with_noremap():with_silent(),
-        -- ["n|<Leader>fl"] = map_cu('Clap loclist'):with_noremap():with_silent(),
-        -- ["n|<Leader>fu"] = map_cu('Clap git_diff_files'):with_noremap():with_silent(),
-        -- ["n|<Leader>fv"] = map_cu('Clap grep ++query=@visual'):with_noremap():with_silent(),
-        -- ["n|<Leader>oc"] = map_cu('Clap dotfiles'):with_noremap():with_silent(),
-        -- ["n|<Leader>s"] = map_cu('Clap gosource'):with_noremap():with_silent(),
 
         -- Plugin Vista
-        -- ["n|<Leader>v"] = map_cu('Vista!!'):with_noremap():with_silent(),
-        -- Plugin SplitJoin
-        -- ["n|sj"] = map_cr('SplitjoinJoin'),
-        -- ["n|sk"] = map_cr('SplitjoinSplit'),
+        ["n|<Leader>tv"] = map_cmd([[exists('g:vista.bufnr')>0 ? ":Vista! <CR>" : ":Vista<CR>" ]]):with_expr():with_silent(),
         -- Plugin vim-operator-replace
         -- ["x|p"] = map_cmd("<Plug>(operator-replace)"),
         -- Plugin vim-operator-surround
