@@ -1,10 +1,12 @@
 syntax enable
 filetype plugin indent on
-" set background=light
 
 lua << EOF
 require('init')
 EOF
+
+
+packadd space-nvim-theme "My spacemacs inspired theme
 
 " If sudo, disable vim swap/backup/undo/shada/viminfo writing
 if $SUDO_USER !=# '' && $USER !=# $SUDO_USER
@@ -25,7 +27,6 @@ augroup user_secure
 		\ /tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim
 		\ setlocal noswapfile noundofile nobackup nowritebackup viminfo= shada=
 augroup END
-
 
 " <c-k> will either expand the current snippet at the word or try to jump to
 " the next position for the snippet.
@@ -52,9 +53,6 @@ cnoreabbrev W! w!
 cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
 
-" Commands to install plugins
-command! -nargs=* InstallPlug :lua plug.install( '<args>' )
-
 function! GetHighlight()
 	let l:gp_nm = synIDattr(synID(line("."), col("."), 1), "name")
   	let l:fg = synIDattr(synIDtrans(hlID(l:gp_nm)), "fg#")
@@ -62,15 +60,29 @@ function! GetHighlight()
 	echo "Group(bg,fg): "l:gp_nm"("l:fg","l:bg")"
 endfunction
 
-highlight link Crates Comment
 call sign_define("LspDiagnosticsErrorSign", {"text" : "✘", "texthl" : "LspDiagnosticsError"})
 call sign_define("LspDiagnosticsWarningSign", {"text" : "", "texthl" : "LspDiagnosticsWarning"})
 call sign_define("LspDiagnosticsInformationSign", {"text" : "", "texthl" : "LspDiagnosticsInformation"})
 call sign_define("LspDiagnosticsHintSign", {"text" : "ஐ", "texthl" : "LspDiagnosticsHint"})
 
-execute 'luafile ' . stdpath('config') . '/lua/plug.lua'
-command! PlugInstall packadd packer.nvim | lua require('plug').install()
-command! PlugUpdate packadd packer.nvim | lua require('plug').update()
-command! PlugSync packadd packer.nvim | lua require('plug').sync()
-command! PlugClean packadd packer.nvim | lua require('plug').clean()
-command! PlugCompile packadd packer.nvim | lua require('plug').compile()
+command! PlugInstall execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').install()
+command! PlugUpdate  execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').update()
+command! PlugSync    execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').sync()
+command! PlugClean   execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').clean()
+command! PlugCompile execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').compile()
+
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['<', '>']]
+
+hi link Crates Comment
+
+" Normal color in popup window with 'CursorLine'
+hi link gitmessengerPopupNormal CursorLine
+
+" Header such as 'Commit:', 'Author:' with 'Statement' highlight group
+hi link gitmessengerHeader CursorLine
+
+" Commit hash at 'Commit:' header with 'Special' highlight group
+hi link gitmessengerHash CursorLine
+
+" History number at 'History:' header with 'Title' highlight group
+hi link gitmessengerHistory CursorLine
