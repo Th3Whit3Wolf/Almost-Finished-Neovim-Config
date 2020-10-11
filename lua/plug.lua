@@ -335,12 +335,26 @@ local function init()
     -- Building on Vim’s spell-check and thesaurus/dictionary completion
     use {
         'reedes/vim-lexical',
-        ft = {'asciidoc', 'html', 'text', 'textile', 'mail', 'markdown', 'rst', 'tex', 'xml'}
+        opt = true,
+        ft = {'asciidoc', 'html', 'text', 'textile', 'mail', 'markdown', 'rst', 'tex', 'xml'},
+        config = function()
+            vim.cmd [[ call lexical#init() ]]
+            vim.cmd [[ let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt', '~/.config/nvim/moby_thesaurus.txt'] ]]
+            vim.cmd [[ let g:lexical#dictionary = ['/usr/share/dict/words'] ]]
+            vim.cmd [[ let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add'] ]]
+            vim.cmd [[ let g:lexical#thesaurus_key = '<leader>lt' ]]
+            vim.cmd [[ let g:lexical#dictionary_key = '<leader>ld']]
+        end
+    
     }
     -- handful of tweaks needed to smooth the path to writing prose
     use {
         'reedes/vim-pencil',
-        ft = {'asciidoc',  'git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendmail', 'html', 'mail', 'markdown', 'rst', 'text', 'textile', 'tex', 'xml'}
+        opt = true,
+        ft = {'asciidoc',  'git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendmail', 'html', 'mail', 'markdown', 'rst', 'text', 'textile', 'tex', 'xml'},
+        config = function()
+            vim.cmd [[ call pencil#init() ]]
+        end
     }
 
     ---------------
