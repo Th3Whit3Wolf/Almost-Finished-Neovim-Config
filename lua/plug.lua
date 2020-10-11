@@ -1,4 +1,5 @@
 local global = require 'global'
+local vim = vim
 
 local packer = nil
 local function init()

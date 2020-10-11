@@ -1,4 +1,4 @@
-vim = vim
+local vim = vim
 local api = vim.api
 local fn = vim.fn
 

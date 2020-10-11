@@ -1,5 +1,5 @@
 local is_git = require 'utils/vcs'.is_git()
-local nv = vim.api
+local vim, nv = vim, vim.api
 local git = {}
 
 function git.run()

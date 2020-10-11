@@ -1,7 +1,8 @@
 local diagnostic = require('diagnostic')
 local completion = require('completion')
 local nvim_lsp = require('nvim_lsp')
-local global = require 'global'
+local global = require('global')
+local vim = vim
 
 -- Configure the completion chains
 local chain_complete_list = {

@@ -7,8 +7,7 @@ vim.g.lazygit_use_neovim_remote = 1
 local window = require 'utils/windows'
 local vcs = require 'utils/vcs'
 
-vim = vim
-local api = vim.api
+local vim = vim
 local fn = vim.fn
 
 LAZYGIT_BUFFER = nil

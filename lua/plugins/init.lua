@@ -1,3 +1,5 @@
+local vim = vim
+
 local plugins = {
     "nvim-lspconfig", -- Collection of common configurations for the Nvim LSP client.
     "lsp_extensions.nvim", -- bunch of info & extension callbacks for built-in LSP (provides inlay hints)
