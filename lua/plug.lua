@@ -64,7 +64,7 @@ local function init()
     --  Modern performant generic finder and dispatcher for NeoVim
     use {
         'liuchengxu/vim-clap',
-        run = ':Clap install-binary!'
+        run = ':call clap#installer#force_download()'
     }
 
     ---------
