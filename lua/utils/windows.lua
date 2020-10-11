@@ -2,7 +2,7 @@ vim = vim
 local api = vim.api
 local fn = vim.fn
 
-local utils = {}
+local windows = {}
 
 --- Strip leading and lagging whitespace
 local function trim(str)
@@ -10,7 +10,7 @@ local function trim(str)
 end
 
 --- Get project_root_dir for git repository
-function utils.project_root_dir()
+function windows.project_root_dir()
     -- try file location first
     local gitdir = fn.system('cd "' .. fn.expand('%:p:h') .. '" && git rev-parse --show-toplevel')
     local isgitdir = fn.matchstr(gitdir, '^fatal:.*') == ""
@@ -30,7 +30,7 @@ function utils.project_root_dir()
 end
 
 --- on_exit callback function to delete the open buffer when lazygit exits in a neovim terminal
-function utils.on_exit(job_id, code, event)
+function windows.on_exit(job_id, code, event)
     if code == 0 then
         -- Close the window where the BUFFER is
         vim.cmd("silent! :q")
@@ -39,7 +39,7 @@ function utils.on_exit(job_id, code, event)
 end
 
 --- open floating window with nice borders
-function utils.open_floating_window(floating_window_scaling_factor, lazygit_floating_window_winblend,BUFFER, BUFFER_NAME, IS_LOADED)
+function windows.open_floating_window(floating_window_scaling_factor, lazygit_floating_window_winblend,BUFFER, BUFFER_NAME, IS_LOADED)
 
     -- Why is this required?
     -- vim.g.lazygit_floating_window_scaling_factor returns different types if the value is an integer or float
@@ -117,4 +117,4 @@ function utils.open_floating_window(floating_window_scaling_factor, lazygit_floa
     vim.cmd(cmd:format(border_buffer))
 end
 
-return utils
+return windows

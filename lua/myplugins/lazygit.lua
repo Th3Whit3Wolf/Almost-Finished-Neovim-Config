@@ -4,7 +4,7 @@ vim.g.lazygit_floating_window_winblend = 0
 vim.g.lazygit_floating_window_scaling_factor = 0.8
 vim.g.lazygit_use_neovim_remote = 1
 
-local utils = require 'utils'
+local utils = require 'utils/windows'
 
 vim = vim
 local api = vim.api
