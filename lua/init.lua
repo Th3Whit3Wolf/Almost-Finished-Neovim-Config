@@ -30,10 +30,15 @@ function M.createdir()
         -- install neovim node host
         os.execute("npm install -g neovim")
     end
-    if not global.isdir(global.local_nvim .. 'site' .. global.path_sep .. 'pack' .. global.path_sep .. 'packer' ..
-                            global.path_sep .. 'opt' .. global.path_sep .. 'packer.nvim') then
-        os.execute(
-            "git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/opt/packer.nvim")
+    if not global.isdir(global.plugins .. 'opt' .. global.path_sep .. 'packer.nvim') then
+        vim.fn.mkdir(global.plugins .. 'opt', 'p')
+        local out = vim.fn.system(string.format(
+            'git clone %s %s',
+            'https://github.com/wbthomason/packer.nvim',
+            global.plugins .. 'opt' .. global.path_sep .. 'packer.nvim'
+        ))
+        print(out)
+        print("Downloading packer.nvim...")
         require'plug'.install()
     end
     if not global.exists(global.local_nvim .. 'bin/') then

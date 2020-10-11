@@ -14,7 +14,7 @@ function global.load_variables()
     global.path_sep = path_sep
     global.home = home
     global.local_nvim = home .. path_sep .. '.local' .. path_sep .. 'share' .. path_sep .. 'nvim' .. path_sep
-    global.plugins = home .. path_sep .. '.local' .. path_sep .. 'share' .. path_sep .. 'nvim' .. path_sep .. 'site' .. path_sep .. 'pack' .. path_sep .. 'default' .. path_sep
+    global.plugins = home .. path_sep .. '.local' .. path_sep .. 'share' .. path_sep .. 'nvim' .. path_sep .. 'site' .. path_sep .. 'pack' .. path_sep .. 'packer' .. path_sep
 end
 
 --- Check if a file or directory exists in this path
