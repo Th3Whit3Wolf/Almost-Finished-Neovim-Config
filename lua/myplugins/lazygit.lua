@@ -4,7 +4,8 @@ vim.g.lazygit_floating_window_winblend = 0
 vim.g.lazygit_floating_window_scaling_factor = 0.8
 vim.g.lazygit_use_neovim_remote = 1
 
-local utils = require 'utils/windows'
+local window = require 'utils/windows'
+local vcs = require 'utils/vcs'
 
 vim = vim
 local api = vim.api
@@ -46,9 +47,9 @@ local function lazygit(path)
         return
     end
     if path == nil then
-        path = utils.project_root_dir()
+        path = vcs.project_root_dir()
     end
-    utils.open_floating_window(vim.g.lazygit_floating_window_scaling_factor, vim.g.lazygit_floating_window_winblend, LAZYGIT_BUFFER, 'lazygit', LAZYGIT_LOADED)
+    window.open_floating_window(vim.g.lazygit_floating_window_scaling_factor, vim.g.lazygit_floating_window_winblend, LAZYGIT_BUFFER, 'lazygit', LAZYGIT_LOADED)
     local cmd = "lazygit " .. "-p " .. path
     exec_lazygit_command(cmd)
 end
@@ -60,9 +61,9 @@ local function lazygitfilter(path)
         return
     end
     if path == nil then
-        path = utils.project_root_dir()
+        path = vcs.project_root_dir()
     end
-    utils.open_floating_window(vim.g.lazygit_floating_window_scaling_factor, vim.g.lazygit_floating_window_winblend, LAZYGIT_BUFFER, 'lazygit', LAZYGIT_LOADED)
+    window.open_floating_window(vim.g.lazygit_floating_window_scaling_factor, vim.g.lazygit_floating_window_winblend, LAZYGIT_BUFFER, 'lazygit', LAZYGIT_LOADED)
     local cmd = "lazygit " .. "-f " .. path
     exec_lazygit_command(cmd)
 end

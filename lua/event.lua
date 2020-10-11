@@ -35,11 +35,6 @@ function autocmd.load_autocmds()
             {"WinEnter,FocusGained,CursorMoved,VimResized", "*", "silent! lua require('scrollbar').show()"},
             {"WinLeave,FocusLost,CursorHold", "*", "silent! lua require('scrollbar').clear()"}
         },
-        gitlens = {
-            {"CursorHold", "*", "lua require'plugins/gitlens'.blameVirtText()"},
-            {"CursorMoved", "*", "lua require'plugins/gitlens'.clearBlameVirtText()"},
-            {"CursorMovedI", "*", "lua require'plugins/gitlens'.clearBlameVirtText()"}
-        },
         -- lazy_plugs = {},
         niceties = {
             {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]},
@@ -73,7 +68,7 @@ function autocmd.load_autocmds()
             {"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]}
         },
         git = {
-            {"BufEnter", "*", "if is_vcs#is_git() == 1 | packadd vim-signify | packadd gina.vim | packadd git-messenger.vim | packadd committia.vim | SignifyEnableAll | endif"}
+            {"BufEnter", "*", "lua require'myplugins/if_git'.run()"}
         }
     }
 

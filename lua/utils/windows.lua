@@ -4,31 +4,6 @@ local fn = vim.fn
 
 local windows = {}
 
---- Strip leading and lagging whitespace
-local function trim(str)
-    return str:gsub("^%s+", ""):gsub("%s+$", "")
-end
-
---- Get project_root_dir for git repository
-function windows.project_root_dir()
-    -- try file location first
-    local gitdir = fn.system('cd "' .. fn.expand('%:p:h') .. '" && git rev-parse --show-toplevel')
-    local isgitdir = fn.matchstr(gitdir, '^fatal:.*') == ""
-    if isgitdir then
-        return trim(gitdir)
-    end
-
-    -- try symlinked file location instead
-    gitdir = fn.system('cd "' .. fn.fnamemodify(fn.resolve(fn.expand('%:p')), ':h') .. '" && git rev-parse --show-toplevel')
-    isgitdir = fn.matchstr(gitdir, '^fatal:.*') == ""
-    if isgitdir then
-        return trim(gitdir)
-    end
-
-    -- just return current working directory
-    return fn.getcwd(0, 0)
-end
-
 --- on_exit callback function to delete the open buffer when lazygit exits in a neovim terminal
 function windows.on_exit(job_id, code, event)
     if code == 0 then
