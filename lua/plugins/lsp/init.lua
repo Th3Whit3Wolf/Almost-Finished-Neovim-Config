@@ -134,7 +134,14 @@ nvim_lsp.sqlls.setup {
     on_attach = on_attach
 }
 nvim_lsp.sumneko_lua.setup {
-    on_attach = on_attach
+    on_attach = on_attach,
+    settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT"
+			}
+		}
+	}
 }
 nvim_lsp.tsserver.setup {
     cmd = {"typescript-language-server", "--stdio"},
