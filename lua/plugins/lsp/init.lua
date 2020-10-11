@@ -1,8 +1,6 @@
 local diagnostic = require('diagnostic')
 local completion = require('completion')
 local nvim_lsp = require('nvim_lsp')
--- local configs = require('nvim_lsp/configs')
--- local util = require('nvim_lsp/util')
 local global = require 'global'
 
 -- Configure the completion chains
@@ -70,91 +68,68 @@ local on_attach = function(client, bufnr)
     })
 end
 
-nvim_lsp.als.setup {
-    on_attach = on_attach
-}
-nvim_lsp.bashls.setup {
-    cmd = {'bash-language-server', 'start'},
-    filetypes = {'sh', 'zsh'},
-    root_dir = nvim_lsp.util.root_pattern('.git'),
-    on_attach = on_attach
-}
-nvim_lsp.cssls.setup {
-    filetypes = {"css", "scss", "less", "sass"},
-    root_dir = nvim_lsp.util.root_pattern("package.json", ".git"),
-    on_attach = on_attach
-}
-nvim_lsp.dockerls.setup {
-    on_attach = on_attach
-}
-nvim_lsp.elmls.setup {
-    on_attach = on_attach
-}
-nvim_lsp.html.setup {
-    on_attach = on_attach
-}
-nvim_lsp.jdtls.setup {
-    on_attach = on_attach
-}
-nvim_lsp.jsonls.setup {
-    cmd = {'json-languageserver', '--stdio'},
-    on_attach = on_attach
-}
-nvim_lsp.metals.setup {
-    on_attach = on_attach
-}
-nvim_lsp.ocamlls.setup {
-    on_attach = on_attach
-}
-nvim_lsp.pyls.setup {
-    cmd = {global.python3 .. 'pyls'},
-    settings = {
-        pyls = {
-            executable = global.python3 .. 'pyls'
+-- List of servers where config = {on_attach = on_attach}
+local simple_lsp = { 'als', 'dockerls', 'elmls', 'html', 'jdtls', 'metals', 'ocamlls', 'purescriptls', 'rnix', 'rust_analyzer', 'sqlls', 'vimls', 'vuels', 'yamlls'}
+-- List of installed LSP servers
+local installed_lsp = vim.fn.systemlist('ls ~/.cache/nvim/nvim_lsp')
+for k,_ in pairs(installed_lsp) do
+    if installed_lsp[k] == "bashls" then
+        nvim_lsp.bashls.setup {
+            cmd = {'bash-language-server', 'start'},
+            filetypes = {'sh', 'zsh'},
+            root_dir = nvim_lsp.util.root_pattern('.git'),
+            on_attach = on_attach
         }
-    },
-    on_attach = on_attach,
-    root_dir = function(fname)
-        return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
-        'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
-        '.gitignore')(fname)
-        or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+    elseif installed_lsp[k] == "cssls" then
+        nvim_lsp.cssls.setup {
+            filetypes = {"", "scss", "less", "sass"},
+            root_dir = nvim_lsp.util.root_pattern("package.json", ".git"),
+            on_attach = on_attach
+        }
+    elseif installed_lsp[k] == "jsonls" then
+        nvim_lsp.jsonls.setup {
+            cmd = {'json-languageserver', '--stdio'},
+            on_attach = on_attach
+        }
+    elseif installed_lsp[k] == "pyls" then
+        nvim_lsp.pyls.setup {
+            cmd = {global.python3 .. 'pyls'},
+            settings = {
+                pyls = {
+                    executable = global.python3 .. 'pyls'
+                }
+            },
+            on_attach = on_attach,
+            root_dir = function(fname)
+                return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
+                'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
+                '.gitignore')(fname)
+                or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+            end
+        }
+    elseif installed_lsp[k] == "sumneko_lua" then
+        nvim_lsp.sumneko_lua.setup {
+            on_attach = on_attach,
+            settings = {
+                Lua = {
+                    runtime = {
+                        version = "LuaJIT"
+                    }
+                }
+            }
+        }
+    elseif installed_lsp[k] == "tsserver" then
+        nvim_lsp.tsserver.setup {
+            cmd = {"typescript-language-server", "--stdio"},
+            filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx"},
+            root_dir = nvim_lsp.util.root_pattern('package.json', 'tsconfig.json', '.git'),
+            on_attach = on_attach
+        }
+    else
+        for k,_ in pairs(simple_lsp) do
+            nvim_lsp[simple_lsp[k]].setup {
+                on_attach = on_attach
+            }
+        end
     end
-}
-nvim_lsp.purescriptls.setup {
-    on_attach = on_attach
-}
-nvim_lsp.rnix.setup {
-    on_attach = on_attach
-}
-nvim_lsp.rust_analyzer.setup {
-    on_attach = on_attach
-}
-nvim_lsp.sqlls.setup {
-    on_attach = on_attach
-}
-nvim_lsp.sumneko_lua.setup {
-    on_attach = on_attach,
-    settings = {
-		Lua = {
-			runtime = {
-				version = "LuaJIT"
-			}
-		}
-	}
-}
-nvim_lsp.tsserver.setup {
-    cmd = {"typescript-language-server", "--stdio"},
-    filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx"},
-    root_dir = nvim_lsp.util.root_pattern('package.json', 'tsconfig.json', '.git'),
-    on_attach = on_attach
-}
-nvim_lsp.vimls.setup {
-    on_attach = on_attach
-}
-nvim_lsp.vuels.setup {
-    on_attach = on_attach
-}
-nvim_lsp.yamlls.setup {
-    on_attach = on_attach
-}
+end
