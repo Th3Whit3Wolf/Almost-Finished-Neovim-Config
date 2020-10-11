@@ -104,3 +104,5 @@ autocmd User ClaqpOnEnter call s:ClapSymbolHL()
 if has('nvim') && executable('nvr')
 	let $GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 endif
+
+command! CheckLSP lua require('myplugins/lsp_install_prompt').check_lsp_installed()
