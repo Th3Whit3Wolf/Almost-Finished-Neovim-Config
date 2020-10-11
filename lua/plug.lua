@@ -422,7 +422,10 @@ local function init()
     -- C#
     use {
         'OmniSharp/omnisharp-vim',
-        ft = {'cs', 'omnisharplog'}
+        ft = {'cs', 'omnisharplog'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Caddyfile
@@ -470,7 +473,10 @@ local function init()
     -- Clojure
     use {
         'guns/vim-clojure-highlight',
-        ft = {'clojure'}
+        ft = {'clojure'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Clojure
@@ -495,7 +501,10 @@ local function init()
     -- Cmake
     use {
         'vhdirk/vim-cmake',
-        ft = {'cmake'}
+        ft = {'cmake'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- CoffeScript
@@ -525,7 +534,10 @@ local function init()
     -- Crystal
     use {
         'vim-crystal/vim-crystal',
-        ft = {'crystal'}
+        ft = {'crystal'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- CSS
@@ -535,6 +547,7 @@ local function init()
         config = function()
             vim.cmd [[ set backupcopy=yes ]]
             vim.cmd [[ setlocal iskeyword+=- ]]
+            require('myplugins/lsp_install_prompt').lsp_installed()
         end
     }
 
@@ -571,7 +584,10 @@ local function init()
     -- Dart
     use {
         'dart-lang/dart-vim-plugin',
-        ft = {'dart'}
+        ft = {'dart'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Dhall
@@ -583,7 +599,10 @@ local function init()
     -- Dockerfile
     use {
         'ekalinin/Dockerfile.vim',
-        ft = {'docker-compose', 'dockerfile'}
+        ft = {'yaml.docker-compose', 'dockerfile'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Duckscript
@@ -595,7 +614,10 @@ local function init()
     -- Elixir
     use {
         'elixir-editors/vim-elixir',
-        ft = {'elixir'}
+        ft = {'elixir'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Emblem
@@ -643,7 +665,10 @@ local function init()
     -- GDScript 3
     use {
         'calviken/vim-gdscript3',
-        ft = {'gdscript3', 'gsl'}
+        ft = {'gdscript3', 'gsl', 'gd'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Git
@@ -680,7 +705,10 @@ local function init()
     use {
         'fatih/vim-go',
         ft = {'go'},
-        run = ':GoUpdateBinaries'
+        run = ':GoUpdateBinaries',
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Gradle
@@ -722,7 +750,10 @@ local function init()
     -- Haskel
     use {
         'neovimhaskell/haskell-vim',
-        ft = {'haskell'}
+        ft = {'haskell'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Haxe
@@ -752,7 +783,10 @@ local function init()
     -- HTML5
     use {
         'othree/html5.vim',
-        ft = {'html'}
+        ft = {'html'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- i3
@@ -800,7 +834,10 @@ local function init()
     -- JSX
     use {
         'maxmellon/vim-jsx-pretty',
-        ft = {'javascript', 'javascriptreact', 'typescript', 'typescriptreact'}
+        ft = {'javascript', 'javascriptreact', 'typescript', 'typescriptreact'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Jenkins
@@ -818,31 +855,46 @@ local function init()
     -- Json
     use {
         'elzr/vim-json',
-        ft = {'json'}
+        ft = {'json'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Json5
     use {
         'GutenYe/json5.vim',
-        ft = {'json5'}
+        ft = {'json5'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Julia
     use {
         'JuliaEditorSupport/julia-vim',
-        ft = {'julia'}
+        ft = {'julia'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Kotlin
     use {
         'udalov/kotlin-vim',
-        ft = {'kotlin'}
+        ft = {'kotlin'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Latex
     use {
         'lervag/vimtex',
-        ft = {'tex', 'bib'}
+        ft = {'tex', 'bib'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Latex
@@ -860,7 +912,10 @@ local function init()
     -- Less
     use {
         'groenewege/vim-less',
-        ft = {'less'}
+        ft = {'less'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Lilypond
@@ -944,25 +999,37 @@ local function init()
     -- Nim
     use {
         'zah/nim.vim',
-        ft = {'nim'}
+        ft = {'nim'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Nix
     use {
         'LnL7/vim-nix',
-        ft = {'nix'}
+        ft = {'nix'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Objective-C
     use {
         'b4winckler/vim-objc',
-        ft = {'objc'}
+        ft = {'objc'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- OCaml
     use {
         'ocaml/vim-ocaml',
-        ft = {'dune', 'oasis', 'ocaml', 'ocamlbuild_tags', 'omake', 'sexplib'}
+        ft = {'dune', 'oasis', 'ocaml', 'ocamlbuild_tags', 'omake', 'sexplib'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Octave
@@ -998,7 +1065,10 @@ local function init()
     -- PostgreSQL
     use {
         'lifepillar/pgsql.vim',
-        ft = {'pgsql'}
+        ft = {'pgsql'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- PHP
@@ -1052,7 +1122,10 @@ local function init()
     -- PureScript
     use {
         'purescript-contrib/purescript-vim',
-        ft = {'purescript'}
+        ft = {'purescript'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- QMake
@@ -1070,7 +1143,10 @@ local function init()
     -- R
     use {
         'jalvesaq/Nvim-R',
-        ft = {'r'}
+        ft = {'r'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Racket
@@ -1106,7 +1182,10 @@ local function init()
     -- Reason
     use {
         'reasonml-editor/vim-reason-plus',
-        ft = {'reason'}
+        ft = {'reason'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- reStructuredText
@@ -1130,7 +1209,10 @@ local function init()
     -- Ruby
     use {
         'vim-ruby/vim-ruby',
-        ft = {'eruby', 'ruby'}
+        ft = {'eruby', 'ruby'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Rust
@@ -1148,19 +1230,28 @@ local function init()
     -- Scala
     use {
         'derekwyatt/vim-scala',
-        ft = {'scala'}
+        ft = {'scala'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- SCSS
     use {
         'cakebaker/scss-syntax.vim',
-        ft = {'scss'}
+        ft = {'scss'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Shell
     use {
         'arzg/vim-sh',
-        ft = {'sh'}
+        ft = {'sh'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Slim
@@ -1235,7 +1326,10 @@ local function init()
     -- Swift
     use {
         'keith/swift.vim',
-        ft = {'swift'}
+        ft = {'swift'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Systemd
@@ -1253,7 +1347,10 @@ local function init()
     -- Terraform
     use {
         'hashivim/vim-terraform',
-        ft = {'terraform'}
+        ft = {'terraform'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- Textile
@@ -1331,7 +1428,10 @@ local function init()
     -- Vue
     use {
         'posva/vim-vue',
-        ft = {'vue'}
+        ft = {'vue'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- XDC
@@ -1355,7 +1455,10 @@ local function init()
     -- YAML
     use {
         'stephpy/vim-yaml',
-        ft = {'yaml'}
+        ft = {'yaml'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 
     -- YANG
@@ -1391,7 +1494,10 @@ local function init()
     -- Zsh
     use {
         'chrisbra/vim-zsh',
-        ft = {'zsh'}
+        ft = {'zsh'},
+        config = function()
+            require('myplugins/lsp_install_prompt').lsp_installed()
+        end
     }
 end
 

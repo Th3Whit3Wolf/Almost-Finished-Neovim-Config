@@ -1,8 +1,8 @@
 local diagnostic = require('diagnostic')
 local completion = require('completion')
 local nvim_lsp = require('nvim_lsp')
-local configs = require('nvim_lsp/configs')
-local util = require('nvim_lsp/util')
+-- local configs = require('nvim_lsp/configs')
+-- local util = require('nvim_lsp/util')
 local global = require 'global'
 
 -- Configure the completion chains
@@ -119,11 +119,11 @@ nvim_lsp.pyls.setup {
         'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
         '.gitignore')(fname)
         or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-      end
+    end
 }
--- nvim_lsp.purescriptls.setup {
---    on_attach = on_attach
--- }
+nvim_lsp.purescriptls.setup {
+    on_attach = on_attach
+}
 nvim_lsp.rnix.setup {
     on_attach = on_attach
 }
@@ -155,4 +155,6 @@ nvim_lsp.vimls.setup {
 nvim_lsp.vuels.setup {
     on_attach = on_attach
 }
-nvim_lsp.yamlls.setup {on_attach}
+nvim_lsp.yamlls.setup {
+    on_attach = on_attach
+}

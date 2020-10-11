@@ -35,3 +35,7 @@ function! s:env(var) abort
 endfunction
 
 let db_url = s:env('DATABASE_URL')
+
+lua << EOF
+require('myplugins/lsp_install_prompt').lsp_installed()
+EOF

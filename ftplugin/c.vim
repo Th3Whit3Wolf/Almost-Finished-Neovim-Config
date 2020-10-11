@@ -15,6 +15,10 @@ function! RunMyCode()
     endif
 endfunction
 
+lua << EOF
+require('myplugins/lsp_install_prompt').lsp_installed()
+EOF
+
 if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/vim-endwise.vim'))) == 0
     execute 'source' fnameescape(resolve(expand('~/.config/nvim/lazy/vim-endwise.vim')))
 endif
