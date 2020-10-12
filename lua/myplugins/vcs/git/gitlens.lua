@@ -1,30 +1,5 @@
-local is_git = require 'utils/vcs'.is_git()
 local vim, nv = vim, vim.api
 local git = {}
-
-function git.run()
-    if is_git == true then
-        nv.nvim_command("augroup gitlens")
-        nv.nvim_command("autocmd!")
-        nv.nvim_command("autocmd CursorHold * lua require'myplugins/if_git'.blameVirtText()")
-        nv.nvim_command("autocmd CursorMoved * lua require'myplugins/if_git'.clearBlameVirtText()")
-        nv.nvim_command("autocmd CursorMovedI * lua require'myplugins/if_git'.clearBlameVirtText()")
-        nv.nvim_command("augroup END")
-        nv.nvim_command("command! LazyGit lua require'myplugins/lazygit'.lazygit()")
-        nv.nvim_command("command! LazyGitFilter lua require'myplugins/lazygit'.lazygitfilter()")
-        nv.nvim_command("command! LazyGitConfig lua require'myplugins/lazygit'.lazygitconfig()")
-        nv.nvim_command("packadd vim-signify")
-        nv.nvim_command("packadd gina.vim")
-        nv.nvim_command("packadd git-messenger.vim")
-        nv.nvim_command("packadd committia.vim")
-        nv.nvim_command("SignifyEnableAll")
-    else
-        nv.nvim_command("augroup gitlens")
-        nv.nvim_command("autocmd!")
-        nv.nvim_command("augroup END")
-    end
-
-end
 
 -- Show git information in virtual text for current line like GitLens
 function git.blameVirtText()

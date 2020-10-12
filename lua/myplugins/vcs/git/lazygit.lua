@@ -5,7 +5,7 @@ vim.g.lazygit_floating_window_scaling_factor = 0.8
 vim.g.lazygit_use_neovim_remote = 1
 
 local window = require 'utils/windows'
-local vcs = require 'utils/vcs'
+local vcs = require 'myplugins/vcs/git'
 
 local vim = vim
 local fn = vim.fn
@@ -13,11 +13,6 @@ local fn = vim.fn
 LAZYGIT_BUFFER = nil
 LAZYGIT_LOADED = false
 vim.g.lazygit_opened = 0
-
---- Check if lazygit is available
-local function is_lazygit_available()
-    return fn.executable("lazygit") == 1
-end
 
 local function lazygit_on_exit(job_id, code, event)
     if code == 0 then
@@ -41,10 +36,6 @@ end
 
 --- :LazyGit entry point
 local function lazygit(path)
-    if is_lazygit_available() ~= true then
-        print("Please install lazygit. Check documentation for more information")
-        return
-    end
     if path == nil then
         path = vcs.project_root_dir()
     end
@@ -55,10 +46,6 @@ end
 
 --- :LazyGitFilter entry point
 local function lazygitfilter(path)
-    if is_lazygit_available() ~= true then
-        print("Please install lazygit. Check documentation for more information")
-        return
-    end
     if path == nil then
         path = vcs.project_root_dir()
     end
