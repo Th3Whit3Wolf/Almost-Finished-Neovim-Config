@@ -141,7 +141,24 @@ for k,_ in pairs(installed_lsp) do
             settings = {
                 Lua = {
                     runtime = {
-                        version = "LuaJIT"
+                        version = "LuaJIT",
+                        path = vim.split(package.path, ';')
+                    },
+                    diagnostics = { 
+                        enable = true,
+                        globals = {
+                            "vim",
+                            "describe",
+                            "it",
+                            "before_each",
+                            "after_each"
+                        },
+                    },
+                    workspace = {
+                        library = {
+                            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+                        }
                     }
                 }
             }
