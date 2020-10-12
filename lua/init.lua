@@ -39,20 +39,24 @@ function M.createdir()
         ))
         print(out)
         print("Downloading packer.nvim...")
+        vim.cmd('set runtimepath+=' .. global.plugins .. 'opt' .. global.path_sep .. 'packer.nvim')
         require'plug'.install()
     end
     if not global.exists(global.local_nvim .. 'bin/') then
         os.execute("mkdir -p " .. global.local_nvim .. 'bin/')
+        print("Downloading Quote Generator...")
         if vim.fn.executable('curl') then
-            os.execute(
-                "curl -o ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz -LJO https://github.com/Th3Whit3Wolf/pquote/releases/download/0.2.0/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
-            os.execute("tar tzf ~/.local/share/nvim/bin/pq.tar.gz --directory ~/.local/share/nvim/bin/")
+            os.execute("curl -o ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz -LJO https://github.com/Th3Whit3Wolf/pquote/releases/download/0.2.0/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
+            print("Unpacking Quote Generator...")
+            os.execute("tar xzf ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz --directory ~/.local/share/nvim/bin/")
+            print("Cleaning up Quote Generator...")
             os.execute("rm ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
             os.execute("mv ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc ~/.local/share/nvim/bin/pq")
         elseif vim.fn.executable('wget') then
-            os.execute(
-                "wget --no-check-certificate --content-disposition -P ~/.local/share/nvim/bin/ https://github.com/Th3Whit3Wolf/pquote/releases/download/0.2.0/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
-            os.execute("tar tzf ~/.local/share/nvim/bin/pq.tar.gz --directory ~/.local/share/nvim/bin/")
+            os.execute("wget --no-check-certificate --content-disposition -P ~/.local/share/nvim/bin/ https://github.com/Th3Whit3Wolf/pquote/releases/download/0.2.0/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
+            print("Unpacking Quote Generator...")
+            os.execute("tar xzf ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz --directory ~/.local/share/nvim/bin/")
+            print("Cleaning up Quote Generator...")
             os.execute("rm ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc.tar.gz")
             os.execute("mv ~/.local/share/nvim/bin/pq-0.2.0-x86_64-unknown-linux-glibc ~/.local/share/nvim/bin/pq")
         end
@@ -96,10 +100,10 @@ end
 function M.load_core()
     M.disable_distribution_plugins()
     M.leader_map()
+    M.createdir()
 
     local ops = options:new()
     ops:load_options()
-    M.createdir()
 
     local vars = variables:new()
     vars:load_variables()
