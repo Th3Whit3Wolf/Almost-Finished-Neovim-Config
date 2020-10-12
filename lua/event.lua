@@ -21,7 +21,10 @@ function autocmd.load_autocmds()
             -- Reload Vim script automatically if setlocal autoread
             {"BufWritePost,FileWritePost", "*.vim",
                 [[nested if &l:autoread > 0 | source <afile> | echo 'source ' . bufname('%') | endif]]},
-            {"BufWritePre", "/tmp/*", "setlocal noundofile"},
+            -- Disable swap/undo/viminfo/shada files in temp directories or shm
+            {"BufNewFile,BufReadPre",
+            "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim",
+            "setlocal noswapfile noundofile nobackup nowritebackup viminfo= shada="},
             {"BufWritePre", "COMMIT_EDITMSG", "setlocal noundofile"},
             {"BufWritePre", "MERGE_MSG", "setlocal noundofile"}, {"BufWritePre", "*.tmp", "setlocal noundofile"},
             {"BufWritePre", "*.bak", "setlocal noundofile"}, {"BufLeave", "*", "silent! update"}
