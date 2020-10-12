@@ -4,18 +4,8 @@ local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
 local global = require('global')
 
 local lsp_prompt = {}
---- Prompt use if they would like to donwload lsp
-function prompt(lsp)
-    if next(vim.lsp.get_active_clients()) == nil then
-        if vim.fn.input("Language server (" .. lsp .. ") is available for " .. ft .. ". Download now? (y for yes)") ~=
-            "y" then
-            return
-        end
-        api.nvim_command("LspInstall " .. lsp)
-    else
-        return
-    end
-end
+
+local installed_lsp = vim.fn.systemlist('ls ~/.cache/nvim/nvim_lsp')
 
 local lsps = {
     ada = "als",
@@ -50,6 +40,17 @@ local lsps = {
     yaml = "yamlls",
     zsh = "bashls",
 }
+
+is_installed = false
+--- Prompt use if they would like to donwload lsp
+function prompt(lsp)
+    if vim.fn.input("Language server (" .. lsp .. ") is available for " .. ft .. ". Download now? (y for yes)") ~=
+        "y" then
+        return
+    end
+    api.nvim_command("LspInstall " .. lsp)
+end
+
 if vim.fn.executable('mix') then
     lsps["elixir"] = "elixirls"
 end
@@ -64,11 +65,15 @@ if vim.fn.executable('nimble') then
 end
 
 function lsp_prompt.lsp_installed()
-    local all = api.nvim_exec(':LspInstallInfo', true)
-    if lsps[ft] ~= nil then
-        if not string.match(all, lsps[ft]) then
-            prompt(lsps[ft])
+    for k,_ in pairs(installed_lsp) do
+        for k,v in pairs(lsps) do
+            if installed_lsp[k] == lsps[v] then
+                is_installed = true
+            end
         end
+    end
+    if is_installed == false and lsps[ft] ~= nil then
+        prompt(lsps[ft])
     end
 end
 
