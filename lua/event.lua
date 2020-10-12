@@ -70,8 +70,8 @@ function autocmd.load_autocmds()
         yank = {
             {"TextYankPost", [[* silent! lua vim.highlight.on_yank({higroup="IncSearch", timeout=400})]]}
         },
-        git = {
-            {"BufEnter", "*", "lua require'myplugins/if_git'.run()"}
+        vcs = {
+            {"BufEnter", "*", "lua require'myplugins/vcs'"}
         },
         lsp_installer = {
             {"FileType", "ada,cs,css,Dockerfile,yaml.docker-compose,elixir,elm,html,java,javascript,javascriptreact,json,json5,julia,less,mysql,nim,nix,ocaml,php,purescript,reason,sass,scala,scss,sql,sh,typescript,typescriptreact,vb,vim,vue,yaml,zsh", "lua require('myplugins/lsp_install_prompt').lsp_installed()"}
