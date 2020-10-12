@@ -121,22 +121,40 @@ for k,_ in pairs(installed_lsp) do
     end
 end
 
-nvim_lsp.pyls.setup {
-    cmd = {global.python3 .. 'bin' .. global.path_sep ..'pyls'},
-    settings = {
-        pyls = {
-            executable = global.python3 .. 'bin' .. global.path_sep ..'pyls'
-        }
-    },
-    on_attach = on_attach,
-    root_dir = function(fname)
-        return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
-        'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
-        '.gitignore')(fname)
-        or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-    end
-}
+-- TODO
+-- clojure
+-- cmake
+-- crystal
+-- dart
+-- gdscript3,gsl,gd
+-- haskell
+-- kotlin
+-- latex,bib
+-- R
+-- ruby - solargraph
+-- swift,obj-c
+-- terraform
 
-nvim_lsp.rust_analyzer.setup {
-    on_attach = on_attach,
-}
+if vim.fn.executable(global.python3 .. 'bin' .. global.path_sep ..'pyls') then
+    nvim_lsp.pyls.setup {
+        cmd = {global.python3 .. 'bin' .. global.path_sep ..'pyls'},
+        settings = {
+            pyls = {
+                executable = global.python3 .. 'bin' .. global.path_sep ..'pyls'
+            }
+        },
+        on_attach = on_attach,
+        root_dir = function(fname)
+            return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
+            'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
+            '.gitignore')(fname)
+            or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+        end
+    }
+end
+
+if vim.fn.executable('rust_analyzer') then
+    nvim_lsp.rust_analyzer.setup {
+        on_attach = on_attach,
+    }
+end
