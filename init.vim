@@ -42,6 +42,26 @@ cnoreabbrev W! w!
 cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
 
+function! MyFoldText()
+	let line = getline(v:foldstart)
+	let nucolwidth = &fdc + &number * &numberwidth
+	let windowwidth = winwidth(0) - nucolwidth - 3
+	let foldedlinecount = v:foldend - v:foldstart
+
+	" expand tabs into spaces
+	let onetab = strpart('          ', 0, &tabstop)
+	let line = substitute(line, '\t', onetab, 'g')
+
+	let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+	" let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - len('lines')
+	" let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - len('lines   ')
+	let fillcharcount = windowwidth - len(line)
+	" return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . ' Lines'
+	return line . ''. repeat(" ",fillcharcount)
+endfunction
+
+set foldtext=MyFoldText()
+
 function! GetHighlight()
 	let l:gp_nm = synIDattr(synID(line("."), col("."), 1), "name")
 	let l:fg = synIDattr(synIDtrans(hlID(l:gp_nm)), "fg#")
