@@ -70,7 +70,7 @@ local on_attach = function(client, bufnr)
 end
 
 -- List of servers where config = {on_attach = on_attach}
-local simple_lsp = { 'als', 'dockerls', 'elmls', 'html', 'jdtls', 'metals', 'ocamlls', 'purescriptls', 'rnix', 'rust_analyzer', 'sqlls', 'vimls', 'vuels', 'yamlls'}
+local simple_lsp = { 'als', 'dockerls', 'elmls', 'html', 'jdtls', 'metals', 'ocamlls', 'purescriptls', 'rnix', 'sqlls', 'vimls', 'vuels', 'yamlls'}
 -- List of installed LSP servers
 local installed_lsp = vim.fn.systemlist('ls ~/.cache/nvim/nvim_lsp')
 for k,_ in pairs(installed_lsp) do
@@ -92,22 +92,6 @@ for k,_ in pairs(installed_lsp) do
             cmd = {'json-languageserver', '--stdio'},
             on_attach = on_attach
         }
-    elseif installed_lsp[k] == "pyls" then
-        nvim_lsp.pyls.setup {
-            cmd = {global.python3 .. 'pyls'},
-            settings = {
-                pyls = {
-                    executable = global.python3 .. 'pyls'
-                }
-            },
-            on_attach = on_attach,
-            root_dir = function(fname)
-                return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
-                'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
-                '.gitignore')(fname)
-                or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-            end
-        }
     elseif installed_lsp[k] == "sumneko_lua" then
         nvim_lsp.sumneko_lua.setup {
             on_attach = on_attach,
@@ -128,9 +112,31 @@ for k,_ in pairs(installed_lsp) do
         }
     else
         for k,_ in pairs(simple_lsp) do
-            nvim_lsp[simple_lsp[k]].setup {
-                on_attach = on_attach
-            }
+            if installed_lsp[k] == simple_lsp[k] then
+                nvim_lsp[simple_lsp[k]].setup {
+                    on_attach = on_attach
+                }
+            end
         end
     end
 end
+
+nvim_lsp.pyls.setup {
+    cmd = {global.python3 .. 'bin' .. global.path_sep ..'pyls'},
+    settings = {
+        pyls = {
+            executable = global.python3 .. 'bin' .. global.path_sep ..'pyls'
+        }
+    },
+    on_attach = on_attach,
+    root_dir = function(fname)
+        return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
+        'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
+        '.gitignore')(fname)
+        or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
+    end
+}
+
+nvim_lsp.rust_analyzer.setup {
+    on_attach = on_attach,
+}
