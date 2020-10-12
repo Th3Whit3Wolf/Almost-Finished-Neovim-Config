@@ -7,7 +7,12 @@ local vim = vim
 -- Configure the completion chains
 local chain_complete_list = {
     default = {{
-        complete_items = {'lsp', 'ts', 'snippet', 'buffers'}
+        complete_items = {
+            'lsp',
+            'ts',
+            'snippet',
+            'buffers'
+        }
     }, {
         complete_items = {'path'},
         triggered_only = {'/'}
@@ -20,7 +25,10 @@ local chain_complete_list = {
     }},
     comment = {},
     sql = {{
-        complete_items = {'vim-dadbod-completion', 'lsp'}
+        complete_items = {
+            'vim-dadbod-completion',
+            'lsp'
+        }
     }},
     vim = {{
         complete_items = {'snippet'}
@@ -33,7 +41,11 @@ local on_attach = function(client, bufnr)
     diagnostic.on_attach(client, bufnr)
     completion.on_attach(client, bufnr, {
         sorting = 'alphabet',
-        matching_strategy_list = {'exact', 'fuzzy', 'substring'},
+        matching_strategy_list = {
+            'exact',
+            'fuzzy',
+            'substring'
+        },
         chain_complete_list = chain_complete_list
     })
 
@@ -70,26 +82,57 @@ local on_attach = function(client, bufnr)
 end
 
 -- List of servers where config = {on_attach = on_attach}
-local simple_lsp = { 'als', 'dockerls', 'elmls', 'html', 'jdtls', 'metals', 'ocamlls', 'purescriptls', 'rnix', 'sqlls', 'vimls', 'vuels', 'yamlls'}
+local simple_lsp = {
+    'als',
+    'dockerls',
+    'elmls',
+    'html',
+    'jdtls',
+    'metals',
+    'ocamlls',
+    'purescriptls',
+    'rnix',
+    'sqlls',
+    'vimls',
+    'vuels',
+    'yamlls'
+}
 -- List of installed LSP servers
 local installed_lsp = vim.fn.systemlist('ls ~/.cache/nvim/nvim_lsp')
 for k,_ in pairs(installed_lsp) do
     if installed_lsp[k] == "bashls" then
         nvim_lsp.bashls.setup {
-            cmd = {'bash-language-server', 'start'},
-            filetypes = {'sh', 'zsh'},
+            cmd = {
+                'bash-language-server',
+                'start'
+            },
+            filetypes = {
+                'sh',
+                'zsh'
+            },
             root_dir = nvim_lsp.util.root_pattern('.git'),
             on_attach = on_attach
         }
     elseif installed_lsp[k] == "cssls" then
         nvim_lsp.cssls.setup {
-            filetypes = {"", "scss", "less", "sass"},
-            root_dir = nvim_lsp.util.root_pattern("package.json", ".git"),
+            filetypes = {
+                "css",
+                "less",
+                "sass",
+                "scss"
+            },
+            root_dir = nvim_lsp.util.root_pattern(
+                "package.json",
+                ".git"
+            ),
             on_attach = on_attach
         }
     elseif installed_lsp[k] == "jsonls" then
         nvim_lsp.jsonls.setup {
-            cmd = {'json-languageserver', '--stdio'},
+            cmd = {
+                'json-languageserver',
+                '--stdio'
+            },
             on_attach = on_attach
         }
     elseif installed_lsp[k] == "sumneko_lua" then
@@ -105,9 +148,23 @@ for k,_ in pairs(installed_lsp) do
         }
     elseif installed_lsp[k] == "tsserver" then
         nvim_lsp.tsserver.setup {
-            cmd = {"typescript-language-server", "--stdio"},
-            filetypes = {"javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx"},
-            root_dir = nvim_lsp.util.root_pattern('package.json', 'tsconfig.json', '.git'),
+            cmd = {
+                "typescript-language-server",
+                "--stdio"
+            },
+            filetypes = {
+                "javascript",
+                "javascriptreact",
+                "javascript.jsx",
+                "typescript",
+                "typescriptreact",
+                "typescript.tsx"
+            },
+            root_dir = nvim_lsp.util.root_pattern(
+                'package.json',
+                'tsconfig.json',
+                '.git'
+            ),
             on_attach = on_attach
         }
     else
@@ -121,19 +178,86 @@ for k,_ in pairs(installed_lsp) do
     end
 end
 
--- TODO
--- clojure
--- cmake
--- crystal
--- dart
--- gdscript3,gsl,gd
--- haskell
--- kotlin
--- latex,bib
--- R
--- ruby - solargraph
--- swift,obj-c
--- terraform
+if vim.fn.executable('ccls') then
+    nvim_lsp.ccls.setup {
+        on_attach = on_attach,
+    }
+elseif vim.fn.executable('clangd') then
+    nvim_lsp.clangd.setup {
+        cmd = {
+            "clangd",
+            "--background-index"
+        },
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('clojure-lsp') then
+    nvim_lsp.clojure_lsp.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('cmake-language-server') then
+    nvim_lsp.cmake.setup {
+        on_attach = on_attach,
+    }
+end
+
+if global.exists('/opt/dart-sdk/bin/snapshots/analysis_server.dart.snapshot') then
+    nvim_lsp.dartls.setup {
+        cmd = {
+            "dart",
+            "/opt/dart-sdk/bin/snapshots/analysis_server.dart.snapshot",
+            "--lsp"
+        },
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('fortls') then
+    nvim_lsp.fortls.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('nc') then
+    nvim_lsp.gdscript.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('hie-wrapper') then
+    nvim_lsp.hie.setup {
+        on_attach = on_attach,
+    }
+elseif vim.fn.executable('ghcide') then
+    nvim_lsp.ghcide.setup {
+        on_attach = on_attach,
+    }
+elseif vim.fn.executable('haskell-language-server-wrapper') then
+    nvim_lsp.hls.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('gopls') then
+    nvim_lsp.gopls.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('kotlin-language-server') then
+    nvim_lsp.kotlin_language_server.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('lean-language-server') then
+    nvim_lsp.leanls.setup {
+        on_attach = on_attach,
+    }
+end
 
 if vim.fn.executable(global.python3 .. 'bin' .. global.path_sep ..'pyls') then
     nvim_lsp.pyls.setup {
@@ -145,11 +269,24 @@ if vim.fn.executable(global.python3 .. 'bin' .. global.path_sep ..'pyls') then
         },
         on_attach = on_attach,
         root_dir = function(fname)
-            return nvim_lsp.util.root_pattern('pyproject.toml', 'setup.py', 'setup.cfg',
-            'requirements.txt', 'mypy.ini', '.pylintrc', '.flake8rc',
-            '.gitignore')(fname)
+            return nvim_lsp.util.root_pattern(
+                'pyproject.toml',
+                'setup.py',
+                'setup.cfg',
+                'requirements.txt',
+                'mypy.ini',
+                '.pylintrc',
+                '.flake8rc',
+                '.gitignore'
+            )(fname)
             or nvim_lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
         end
+    }
+end
+
+if vim.fn.executable('R') then
+    nvim_lsp.r_language_server.setup {
+        on_attach = on_attach,
     }
 end
 
@@ -157,4 +294,40 @@ if vim.fn.executable('rust_analyzer') then
     nvim_lsp.rust_analyzer.setup {
         on_attach = on_attach,
     }
+elseif vim.fn.executable('rls') then
+    nvim_lsp.rls.setup {
+        on_attach = on_attach,
+    }
 end
+
+if vim.fn.executable('scry') then
+    nvim_lsp.scry.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('solargraph') then
+    nvim_lsp.solargraph.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('sourcekit') then
+    nvim_lsp.sourcekit.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('terraform-ls') then
+    nvim_lsp.terraformls.setup {
+        on_attach = on_attach,
+    }
+end
+
+if vim.fn.executable('texlab') then
+    nvim_lsp.texlab.setup {
+        on_attach = on_attach,
+    }
+end
+
+
