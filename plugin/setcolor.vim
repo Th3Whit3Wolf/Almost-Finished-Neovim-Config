@@ -1,3 +1,5 @@
+
+packadd space-nvim-theme "My spacemacs inspired theme
 let hr = str2nr(strftime('%H'))
 if strftime("%H") >= g:setcolor_morning_time && strftime("%H") < g:setcolor_night_time
     set background=light
@@ -31,8 +33,7 @@ function! setcolor#ChangeColo()
 	else
 		set background=light
 	endif
-	lua require 'space-nvim-theme'
-	colorscheme space-nvim-theme
+	luafile ~/.local/share/nvim/site/pack/packer/opt/space-nvim-theme/lua/space-nvim-theme.lua
 	" if we don't do this check, Setcolor's own ColorScheme autocmd will
 	" run infinitely; this limits when it happens
 	if s:setcolor_autocmd_allowed
