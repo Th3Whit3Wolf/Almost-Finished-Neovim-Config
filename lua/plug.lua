@@ -68,6 +68,9 @@ local function init()
         run = ':call clap#installer#force_download()'
     }
 
+    -- Tame the quickfix window
+    ---use {'romainl/vim-qf'}
+
     ---------
     -- Lua --
     ---------
@@ -112,6 +115,7 @@ local function init()
             vim.cmd [[ setlocal foldmethod=expr ]]
             vim.cmd [[ setlocal foldexpr=nvim_treesitter#foldexpr() ]]
         end,
+        run = ':TSInstall all',
         opt = true
     }
 
@@ -121,7 +125,6 @@ local function init()
         ft = {'sh', 'c', 'cs', 'cpp', 'css', 'dart', 'elm', 'fennel', 'go', 'haskell', 'html', 'java', 'javascript',
               'jsdoc', 'julia', 'lua', 'markdown', 'nix', 'ocaml', 'php', 'python', 'ql', 'rst', 'ruby', 'rust',
               'scala', 'swift', 'toml', 'tsx', 'typescript', 'vue', 'yaml'},
-        run = 'TSInstall all',
         opt = true
     }
 
@@ -270,7 +273,7 @@ local function init()
     if vim.fn.executable('yarn') then
         use {
             'turbio/bracey.vim',
-            run = 'yarn --prefix server',
+            run = 'yarn --cwd server',
             ft = {'html', 'css', 'javascript'}
         }
     elseif vim.fn.executable('npm') then
@@ -716,15 +719,17 @@ local function init()
         ft = {'gnuplot'}
     }
 
-    -- Go
-    use {
-        'fatih/vim-go',
-        ft = {'go'},
-        run = ':GoUpdateBinaries',
-        config = function()
-            require('myplugins/lsp_install_prompt').lsp_installed()
-        end
-    }
+    if vim.fn.executable('go') then
+        -- Go
+        use {
+            'fatih/vim-go',
+            ft = {'go'},
+            run = ':GoUpdateBinaries',
+            config = function()
+                require('myplugins/lsp_install_prompt').lsp_installed()
+            end
+        }
+    end
 
     -- Gradle
     use {
