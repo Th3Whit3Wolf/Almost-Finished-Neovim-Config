@@ -1,12 +1,13 @@
 local vim, api = vim, vim.api
 local next = next
 local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+local global = require('global')
 
 local lsp_prompt = {}
 --- Prompt use if they would like to donwload lsp
 function prompt(lsp)
     if next(vim.lsp.get_active_clients()) == nil then
-        if vim.fn.input("Language server(" .. lsp .. ") is available for " .. ft .. ". \n Download now? (y for yes)") ~=
+        if vim.fn.input("Language server (" .. lsp .. ") is available for " .. ft .. ". Download now? (y for yes)") ~=
             "y" then
             return
         end
@@ -34,8 +35,7 @@ local lsps = {
     mysql = "sqlls",
     nix = "rnix",
     ocaml = "ocamlls",
-    -- php = "intelphense",
-    -- purescript = "purescriptls",
+    purescript = "purescriptls",
     reason =  "ocamlls",
     sass = "cssls",
     scala = "metals",
@@ -80,7 +80,7 @@ function lsp_prompt.check_lsp_installed()
         else
             print('LSP '.. lsps[ft] .. ' is installed')
         end
-    elseif ft == "python" then
+    elseif ft == "python" and vim.fn.executable(global.python3 .. 'bin' .. global.path_sep ..'pyls') then
         print('LSP pyls is installed')
     elseif ft == "rust" and vim.fn.executable('rust-analyzer') then
         print('LSP rust-analyzer is installed')
