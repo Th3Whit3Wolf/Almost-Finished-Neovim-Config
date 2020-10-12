@@ -18,8 +18,8 @@ function variables:new()
 end
 
 function variables:load_variables()
-    if global.isdir(global.python3 .. 'python') then
-        self.python3_host_prog = global.python3 .. 'python'
+    if global.isdir(global.python3 .. 'bin' .. global.path_sep .. 'python') then
+        self.python3_host_prog = global.python3 .. 'bin' .. global.path_sep .. 'python'
     end
     if global.exists(global.node) then
         self.node_host_prog = global.node
