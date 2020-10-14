@@ -61,7 +61,7 @@ function variables:load_variables()
     -- Rainbow Parentheses
     self["rainbow#pairs"] = [['(', ')'], ['[', ']'], ['<', '>']]
 
-    -- DB env variables for vim-dadbod-ui 
+    -- DB env variables for vim-dadbod-ui
     self.db_ui_env_variable_url = 'DATABASE_URL'
     self.db_ui_env_variable_name = 'DATABASE_NAME'
     self.db_ui_save_location = global.cache_dir .. 'db_ui_queries'
@@ -70,18 +70,11 @@ function variables:load_variables()
     self.minimap_auto_start = 1
     --self.minimap_highlight = comment
 
-    -- Set Color
-    self.setcolor_morning_time = 7
-    self.setcolor_night_time = 19
-    self.setcolor_change_automatically = 1
-    self.setcolor_autocmd_allowed = 0
-
-    -- Vim Signify
-    self.signify_sign_add = ''
-    self.signify_sign_delete = ''
-    self.signify_sign_delete_first_line = ''
-    self.signify_sign_change = ''
-    self.signify_sign_change = ''
+    -- Dusk til Dawn
+    self.dusk_til_dawn_light_luafile = '~/.local/share/nvim/site/pack/packer/opt/space-nvim-theme/lua/space-nvim-theme.lua'
+    self.dusk_til_dawn_dark_luafile  = '~/.local/share/nvim/site/pack/packer/opt/space-nvim-theme/lua/space-nvim-theme.lua'
+    self.dusk_til_dawn_morning = 7
+    self.dusk_til_dawn_night = 19
 
     -- Vim Clap
     self.clap_cache_directory = global.cache_dir .. '/clap'
@@ -89,6 +82,7 @@ function variables:load_variables()
     self.clap_search_box_border_style = 'curve'
     self.clap_provider_grep_enable_icon = 1
     self.clap_prompt_format = '%spinner%%forerunner_status% %provider_id%: '
+
 
     for name, value in pairs(self) do
         vim.g[name] = value
