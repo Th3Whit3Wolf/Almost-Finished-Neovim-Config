@@ -1,5 +1,5 @@
-local vim = vim
-local nv = vim.api
+local v = vim
+local api = vim.api
 local fn = vim.fn
 
 local git = {}
@@ -42,29 +42,44 @@ end
 function git.run()
     local _, status = git.project_root_dir()
     if status == 1 then
-        nv.nvim_command("augroup vcsGit")
-        nv.nvim_command("autocmd!")
-        nv.nvim_command("autocmd CursorHold * lua require'myplugins/vcs/git/gitlens'.blameVirtText()")
-        nv.nvim_command("autocmd CursorMoved * lua require'myplugins/vcs/git/gitlens'.clearBlameVirtText()")
-        nv.nvim_command("autocmd CursorMovedI * lua require'myplugins/vcs/git/gitlens'.clearBlameVirtText()")
-        nv.nvim_command("augroup END")
-        if vim.fn.executable("lazygit") then
-            nv.nvim_command("command! LazyGit lua require'myplugins/vcs/git/lazygit'.lazygit()")
-            nv.nvim_command("command! LazyGitFilter lua require'myplugins/vcs/git/lazygit'.lazygitfilter()")
-            nv.nvim_command("command! LazyGitConfig lua require'myplugins/vcs/git/lazygit'.lazygitconfig()")
+        api.nvim_command("augroup vcsGit")
+        api.nvim_command("autocmd!")
+        api.nvim_command("autocmd CursorHold * lua require'myplugins/vcs/git/gitlens'.blameVirtText()")
+        api.nvim_command("autocmd CursorMoved * lua require'myplugins/vcs/git/gitlens'.clearBlameVirtText()")
+        api.nvim_command("autocmd CursorMovedI * lua require'myplugins/vcs/git/gitlens'.clearBlameVirtText()")
+        api.nvim_command("augroup END")
+        if fn.executable("lazygit") then
+            api.nvim_command("command! LazyGit lua require'myplugins/vcs/git/lazygit'.lazygit()")
+            api.nvim_command("command! LazyGitFilter lua require'myplugins/vcs/git/lazygit'.lazygitfilter()")
+            api.nvim_command("command! LazyGitConfig lua require'myplugins/vcs/git/lazygit'.lazygitconfig()")
         end
-        if vim.fn.executable("gitui") then
-            nv.nvim_command("command! GitUI lua require'myplugins/vcs/git/gitui'.gitui()")
+        if fn.executable("gitui") then
+            api.nvim_command("command! GitUI lua require'myplugins/vcs/git/gitui'.gitui()")
         end
-        nv.nvim_command("packadd vim-signify")
-        nv.nvim_command("packadd gina.vim")
-        nv.nvim_command("packadd git-messenger.vim")
-        nv.nvim_command("packadd committia.vim")
-        nv.nvim_command("SignifyEnableAll")
+        -- Vim Signify
+        api.nvim_command("packadd vim-signify")
+        api.nvim_set_keymap("n", "\\<Space>gd", "<cmd>SignifyDiff<CR>",     {silent = true, noremap = true})
+        api.nvim_set_keymap("n", "\\<Space>gp", "<cmd>SignifyHunkDiff<CR>", {silent = true, noremap = true})
+        api.nvim_set_keymap("n", "\\<Space>gu", "<cmd>SignifyHunkUndo<CR>", {silent = true, noremap = true})
+
+        api.nvim_set_keymap("n", "\\<Space>g[", "<Plug>(signify-prev-hunk)", {silent = true})
+        api.nvim_set_keymap("n", "\\<Space>g]", "<Plug>(signify-next-hunk)", {silent = true})
+
+        api.nvim_set_keymap("o", "ih", "<Plug>(signify-inner-pending)", {silent = true})
+        api.nvim_set_keymap("x", "ih", "<Plug>(signify-inner-visual)",  {silent = true})
+        api.nvim_set_keymap("o", "ah", "<Plug>(signify-outer-pending)", {silent = true})
+        api.nvim_set_keymap("x", "ah", "<Plug>(signify-outer-visual)",  {silent = true})
+        api.nvim_command("packadd gina.vim")
+        -- Git Messenger
+        api.nvim_command("packadd git-messenger.vim")
+        v.g.git_messenger_no_default_mappings = true
+        api.nvim_set_keymap("n", "gm", "<cmd>GitMessenger<CR>", {silent = true})
+        api.nvim_command("packadd committia.vim")
+        api.nvim_command("SignifyEnableAll")
     else
-        nv.nvim_command("augroup vcsGit")
-        nv.nvim_command("autocmd!")
-        nv.nvim_command("augroup END")
+        api.nvim_command("augroup vcsGit")
+        api.nvim_command("autocmd!")
+        api.nvim_command("augroup END")
     end
 end
 
