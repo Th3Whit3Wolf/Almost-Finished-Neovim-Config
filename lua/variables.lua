@@ -76,6 +76,13 @@ function variables:load_variables()
     self.dusk_til_dawn_morning = 7
     self.dusk_til_dawn_night = 19
 
+    -- Vim Signify
+    self.signify_sign_add = ''
+    self.signify_sign_delete = ''
+    self.signify_sign_delete_first_line = ''
+    self.signify_sign_change = ''
+    self.signify_sign_change = ''
+
     -- Vim Clap
     self.clap_cache_directory = global.cache_dir .. '/clap'
     self.clap_enable_icon = 1
