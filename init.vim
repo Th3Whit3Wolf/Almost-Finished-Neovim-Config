@@ -53,16 +53,13 @@ function! MyFoldText()
 	let line = substitute(line, '\t', onetab, 'g')
 
 	let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-	" let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - len('lines')
-	" let fillcharcount = windowwidth - len(line) - len(foldedlinecount) - len('lines   ')
 	let fillcharcount = windowwidth - len(line)
-	" return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . ' Lines'
 	return line . ''. repeat(" ",fillcharcount)
 endfunction
 
 set foldtext=MyFoldText()
 
-function! GetHighlight()
+function! s:get_highlight()
 	let l:gp_nm = synIDattr(synID(line("."), col("."), 1), "name")
 	let l:fg = synIDattr(synIDtrans(hlID(l:gp_nm)), "fg#")
 	let l:bg = synIDattr(synIDtrans(hlID(l:gp_nm)), "bg#")
@@ -104,4 +101,4 @@ command! PlugCompile execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | 
 command! CheckLSP lua require('myplugins/lsp_install_prompt').check_lsp_installed()
 
 " Get current syntax highlight group for item under cursor
-command! GetHighlight call GetHighlight()
+command! GetHighlight call <SID>get_highlight()
