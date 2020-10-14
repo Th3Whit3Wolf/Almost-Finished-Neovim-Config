@@ -27,6 +27,7 @@ local function onread(err, data)
     end
 end
 
+
 function M.make()
     local lines = {""}
     local winnr = vim.fn.win_getid()
@@ -35,15 +36,13 @@ function M.make()
     local makeprg = vim.api.nvim_buf_get_option(bufnr, "makeprg")
     if not makeprg then return end
 
-    if makeprg == "cargo build" then
-        local cmd = "cargo build 2>&1 | rg 'error:'"
-    else
-        local cmd = vim.fn.expandcmd(makeprg)
-    end
+    local cmd = vim.fn.expandcmd(makeprg) .. 'rg " 2>&1 error"'
+
     local function on_event(job_id, data, event)
         if event == "stdout" or event == "stderr" then
             if data then
                 vim.list_extend(lines, data)
+                print('Failed to build')
             end
         end
 
@@ -54,7 +53,7 @@ function M.make()
                 efm = vim.api.nvim_buf_get_option(bufnr, "errorformat")
             })
             vim.api.nvim_command("doautocmd QuickFixCmdPost")
-            vim.api.nvim_command("copen")
+            
         end
     end
 
@@ -62,11 +61,11 @@ function M.make()
         vim.fn.jobstart(
         cmd,
         {
-        on_stderr = on_event,
-        on_stdout = on_event,
-        on_exit = on_event,
-        stdout_buffered = true,
-        stderr_buffered = true,
+            on_stderr = on_event,
+            on_stdout = on_event,
+            on_exit = on_event,
+            stdout_buffered = true,
+            stderr_buffered = true,
         }
     )
 end
