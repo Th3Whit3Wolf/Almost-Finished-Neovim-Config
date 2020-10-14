@@ -37,6 +37,35 @@ local chain_complete_list = {
     }}
 }
 
+-- Custom label
+vim.g.completion_customize_lsp_label = {
+    Function      = "",
+    Method        = "",
+    Variable      = "",
+    Constant      = "",
+    Struct        = "פּ",
+    Class         = "",
+    Interface     = "禍",
+    Text          = "",
+    Enum          = "",
+    EnumMember    = "",
+    Module        = "",
+    Color         = "",
+    Property      = "襁",
+    Field         = "綠",
+    Unit          = "",
+    File          = "",
+    Value         = "",
+    Event         = "鬒",
+    Folder        = "",
+    Keyword       = "",
+    Snippet       = "",
+    Operator      = "洛",
+    Reference     = " ",
+    TypeParameter = "",
+    Default       = ""
+}
+
 local on_attach = function(client, bufnr)
     diagnostic.on_attach(client, bufnr)
     completion.on_attach(client, bufnr, {
