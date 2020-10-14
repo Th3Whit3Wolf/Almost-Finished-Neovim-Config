@@ -56,11 +56,8 @@ local function init()
     -- Most beautiful & fastest statusline
     use {'glepnir/spaceline.vim'}
 
-    -- Devicons (requirement for spaceline)
-    use {'ryanoasis/vim-devicons'}
-
     -- Modern vim-startify
-    use {'hardcoreplayers/dashboard-nvim'}
+    use {'glepnir/dashboard-nvim'}
 
     --  Modern performant generic finder and dispatcher for NeoVim
     use {
@@ -69,7 +66,7 @@ local function init()
     }
 
     -- Tame the quickfix window
-    ---use {'romainl/vim-qf'}
+    use {'romainl/vim-qf'}
 
     ---------
     -- Lua --
@@ -105,16 +102,47 @@ local function init()
         opt = true
     }
 
-    -- Treesitter configurations and abstraction layer for Neovim. 
+    -- Treesitter configurations and abstraction layer for Neovim.
     use {
         'nvim-treesitter/nvim-treesitter',
-        ft = {'sh', 'c', 'cs', 'cpp', 'css', 'dart', 'elm', 'fennel', 'go', 'haskell', 'html', 'java', 'javascript',
-              'jsdoc', 'julia', 'lua', 'markdown', 'nix', 'ocaml', 'php', 'python', 'ql', 'rst', 'ruby', 'rust',
-              'scala', 'swift', 'toml', 'tsx', 'typescript', 'vue', 'yaml'},
-        config = function()
-            vim.cmd [[ setlocal foldmethod=expr ]]
-            vim.cmd [[ setlocal foldexpr=nvim_treesitter#foldexpr() ]]
-        end,
+        ft = {
+            'sh',
+            'c',
+            'cs',
+            'cpp',
+            'css',
+            'dart',
+            'elm',
+            'fennel',
+            'go',
+            'haskell',
+            'html',
+            'java',
+            'javascript',
+            'jsdoc',
+            'julia',
+            'lua',
+            'markdown',
+            'nix',
+            'ocaml',
+            'php',
+            'python',
+            'ql',
+            'rst',
+            'ruby',
+            'rust',
+            'scala',
+            'swift',
+            'toml',
+            'tsx',
+            'typescript',
+            'vue',
+            'yaml'
+        },
+        --config = function()
+        --    vim.bo.foldmethod = 'expr'
+        --    vim.bo.foldexpr = 'nvim_treesitter#foldexpr()'
+        --end,
         run = ':TSInstall all',
         opt = true
     }
@@ -122,9 +150,40 @@ local function init()
     -- Treesitter based completion sources.
     use {
         'nvim-treesitter/completion-treesitter',
-        ft = {'sh', 'c', 'cs', 'cpp', 'css', 'dart', 'elm', 'fennel', 'go', 'haskell', 'html', 'java', 'javascript',
-              'jsdoc', 'julia', 'lua', 'markdown', 'nix', 'ocaml', 'php', 'python', 'ql', 'rst', 'ruby', 'rust',
-              'scala', 'swift', 'toml', 'tsx', 'typescript', 'vue', 'yaml'},
+        ft = {
+            'sh',
+            'c',
+            'cs',
+            'cpp',
+            'css',
+            'dart',
+            'elm',
+            'fennel',
+            'go',
+            'haskell',
+            'html',
+            'java',
+            'javascript',
+            'jsdoc',
+            'julia',
+            'lua',
+            'markdown',
+            'nix',
+            'ocaml',
+            'php',
+            'python',
+            'ql',
+            'rst',
+            'ruby',
+            'rust',
+            'scala',
+            'swift',
+            'toml',
+            'tsx',
+            'typescript',
+            'vue',
+            'yaml'
+        },
         opt = true
     }
 
@@ -137,11 +196,63 @@ local function init()
     -- Slightly improved ctags completion
     use {
         'kristijanhusak/completion-tags',
-        ft = {'ada', 'ansible', 'asm', 'awk', 'bib', 'c', 'clojure', 'cobol', 'cmake', 'cpp', 'cs', 'css', 'd',
-              'elixir', 'elm', 'erlang', 'fortan', 'go', 'html', 'java', 'json', 'lisp', 'lua', 'm4', 'make',
-              'markdown', 'matlab', 'objc', 'ocaml', 'pascal', 'perl', 'perl6', 'php', 'ps1', 'ps1xml', 'proto',
-              'python', 'r', 'rst', 'ruby', 'rust', 'scss', 'sh', 'sql', 'svg', 'systemd', 'tex', 'typescript',
-              'verilog', 'vhdl', 'vim', 'xml', 'xsl', 'yaml', 'zephir'},
+        ft = {
+            'ada',
+            'ansible',
+            'asm',
+            'awk',
+            'bib',
+            'c',
+            'clojure',
+            'cobol',
+            'cmake',
+            'cpp',
+            'cs',
+            'css',
+            'd',
+            'elixir',
+            'elm',
+            'erlang',
+            'fortan',
+            'go',
+            'html',
+            'java',
+            'json',
+            'lisp',
+            'lua',
+            'm4',
+            'make',
+            'markdown',
+            'matlab',
+            'objc',
+            'ocaml',
+            'pascal',
+            'perl',
+            'perl6',
+            'php',
+            'ps1',
+            'ps1xml',
+            'proto',
+            'python',
+            'r',
+            'rst',
+            'ruby',
+            'rust',
+            'scss',
+            'sh',
+            'sql',
+            'svg',
+            'systemd',
+            'tex',
+            'typescript',
+            'verilog',
+            'vhdl',
+            'vim',
+            'xml',
+            'xsl',
+            'yaml',
+            'zephir'
+        },
         opt = true
     }
 
@@ -175,11 +286,38 @@ local function init()
         opt = true
     }
 
+    -- A surround text object plugin for neovim, written in lua.
+    use {
+        'blackcauldron7/surround.nvim',
+        opt = true
+    }
+
     -- My spacemacs colorscheme
     use {
         'Th3Whit3Wolf/space-nvim-theme',
-        opt = true
+        opt = true,
+        branch = 'main'
     }
+
+    -- Automatically change colorscheme based on time
+    --if global.isdir('~/Code/Dusk-til-Dawn.nvim') then
+        use {
+            '~/Code/Dusk-til-Dawn.nvim',
+            opt = true,
+        }
+    --else
+    ---    use {
+    --        'Th3Whit3Wolf/Dusk-til-Dawn.nvim',
+    --        opt = true,
+    --        branch = 'main',
+            -- setup = function()
+            --    vim.g.dusk_til_dawn_light_luafile = '~/.local/share/nvim/site/pack/packer/opt/space-nvim-theme/lua/space-nvim-theme.lua'
+            --    vim.g.dusk_til_dawn_dark_luafile  = '~/.local/share/nvim/site/pack/packer/opt/space-nvim-theme/lua/space-nvim-theme.lua'
+            --    vim.g.dusk_til_dawn_morning = 7
+            --    vim.g.dusk_til_dawn_night = 19
+            --end
+     --   }
+    --end
 
     ----------
     -- Lazy --
@@ -189,24 +327,41 @@ local function init()
     use {
         'mhinz/vim-signify',
         opt = true,
+        --config = function ()
+        --    vim.g.signify_sign_add = ''
+        --    vim.g.signify_sign_delete = ''
+        --    vim.g.signify_sign_delete_first_line = ''
+        --    vim.g.signify_sign_change = ''
+        --    vim.g.signify_sign_change = ''
+        --end
     }
 
     -- Vim sugar for the UNIX shell commands
     use {
         'tpope/vim-eunuch',
-        cmd = {'Delete', 'Unlink', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Cfind', 'Clocate', 'Lfind', 'Llocate', 'Wall',
-               'SudoWrite', 'SudoEdit'}
+        cmd = {'Delete',
+            'Unlink',
+            'Move',
+            'Rename',
+            'Chmod',
+            'Mkdir',
+            'Cfind',
+            'Clocate',
+            'Lfind',
+            'Llocate',
+            'Wall',
+            'SudoWrite',
+            'SudoEdit'
+        }
     }
 
     -- shows the history of commits under the cursor in popup window
     use {
         'rhysd/git-messenger.vim',
-        opt = true,
-        cmd = 'GitMessenger',
-        keys = '<Plug>(git-messenger)'
+        cmd = 'GitMessenger'
     }
 
-    -- Vim plugin that shows keybindings in popup 
+    -- Vim plugin that shows keybindings in popup
     use {
         'liuchengxu/vim-which-key',
         opt = true
@@ -222,9 +377,7 @@ local function init()
     use {
         'tpope/vim-abolish',
         event = 'InsertEnter *',
-        config = function ()
-            vim.cmd [[ if !stridx(&rtp, resolve(expand('~/.config/nvim/lazy/abolish.vim'))) == 0 | execute 'source' fnameescape(resolve(expand('~/.config/nvim/lazy/abolish.vim'))) | endif ]]
-        end
+        --config = 'vim.cmd(if !stridx(&rtp, resolve(expand("~/.config/nvim/lazy/abolish.vim"))) == 0 | execute "source" fnameescape(resolve(expand("~/.config/nvim/lazy/abolish.vim"))) | endif)'
     }
 
     -- Asynchronously control git repositories in Neovim
@@ -233,40 +386,45 @@ local function init()
         opt = true
     }
 
-    -- Vim script for text filtering and alignment
+    -- A simple, easy-to-use Vim alignment plugin
     use {
-        'godlygeek/tabular',
-        opt = true
+        'junegunn/vim-easy-align',
     }
 
     -- Viewer & Finder for LSP symbols and tags
     use {
         'liuchengxu/vista.vim',
         cmd = 'Vista',
-        config = function()
+        --config = function()
             -- How each level is indented and what to prepend.
             -- This could make the display more compact or more spacious.
             -- e.g., more compact: ["▸ ", ""]
             -- Note: this option only works the LSP executives, doesn't work for `:Vista ctags`
-            vim.cmd [[ let g:vista_icon_indent = ["╰─▸ ", "├─▸ "] ]]
+        --    vim.cmd [[ let g:vista_icon_indent = ["╰─▸ ", "├─▸ "] ]]
             -- Executive used when opening vista sidebar without specifying it.
             -- See all the avaliable executives via `:echo g:vista#executives`.
-            vim.cmd [[ let g:vista_default_executive = 'ctags' ]]
+        --    vim.cmd [[ let g:vista_default_executive = 'ctags' ]]
             -- To enable fzf's preview window set g:vista_fzf_preview.
             -- The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
             -- For example:
-            vim.cmd [[ let g:vista_fzf_preview = ['right:50%'] ]]
+        --    vim.cmd [[ let g:vista_fzf_preview = ['right:50%'] ]]
             -- Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
-            vim.cmd [[ let g:vista#renderer#enable_icon = 1 ]]
+        --    vim.cmd [[ let g:vista#renderer#enable_icon = 1 ]]
             -- The default icons can't be suitable for all the filetypes, you can extend it as you wish.
-            vim.cmd [[ let g:vista#renderer#icons = { "function": "\uf794", "variable": "\uf71b" } ]]
-        end
+        --    vim.cmd [[ let g:vista#renderer#icons = { "function": "\uf794", "variable": "\uf71b" } ]]
+        --end
     }
 
     -- Auto close (X)HTML tags
     use {
         'alvan/vim-closetag',
-        ft = {'html', 'javascript', 'xhtml', 'phtml', 'xml'}
+        ft = {
+            'html',
+            'javascript',
+            'xhtml',
+            'phtml',
+            'xml'
+        }
     }
 
     -- live edit html, css, and javascript in vim
@@ -274,13 +432,21 @@ local function init()
         use {
             'turbio/bracey.vim',
             run = 'yarn --cwd server',
-            ft = {'html', 'css', 'javascript'}
+            ft = {
+                'html',
+                'css',
+                'javascript'
+            }
         }
     elseif vim.fn.executable('npm') then
         use {
             'turbio/bracey.vim',
             run = 'npm install --prefix server',
-            ft = {'html', 'css', 'javascript'}
+            ft = {
+                'html',
+                'css',
+                'javascript'
+            }
         }
     end
 
@@ -288,14 +454,17 @@ local function init()
     use {
         'euclio/vim-markdown-composer',
         run = 'cargo build --release',
-        ft = {'markdown'},
-        cmd = {'ComposerOpen', 'ComposerUpdate'}
+        ft = 'markdown',
+        cmd = {
+            'ComposerOpen',
+            'ComposerUpdate'
+        }
     }
 
     -- Minimap for vim
     use {
         'wfxr/minimap.vim',
-        run = 'cargo install --locked code-minimap'
+        run = 'cargo install --locked code-minimap',
     }
 
     -- Simpler Rainbow Parentheses
@@ -303,7 +472,7 @@ local function init()
         'junegunn/rainbow_parentheses.vim',
         event = 'InsertEnter *',
         config = function()
-            vim.cmd [[ RainbowParentheses ]]
+            vim.cmd('RainbowParentheses')
         end
     }
 
@@ -327,38 +496,71 @@ local function init()
     -- Uncover usage problems in your writing
     use {
         'reedes/vim-wordy',
-        cmd = {'PrevWordy', 'Wordy', 'NextWordy'}
+        cmd = {
+            'PrevWordy',
+            'Wordy',
+            'NextWordy'
+        }
     }
 
     -- Highlights overused words
     use {
         'dbmrq/vim-ditto',
-        cmd = {'DittoNext', 'DittoPrev', 'DittoGood', 'DittoBad', 'DittoMore', 'DittoLess', 'DittoOn'}
+        cmd = {
+            'DittoNext',
+            'DittoPrev',
+            'DittoGood',
+            'DittoBad',
+            'DittoMore',
+            'DittoLess',
+            'DittoOn'
+        }
     }
 
     -- Building on Vim’s spell-check and thesaurus/dictionary completion
     use {
         'reedes/vim-lexical',
-        opt = true,
-        ft = {'asciidoc', 'html', 'text', 'textile', 'mail', 'markdown', 'rst', 'tex', 'xml'},
-        config = function()
-            vim.cmd [[ call lexical#init() ]]
-            vim.cmd [[ let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt', '~/.config/nvim/moby_thesaurus.txt'] ]]
-            vim.cmd [[ let g:lexical#dictionary = ['/usr/share/dict/words'] ]]
-            vim.cmd [[ let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add'] ]]
-            vim.cmd [[ let g:lexical#thesaurus_key = '<leader>lt' ]]
-            vim.cmd [[ let g:lexical#dictionary_key = '<leader>ld']]
-        end
-    
+        ft = {
+            'asciidoc',
+            'html',
+            'text',
+            'textile',
+            'mail',
+            'markdown',
+            'rst',
+            'tex',
+            'xml'
+        },
+        --config = function()
+        --    vim.call('lexical#init()')
+        --    vim.api.nvim_set_var("lexical#thesaurus", {'~/.config/nvim/thesaurus/mthesaur.txt', '~/.config/nvim/moby_thesaurus.txt'})
+        --    vim.api.nvim_set_var("lexical#dictionary", '/usr/share/dict/words')
+        --    vim.api.nvim_set_var("lexical#spellfile", '~/.config/nvim/spell/en.utf-8.add')
+        --    vim.api.nvim_set_var("lexical#thesaurus_key", '<leader>lt')
+        --    vim.api.nvim_set_var("lexical#dictionary_key", '<leader>ld')
+        --end
     }
+
     -- handful of tweaks needed to smooth the path to writing prose
     use {
         'reedes/vim-pencil',
-        opt = true,
-        ft = {'asciidoc',  'git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendmail', 'html', 'mail', 'markdown', 'rst', 'text', 'textile', 'tex', 'xml'},
-        config = function()
-            vim.cmd [[ call pencil#init() ]]
-        end
+        ft = {
+            'asciidoc',
+            'git',
+            'gitcommit',
+            'gitconfig',
+            'gitrebase',
+            'gitsendmail',
+            'html',
+            'mail',
+            'markdown',
+            'rst',
+            'text',
+            'textile',
+            'tex',
+            'xml'
+        },
+        config = 'vim.cmd("call pencil#init()")'
     }
 
     ---------------
@@ -368,91 +570,99 @@ local function init()
     -- ACPI ASL
     use {
         'martinlroth/vim-acpi-asl',
-        ft = {'asl'}
+        ft = 'asl'
     }
 
     -- Ansible 2.x
     use {
         'pearofducks/ansible-vim',
-        ft = {'ansible'}
+        ft = 'ansible'
     }
 
     -- API Blueprint
     use {
         'sheerun/apiblueprint.vim',
-        ft = {'apiblueprint'}
+        ft = 'apiblueprint'
     }
 
     -- AppleScript
     use {
         'mityu/vim-applescript',
-        ft = {'applescript'}
+        ft = 'applescript'
     }
 
     -- Arduino
     use {
         'sudar/vim-arduino-syntax',
-        ft = {'arduino'}
+        ft = 'arduino'
     }
 
     -- AsciiDoc
     use {
         'asciidoc/vim-asciidoc',
-        ft = {'asciidoc'}
+        ft = 'asciidoc'
     }
 
     -- BATS
     use {
         'aliou/bats.vim',
-        ft = {'bats'}
+        ft = 'bats'
     }
 
     -- Bazel
     use {
         'bazelbuild/vim-bazel',
-        ft = {'bzl'}
+        ft = 'bzl'
     }
 
     -- Bazel
     use {
         'google/vim-maktaba',
-        ft = {'bzl'}
+        ft = 'bzl'
     }
 
     -- Blade templates
     use {
         'jwalton512/vim-blade',
-        ft = {'blade'}
+        ft = 'blade'
     }
 
     -- Brewfile
     use {
         'bfontaine/Brewfile.vim',
-        ft = {'brewfile'}
+        ft = 'brewfile'
     }
 
     -- C#
     use {
         'OrangeT/vim-csharp',
-        ft = {'cs', 'xml', 'cshtml.html', 'aspx.html'}
+        ft = {
+            'cs',
+            'xml',
+            'cshtml.html',
+            'aspx.html'
+        }
     }
 
     -- C#
     use {
         'OmniSharp/omnisharp-vim',
-        ft = {'cs', 'omnisharplog'},
+        ft = {
+            'cs',
+            'omnisharplog'
+        },
     }
 
     -- Caddyfile
     use {
         'isobit/vim-caddyfile',
-        ft = {'caddyfile'}
+        ft = 'caddyfile'
     }
 
     -- Cargo Make (Rust cargo extension)
     use {
         'nastevens/vim-cargo-make',
-        ft = {'cargo-make'}
+        ft = 'cargo-make'
     }
 
     -- Cargo.toml (Rust)
@@ -464,241 +674,274 @@ local function init()
     -- Carp
     use {
         'hellerve/carp-vim',
-        ft = {'carp'}
+        ft = 'carp'
     }
 
     -- Chef
     use {
         'vadv/vim-chef',
-        ft = {'chef'}
+        ft = 'chef'
     }
 
     -- Clojure
     use {
         'guns/vim-clojure-static',
-        ft = {'clojure'}
+        ft = 'clojure'
     }
 
     -- Clojure
     use {
         'tpope/vim-fireplace',
-        ft = {'clojure'}
+        ft = 'clojure'
     }
 
     -- Clojure
     use {
         'guns/vim-clojure-highlight',
-        ft = {'clojure'},
+        ft = 'clojure',
     }
 
     -- Clojure
     use {
         'Olical/conjure',
-        ft = {'clojure', 'fennel'}
+        ft = {
+            'clojure',
+            'fennel'
+        }
     }
 
     -- LISP languages
     use {
         'eraserhd/parinfer-rust',
-        ft = {'clojure', 'lisp', 'scheme', 'racket', 'jbuild', 'fennel', 'pddl'},
+        ft = {
+            'clojure',
+            'lisp',
+            'scheme',
+            'racket',
+            'jbuild',
+            'fennel',
+            'pddl'
+        },
         run = 'cargo build --release'
     }
 
     -- Cmake
     use {
         'pboettch/vim-cmake-syntax',
-        ft = {'cmake'}
+        ft = 'cmake'
     }
 
     -- Cmake
     use {
         'vhdirk/vim-cmake',
-        ft = {'cmake'},
+        ft = 'cmake',
     }
 
     -- CoffeScript
     use {
         'kchmck/vim-coffee-script',
-        ft = {'coffee'}
+        ft = 'coffee'
     }
 
     -- CJSX (JSX equivalent in CoffeeScript)
     use {
         'mtscout6/vim-cjsx',
-        ft = {'coffee'}
+        ft = 'coffee'
     }
 
     -- Cassandra CQL
     use {
         'elubow/cql-vim',
-        ft = {'cql'}
+        ft = 'cql'
     }
 
     -- Cryptol
     use {
         'victoredwardocallaghan/cryptol.vim',
-        ft = {'cryptol'}
+        ft = 'cryptol'
     }
 
     -- Crystal
     use {
         'vim-crystal/vim-crystal',
-        ft = {'crystal'},
+        ft = 'crystal'
     }
 
     -- CSS
     use {
         'hail2u/vim-css3-syntax',
-        ft = {'css'},
-        config = function()
-            vim.cmd [[ set backupcopy=yes ]]
-            vim.cmd [[ setlocal iskeyword+=- ]]
-        end
+        ft = 'css',
+        --config = function()
+        --    vim.bo = vim.api.nvim_get_option('iskeyword') .. ',-'
+        --    vim.cmd('setlocal iskeyword+=-')
+        --end
     }
 
     -- CSV
     use {
         'chrisbra/csv.vim',
-        ft = {'csv'}
+        ft = 'csv'
     }
 
     -- Cucumber
     use {
         'tpope/vim-cucumber',
-        ft = {'cucumber'}
+        ft = 'cucumber'
     }
 
     -- Cue
     use {
         'mgrabovsky/vim-cuesheet',
-        ft = {'cue'}
+        ft = 'cue'
     }
 
     -- D Lang
     use {
         'JesseKPhillips/d.vim',
-        ft = {'d', 'dcov', 'dd', 'ddoc', 'dsdl'}
+        ft = {
+            'd',
+            'dcov',
+            'dd',
+            'ddoc',
+            'dsdl'
+        }
     }
 
     -- Dafny
     use {
         'mlr-msft/vim-loves-dafny',
-        ft = {'dafny'}
+        ft = 'dafny'
     }
 
     -- Dart
     use {
         'dart-lang/dart-vim-plugin',
-        ft = {'dart'},
+        ft = 'dart'
     }
 
     -- Dhall
     use {
         'vmchale/dhall-vim',
-        ft = {'dhall'}
+        ft = 'dhall'
     }
 
     -- Dockerfile
     use {
         'ekalinin/Dockerfile.vim',
-        ft = {'yaml.docker-compose', 'dockerfile'},
+        ft = {
+            'yaml.docker-compose',
+            'dockerfile'
+        },
     }
 
     -- Duckscript
     use {
         'nastevens/vim-duckscript',
-        ft = {'cargo-make', 'duckscript'}
+        ft = {
+            'cargo-make',
+            'duckscript'
+        }
     }
 
     -- Elixir
     use {
         'elixir-editors/vim-elixir',
-        ft = {'elixir'},
+        ft = 'elixir'
     }
 
     -- Emblem
     use {
         'yalesov/vim-emblem',
-        ft = {'emblem'}
+        ft = 'emblem'
     }
 
     -- Erlang
     use {
         'vim-erlang/vim-erlang-runtime',
-        ft = {'erlang'}
+        ft = 'erlang'
     }
 
     -- Fennel
     use {
         'bakpakin/fennel.vim',
-        ft = {'fennel'}
+        ft = 'fennel'
     }
 
     -- Ferm
     use {
         'vim-scripts/ferm.vim',
-        ft = {'ferm'}
+        ft = 'ferm'
     }
 
     -- Fish
     use {
         'georgewitteman/vim-fish',
-        ft = {'fish'}
+        ft = 'fish'
     }
 
     -- Flatbuffers
     use {
         'dcharbon/vim-flatbuffers',
-        ft = {'fbs'}
+        ft = 'fbs'
     }
 
     -- Fountain
     use {
         'kblin/vim-fountain',
-        ft = {'fountain'}
+        ft = 'fountain'
     }
 
     -- GDScript 3
     use {
         'calviken/vim-gdscript3',
-        ft = {'gdscript3', 'gsl', 'gd'},
+        ft = {
+            'gdscript3',
+            'gsl',
+            'gd'
+        },
     }
 
     -- Git
     use {
         'tpope/vim-git',
-        ft = {'git', 'gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail'}
+        ft = {
+            'git',
+            'gitcommit',
+            'gitconfig',
+            'gitrebase',
+            'gitsendemail'
+        }
     }
 
     -- OpenGL Shading Language
     use {
         'tikhomirov/vim-glsl',
-        ft = {'glsl'}
+        ft = 'glsl'
     }
 
     -- Gleam
     use {
         'gleam-lang/gleam.vim',
-        ft = {'gleam'}
+        ft = 'gleam'
     }
 
     -- GMPL
     use {
         'maelvls/gmpl.vim',
-        ft = {'gmpl'}
+        ft = 'gmpl'
     }
 
     -- GNUPlot
     use {
         'vim-scripts/gnuplot-syntax-highlighting',
-        ft = {'gnuplot'}
+        ft = 'gnuplot'
     }
 
     if vim.fn.executable('go') then
         -- Go
         use {
             'fatih/vim-go',
-            ft = {'go'},
+            ft = 'go',
             run = ':GoUpdateBinaries',
         }
     end
@@ -706,217 +949,238 @@ local function init()
     -- Gradle
     use {
         'tfnico/vim-gradle',
-        ft = {'groovy'}
+        ft = 'groovy'
     }
 
     -- GraphQL
     use {
         'jparise/vim-graphql',
-        ft = {'graphql', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue'}
+        ft = {
+            'graphql',
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact',
+            'vue'
+        }
     }
 
     -- Hack
     use {
         'hhvm/vim-hack',
-        ft = {'hack'}
+        ft = 'hack'
     }
 
     -- Haml
     use {
         'sheerun/vim-haml',
-        ft = {'haml', 'sass'}
+        ft = {
+            'haml',
+            'sass'
+        }
     }
 
     -- Handlebars
     use {
         'mustache/vim-mustache-handlebars',
-        ft = {'handlebars', 'mustache'}
+        ft = {
+            'handlebars',
+            'mustache'
+        }
     }
 
     -- HAProxy
     use {
         'CH-DanReif/haproxy.vim',
-        ft = {'haproxy'}
+        ft = 'haproxy'
     }
 
     -- Haskel
     use {
         'neovimhaskell/haskell-vim',
-        ft = {'haskell'},
+        ft = 'haskell',
     }
 
     -- Haxe
     use {
         'yaymukund/vim-haxe',
-        ft = {'haxe'}
+        ft = 'haxe'
     }
 
     -- HCL
     use {
         'b4b4r07/vim-hcl',
-        ft = {'hcl'}
+        ft = 'hcl'
     }
 
     -- Helm Templates
     use {
         'towolf/vim-helm',
-        ft = {'helm'}
+        ft = 'helm'
     }
 
     -- Hive
     use {
         'zebradil/hive.vim',
-        ft = {'hive'}
+        ft = 'hive'
     }
 
     -- HTML5
     use {
         'othree/html5.vim',
-        ft = {'html'},
+        ft = 'html',
     }
 
     -- i3
     use {
         'mboughaba/i3config.vim',
-        ft = {'i3config'}
+        ft = 'i3config'
     }
 
     -- icalendar
     use {
         'chutzpah/icalendar.vim',
-        ft = {'icalendar'}
+        ft = 'icalendar'
     }
 
     -- Idris
     use {
         'idris-hackers/idris-vim',
-        ft = {'idris'}
+        ft = 'idris'
     }
 
     -- Info
     use {
         'HiPhish/info.vim',
-        ft = {'info'}
+        ft = 'info'
     }
 
     -- Ion
     use {
         'vmchale/ion-vim',
-        ft = {'ion'}
+        ft = 'ion'
     }
 
     -- ISPC
     use {
         'jez/vim-ispc',
-        ft = {'ispc'}
+        ft = 'ispc'
     }
 
     -- JST
     use {
         'briancollins/vim-jst',
-        ft = {'jst'}
+        ft = 'jst'
     }
 
     -- JSX
     use {
         'maxmellon/vim-jsx-pretty',
-        ft = {'javascript', 'javascriptreact', 'typescript', 'typescriptreact'},
+        ft = {
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact'
+        },
     }
 
     -- Jenkins
     use {
         'martinda/Jenkinsfile-vim-syntax',
-        ft = {'jenkins'}
+        ft = 'jenkins'
     }
 
     -- Jinja
     use {
         'lepture/vim-jinja',
-        ft = {'jinja'}
+        ft = 'jinja'
     }
 
     -- Json
     use {
         'elzr/vim-json',
-        ft = {'json'},
+        ft = 'json',
     }
 
     -- Json5
     use {
         'GutenYe/json5.vim',
-        ft = {'json5'},
+        ft = 'json5',
     }
 
     -- Julia
     use {
         'JuliaEditorSupport/julia-vim',
-        ft = {'julia'},
+        ft = 'julia',
     }
 
     -- Kotlin
     use {
         'udalov/kotlin-vim',
-        ft = {'kotlin'},
+        ft = 'kotlin',
     }
 
     -- Latex
     use {
         'lervag/vimtex',
-        ft = {'tex', 'bib'},
+        ft = {
+            'tex',
+            'bib'
+        }
     }
 
     -- Latex
     use {
         'xuhdev/vim-latex-live-preview',
-        ft = {'tex'}
+        ft = 'tex'
     }
 
     -- Ledger
     use {
         'ledger/vim-ledger',
-        ft = {'ledger'}
+        ft = 'ledger'
     }
 
     -- Less
     use {
         'groenewege/vim-less',
-        ft = {'less'},
+        ft = 'less'
     }
 
     -- Lilypond
     use {
         'sersorrel/vim-lilypond',
-        ft = {'lilypond'}
+        ft = 'lilypond'
     }
 
     -- LiveScript
     use {
         'gkz/vim-ls',
-        ft = {'ls'}
+        ft = 'ls'
     }
 
     -- Log
     use {
         'MTDL9/vim-log-highlighting',
-        ft = {'log'}
+        ft = 'log'
     }
 
     -- Macports
     use {
         'jstrater/mpvim',
-        ft = {'portfile'}
+        ft = 'portfile'
     }
 
     -- Mako
     use {
         'sophacles/vim-bundle-mako',
-        ft = {'mako'}
+        ft = 'mako'
     }
 
     -- Markdown
     use {
         'plasticboy/vim-markdown',
-        ft = {'markdown'}
+        ft = 'markdown'
     }
 
     -- Markdown (Github)
@@ -928,490 +1192,518 @@ local function init()
     -- Mathematica
     use {
         'voldikss/vim-mma',
-        ft = {'mma'}
+        ft = 'mma'
     }
 
     -- Matlab
     use {
         'daeyun/vim-matlab',
-        ft = {'matlab'}
+        ft = 'matlab'
     }
 
     -- MDX
     use {
         'jxnblk/vim-mdx-js',
-        ft = {'mdx'}
+        ft = 'mdx'
     }
 
     -- Mercury
     use {
         'stewy33/mercury-vim',
-        ft = {'mercury'}
+        ft = 'mercury'
     }
 
     -- MoonScript
     use {
         'leafo/moonscript-vim',
-        ft = {'moon'}
+        ft = 'moon'
     }
 
     -- Nginx
     use {
         'chr4/nginx.vim',
-        ft = {'nginx'}
+        ft = 'nginx'
     }
 
     -- Nim
     use {
         'zah/nim.vim',
-        ft = {'nim'},
+        ft = 'nim'
     }
 
     -- Nix
     use {
         'LnL7/vim-nix',
-        ft = {'nix'},
+        ft = 'nix'
     }
 
     -- Objective-C
     use {
         'b4winckler/vim-objc',
-        ft = {'objc'},
+        ft = 'objc'
     }
 
     -- OCaml
     use {
         'ocaml/vim-ocaml',
-        ft = {'dune', 'oasis', 'ocaml', 'ocamlbuild_tags', 'omake', 'sexplib'},
+        ft = {
+            'dune',
+            'oasis',
+            'ocaml',
+            'ocamlbuild_tags',
+            'omake',
+            'sexplib'
+        }
     }
 
     -- Octave
     use {
         'McSinyx/vim-octave',
-        ft = {'octave'}
+        ft = 'octave'
     }
 
     -- Pawn
     use {
         'mcnelson/vim-pawn',
-        ft = {'pawn'}
+        ft = 'pawn'
     }
 
     -- Pandoc
     use {
         'vim-pandoc/vim-pandoc',
-        ft = {'pandoc'}
+        ft = 'pandoc'
     }
 
     -- Pandoc
     use {
         'vim-pandoc/vim-pandoc-syntax',
-        ft = {'pandoc'}
+        ft = 'pandoc'
     }
 
     -- PERL
     use {
         'vim-perl/vim-perl',
-        ft = {'perl', 'perl6'}
+        ft = {
+            'perl',
+            'perl6'
+        }
     }
 
     -- PostgreSQL
     use {
         'lifepillar/pgsql.vim',
-        ft = {'pgsql'},
+        ft = 'pgsql'
     }
 
     -- PHP
     use {
         'StanAngeloff/php.vim',
-        ft = {'php'}
+        ft = 'php'
     }
 
     -- PlantUML
     use {
         'aklt/plantuml-syntax',
-        ft = {'plantuml'}
+        ft = 'plantuml'
     }
 
     -- Ponylang
     use {
         'jakwings/vim-pony',
-        ft = {'pony'}
+        ft = 'pony'
     }
 
     -- PowerShell
     use {
         'PProvost/vim-ps1',
-        ft = {'ps1', 'ps1xml'}
+        ft = {
+            'ps1',
+            'ps1xml'
+        }
     }
 
     -- Prolog
     use {
         'adimit/prolog.vim',
-        ft = {'prolog'}
+        ft = 'prolog'
     }
 
     -- Protocol Buffers
     use {
         'uarun/vim-protobuf',
-        ft = {'proto'}
+        ft = 'proto'
     }
 
     -- Pug
     use {
         'digitaltoad/vim-pug',
-        ft = {'pug'}
+        ft = 'pug'
     }
 
     -- Puppet
     use {
         'rodjek/vim-puppet',
-        ft = {'puppet', 'embeddedpuppet'}
+        ft = {
+            'puppet',
+            'embeddedpuppet'
+        }
     }
 
     -- PureScript
     use {
         'purescript-contrib/purescript-vim',
-        ft = {'purescript'},
+        ft = 'purescript',
     }
 
     -- QMake
     use {
         'artoj/qmake-syntax-vim',
-        ft = {'qmake'}
+        ft = 'qmake'
     }
 
     -- QML
     use {
         'peterhoeg/vim-qml',
-        ft = {'qml'}
+        ft = 'qml'
     }
 
     -- R
     use {
         'jalvesaq/Nvim-R',
-        ft = {'r'},
+        ft = 'r',
     }
 
     -- Racket
     use {
         'wlangstroth/vim-racket',
-        ft = {'racket'}
+        ft = 'racket'
     }
 
     -- Ragel
     use {
         'jneen/ragel.vim',
-        ft = {'ragel'}
+        ft = 'ragel'
     }
 
     -- Raku
     use {
         'Raku/vim-raku',
-        ft = {'raku'}
+        ft = 'raku'
     }
 
     -- RAML
     use {
         'IN3D/vim-raml',
-        ft = {'raml'}
+        ft = 'raml'
     }
 
     -- Razor view engine
     use {
         'adamclerk/vim-razor',
-        ft = {'razor'}
+        ft = 'razor'
     }
 
     -- Reason
     use {
         'reasonml-editor/vim-reason-plus',
-        ft = {'reason'},
+        ft = 'reason'
     }
 
     -- reStructuredText
     use {
         'marshallward/vim-restructuredtext',
-        ft = {'rst'}
+        ft = 'rst'
     }
 
     -- RSpec
     use {
         'keith/rspec.vim',
-        ft = {'rspec'}
+        ft = 'rspec'
     }
 
     -- RON
     use {
         'ron-rs/ron.vim',
-        ft = {'ron'}
+        ft = 'ron'
     }
 
     -- Ruby
     use {
         'vim-ruby/vim-ruby',
-        ft = {'eruby', 'ruby'},
+        ft = {
+            'eruby',
+            'ruby'
+        }
     }
 
     -- Rust
     use {
         'rust-lang/rust.vim',
-        ft = {'rust'}
+        ft = 'rust'
     }
 
     -- SBT
     use {
         'derekwyatt/vim-sbt',
-        ft = {'sbt'}
+        ft = 'sbt'
     }
 
     -- Scala
     use {
         'derekwyatt/vim-scala',
-        ft = {'scala'},
+        ft = 'scala'
     }
 
     -- SCSS
     use {
         'cakebaker/scss-syntax.vim',
-        ft = {'scss'},
+        ft = 'scss'
     }
 
     -- Shell
     use {
         'arzg/vim-sh',
-        ft = {'sh'},
+        ft = 'sh'
     }
 
     -- Slim
     use {
         'slim-template/vim-slim',
-        ft = {'slim'}
+        ft = 'slim'
     }
 
     -- Slime
     use {
         'slime-lang/vim-slime-syntax',
-        ft = {'slime'}
+        ft = 'slime'
     }
 
     -- SML
     use {
         'jez/vim-better-sml',
-        ft = {'sml'}
+        ft = 'sml'
     }
 
     -- SMT-LIB2
     use {
         'bohlender/vim-smt2',
-        ft = {'smt2'}
+        ft = 'smt2'
     }
 
     -- Solidity
     use {
         'tomlion/vim-solidity',
-        ft = {'solidity'}
+        ft = 'solidity'
     }
 
     -- Starlark
     use {
         'cappyzawa/starlark.vim',
-        ft = {'starlark'}
+        ft = 'starlark'
     }
 
     -- Sugarss
     use {
         'hhsnopek/vim-sugarss',
-        ft = {'sugarss'}
+        ft = 'sugarss'
     }
 
     -- Stylus
     use {
         'wavded/vim-stylus',
-        ft = {'stylus'}
+        ft = 'stylus'
     }
 
     -- Svelte
     use {
         'leafOfTree/vim-svelte-plugin',
-        ft = {'svelte'},
-        config = function()
-            vim.cmd [[ let g:vim_svelte_plugin_load_full_syntax = 1 ]]
-        end
+        ft = 'svelte',
+        --config = function()
+        --    vim.g.vim_svelte_plugin_load_full_syntax = 1
+        --end
     }
 
     -- SVG
     use {
         'jasonshell/vim-svg-indent',
-        ft = {'svg'}
+        ft = 'svg'
     }
 
     -- SVG
     use {
         'vim-scripts/svg.vim',
-        ft = {'svg'}
+        ft = 'svg'
     }
 
     -- Swift
     use {
         'keith/swift.vim',
-        ft = {'swift'},
+        ft = 'swift'
     }
 
     -- Systemd
     use {
         'wgwoods/vim-systemd-syntax',
-        ft = {'systemd'}
+        ft = 'systemd'
     }
 
     -- SXHKD (bspwm)
     use {
         'baskerville/vim-sxhkdrc',
-        ft = {'sxhkdrc'}
+        ft = 'sxhkdrc'
     }
 
     -- Terraform
     use {
         'hashivim/vim-terraform',
-        ft = {'terraform'},
+        ft = 'terraform'
     }
 
     -- Textile
     use {
         'timcharper/textile.vim',
-        ft = {'textile'}
+        ft = 'textile'
     }
 
     -- Thrift
     use {
         'solarnz/thrift.vim',
-        ft = {'thrift'}
+        ft = 'thrift'
     }
 
     -- TomDoc
     use {
         'wellbredgrapefruit/tomdoc.vim',
-        ft = {'tomdoc'}
+        ft = 'tomdoc'
     }
 
     -- TPTP
     use {
         'c-cube/vim-tptp',
-        ft = {'tptp'}
+        ft = 'tptp'
     }
 
     -- Twig
     use {
         'lumiliet/vim-twig',
-        ft = {'twig'}
+        ft = 'twig'
     }
 
     -- V
     use {
         'ollykel/v-vim',
-        ft = {'v', 'vlang'}
+        ft = {
+            'v',
+            'vlang'
+        }
     }
 
     -- Vala
     use {
         'arrufat/vala.vim',
-        ft = {'vala'}
+        ft = 'vala'
     }
 
     -- VB.NET
     use {
         'vim-scripts/vbnet.vim',
-        ft = {'vb.net'}
+        ft = 'vb.net'
     }
 
     -- VCL
     use {
         'smerrill/vcl-vim-plugin',
-        ft = {'vcl'}
+        ft = 'vcl'
     }
 
     -- Velocity
     use {
         'lepture/vim-velocity',
-        ft = {'velocity'}
+        ft = 'velocity'
     }
 
     -- vifm
     use {
         'vifm/vifm.vim',
-        ft = {'vifm', 'vifm-rename'}
+        ft = {
+            'vifm',
+            'vifm-rename'
+        }
     }
 
     -- VHDL
     use {
         'suoto/vim-hdl',
-        ft = {'vhdl'}
+        ft = 'vhdl'
     }
 
     -- Vue
     use {
         'posva/vim-vue',
-        ft = {'vue'},
+        ft = 'vue'
     }
 
     -- XDC
     use {
         'amal-khailtash/vim-xdc-syntax',
-        ft = {'xdc'}
+        ft = 'xdc'
     }
 
     -- XSL
     use {
         'vim-scripts/XSLT-syntax',
-        ft = {'xsl'}
+        ft = 'xsl'
     }
 
     -- XML
     use {
         'amadeus/vim-xml',
-        ft = {'xml'}
+        ft = 'xml'
     }
 
     -- YAML
     use {
         'stephpy/vim-yaml',
-        ft = {'yaml'},
+        ft = 'yaml'
     }
 
     -- YANG
     use {
         'nathanalderson/yang.vim',
-        ft = {'yang'}
+        ft = 'yang'
     }
 
     -- YARD Documentation
     use {
         'sheerun/vim-yardoc',
-        ft = {'eruby', 'ruby'}
+        ft = {
+            'eruby',
+            'ruby'
+        }
     }
 
     -- Zephir
     use {
         'xwsoul/vim-zephir',
-        ft = {'zephir'}
+        ft = 'zephir'
     }
 
     -- Zig
     use {
         'ziglang/zig.vim',
-        ft = {'zig'}
+        ft = 'zig'
     }
 
     -- Zinit
     use {
         'zinit-zsh/zinit-vim-syntax',
-        ft = {'zsh'}
+        ft = 'zsh'
     }
 
     -- Zsh
     use {
         'chrisbra/vim-zsh',
-        ft = {'zsh'},
+        ft = 'zsh'
     }
 end
 
