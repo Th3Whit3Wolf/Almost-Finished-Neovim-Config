@@ -91,9 +91,11 @@ function mapping:load_plugin_define()
         -- ["n|<A-d>"] = map_cu('FloatermToggle'):with_noremap():with_silent(),
         -- ["t|<A-d>"] = map_cu([[<C-\><C-n>:FloatermToggle<CR>]]):with_noremap():with_silent(),
         -- ["n|<Leader>g"] = map_cu('FloatermNew height=0.7 width=0.8 lazygit'):with_noremap():with_silent(),
-
         -- Plugin Vista
-        ["n|<Leader>tv"] = map_cmd([[exists('g:vista.bufnr')>0 ? ":Vista! <CR>" : ":Vista<CR>" ]]):with_expr():with_silent(),
+        ["n|<Leader>tv"] = map_cmd('<cmd>Vista!!<CR>'):with_noremap():with_silent(),
+        -- Vim Easy Align
+        ["n|<Leader>a"] = map_cmd("<Plug>(EasyAlign)"):with_silent(),
+        ["v|<Leader>a"] = map_cmd("<Plug>(EasyAlign)"):with_silent(),
         -- Plugin vim-operator-replace
         -- ["x|p"] = map_cmd("<Plug>(operator-replace)"),
         -- Plugin vim-operator-surround
