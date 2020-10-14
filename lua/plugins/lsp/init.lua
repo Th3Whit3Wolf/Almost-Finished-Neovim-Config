@@ -66,9 +66,9 @@ vim.g.completion_customize_lsp_label = {
     Default       = ""
 }
 
-local on_attach = function(client, bufnr)
-    diagnostic.on_attach(client, bufnr)
-    completion.on_attach(client, bufnr, {
+local on_attach = function(client)
+    diagnostic.on_attach(client)
+    completion.on_attach(client, {
         sorting = 'alphabet',
         matching_strategy_list = {
             'exact',
@@ -80,31 +80,31 @@ local on_attach = function(client, bufnr)
 
     -- Keybindings for LSPs
     -- Note these are in on_attach so that they don't override bindings in a non-LSP setting
-    vim.fn.nvim_buf_set_keymap(0, "n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", {
+    vim.fn.nvim_buf_set_keymap(0, "n", "ch", "<cmd>lua vim.lsp.buf.hover()<CR>", {
         noremap = true,
         silent = true
     })
-    vim.fn.nvim_buf_set_keymap(0, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", {
+    vim.fn.nvim_buf_set_keymap(0, "n", "ci", "<cmd>lua vim.lsp.buf.implementation()<CR>", {
         noremap = true,
         silent = true
     })
-    vim.fn.nvim_buf_set_keymap(0, "n", "<c-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", {
+    vim.fn.nvim_buf_set_keymap(0, "n", "cs", "<cmd>lua vim.lsp.buf.signature_help()<CR>", {
         noremap = true,
         silent = true
     })
-    vim.fn.nvim_buf_set_keymap(0, "n", "1gD", "<cmd>lua vim.lsp.buf.type_definition()<CR>", {
+    vim.fn.nvim_buf_set_keymap(0, "n", "ct", "<cmd>lua vim.lsp.buf.type_definition()<CR>", {
         noremap = true,
         silent = true
     })
-    vim.fn.nvim_buf_set_keymap(0, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", {
+    vim.fn.nvim_buf_set_keymap(0, "n", "cr", "<cmd>lua vim.lsp.buf.references()<CR>", {
         noremap = true,
         silent = true
     })
-    vim.fn.nvim_buf_set_keymap(0, "n", "g0", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", {
+    vim.fn.nvim_buf_set_keymap(0, "n", "cd", "<cmd>lua vim.lsp.buf.document_symbol()<CR>", {
         noremap = true,
         silent = true
     })
-    vim.fn.nvim_buf_set_keymap(0, "n", "gW", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {
+    vim.fn.nvim_buf_set_keymap(0, "n", "gw", "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", {
         noremap = true,
         silent = true
     })
