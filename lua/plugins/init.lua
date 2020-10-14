@@ -15,7 +15,10 @@ local plugins = {
     "snippets.nvim", -- Snippets tool written in lua
     "nvim-colorizer.lua", -- high-performance color highlighter for Neovim
     "formatter.nvim", -- A format runner for neovim, written in lua
-    "plenary.nvim"
+    "surround.nvim", -- A surround text object plugin for neovim written in lua.
+    "plenary.nvim",
+    "space-nvim-theme", -- My spacemacs colorscheme
+    "Dusk-til-Dawn.nvim"
 }
 
 for _, plugin in ipairs(plugins) do
@@ -23,6 +26,7 @@ for _, plugin in ipairs(plugins) do
     vim.cmd('packadd ' .. plugin)
 end
 
+require 'Dusk-til-Dawn'
 require 'plugins/lsp'
 require 'plugins/snippets'
 
@@ -35,4 +39,24 @@ require'colorizer'.setup {
     html = {
         names = false
     } -- Disable parsing "names" like Blue or Gray
+}
+
+require"surround".setup{}
+
+vim.g.vista_default_executive = "ctags"
+vim.g.vista_executive_for = {
+    c          = "nvim_lsp",
+    cpp        = "nvim_lsp",
+    css        = "nvim_lsp",
+    dockerfile = "nvim_lsp",
+    fortran    = "nvim_lsp",
+    go         = "nvim_lsp",
+    lua        = "nvim_lsp",
+    javascript = "nvim_lsp",
+    python     = "nvim_lsp",
+    ruby       = "nvim_lsp",
+    rust       = "nvim_lsp",
+    sh         = "nvim_lsp",
+    tex        = "nvim_lsp",
+    typescript = "nvim_lsp",
 }
