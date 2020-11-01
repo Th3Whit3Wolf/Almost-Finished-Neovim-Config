@@ -41,11 +41,18 @@ function autocmd.load_autocmds()
         -- lazy_plugs = {},
         niceties = {
             {"Syntax", "*", [[if line('$') > 5000 | syntax sync minlines=300 | endif]]},
-            {"WinEnter,InsertLeave", "*", "set cursorline"}, {"WinLeave,InsertEnter", "*", "set nocursorline"},
+            {"BufEnter,WinEnter,InsertLeave,VimEnter", "*", "set cursorline"},
+            {"BufLeave,WinLeave,InsertEnter", "*", "set nocursorline"},
             {"BufWritePost", "*",
                 [[nested  if &l:filetype ==# '' || exists('b:ftdetect') | unlet! b:ftdetect | filetype detect | endif]]},
             {"BufReadPost", "*",
                 [[if &ft !~# 'commit' && ! &diff && line("'\"") >= 1 && line("'\"") <= line("$") | execute 'normal! g`"zvzz' | endif]]}
+        },
+        --- Current window has hybrid numbers
+        --- All other windows have absolute numbers
+        numberToggle = {
+            {"BufEnter,FocusGained,InsertLeave", "*", "set relativenumber"},
+            {"BufLeave,FocusLost,InsertEnter", "*", "set norelativenumber"}
         },
         wins = {
             -- Highlight current line only on focused window
