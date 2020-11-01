@@ -16,7 +16,7 @@ function mapping:load_vim_define()
         ["n|<C-x>"] = map_cr('bd!'):with_noremap(),
         ["n|<C-s>"] = map_cu('write'):with_noremap(),
         ["n|<C-z>"] = map_cu('undo'):with_noremap(),
-        ["n|<C-S-z>"] = map_cu('redo'):with_noremap(),
+        ["n|<M-z>"] = map_cu('redo'):with_noremap(),
         ["n|Y"] = map_cmd('y$'),
         ["n|q"] = map_cu('quit'),
         ["n|Q"] = map_cmd('q'):with_noremap(),
@@ -37,8 +37,8 @@ function mapping:load_vim_define()
         ["n|<S-Return>"] = map_cmd('zMzvzt'):with_noremap(),
         -- Insert
         ["i|<C-s>"] = map_cmd('<Esc>:w<CR>'),
-        ["i|<C-z>"] = map_cu('undo'):with_noremap(),
-        ["i|<C-S-z>"] = map_cu('redo'):with_noremap(),
+        ["i|<C-z>"] = map_cu('<Esc>:undo<CR>'):with_noremap(),
+        ["i|<M-z>"] = map_cu('<Esc>:redo<CR>'):with_noremap(),
         ["i|<C-q>"] = map_cmd('<Esc>:wq<CR>'),
         -- Visual
         ["v|j"] = map_cmd('gk'):with_noremap(),
@@ -47,7 +47,7 @@ function mapping:load_vim_define()
         ["v|<S-Tab>"] = map_cmd('<gv'):with_noremap(),
         ["v|<C-s>"] = map_cu('write'):with_noremap(),
         ["v|<C-z>"] = map_cu('undo'):with_noremap(),
-        ["v|<C-S-z>"] = map_cu('redo'):with_noremap(),
+        ["v|<M-z>"] = map_cu('redo'):with_noremap(),
         -- Leader
         -- :: Splits
         ["n|<leader>sv"] = map_cr('vsplit'):with_noremap(),
@@ -66,6 +66,14 @@ function mapping:load_vim_define()
     }
 end
 
+-- <c-k> will either expand the current snippet at the word or try to jump to
+-- the next position for the snippet.
+--inoremap <Tab> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
+
+-- <C-Tab> will jump backwards to the previous field.
+-- If you jump before the first field, it will cancel the snippet.
+--inoremap <C-Tab> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
+
 function mapping:load_plugin_define()
     self.plugin = {
         -- kyazdani42/nvim-tree.lua
@@ -77,12 +85,6 @@ function mapping:load_plugin_define()
         ["i|<S-TAB>"] = map_cmd([[pumvisible() ? "\<C-p>" : "\<S-Tab>"]]):with_noremap():with_expr():with_silent(),
             -- Allows completions to work with plugins that also map to enter
         ["i|''"] = map_cmd([[pumvisible() ? complete_info()["selected"] != "-1" ? "<Plug>(completion_confirm_completion)"  : "<c-e><CR>" :  "<CR>"]]):with_noremap():with_expr():with_silent(),
-        -- Plugin Clap
-        ["n|<Leader>ff"] = map_cu('Clap files ++finder=rg --ignore --hidden --files'):with_noremap():with_silent(),
-        ["n|<Leader>fh"] = map_cu('Clap history'):with_noremap():with_silent(),
-        ["n|<Leader>fa"] = map_cu('Clap grep2'):with_noremap():with_silent(),
-        ["n|<Leader>fb"] = map_cu('Clap marks'):with_noremap():with_silent(),
-
         -- a magic bind for regex [0-9]
         -- ["n|<Leader>,0,9"] = "<Plug>BuffetSwitch(+)",
         -- Plugin DadbodUI
