@@ -17,8 +17,11 @@ local plugins = {
     "formatter.nvim", -- A format runner for neovim, written in lua
     "surround.nvim", -- A surround text object plugin for neovim written in lua.
     "plenary.nvim",
+    "popup.nvim",
+    "telescope.nvim", -- highly extendable fuzzy finder over lists. Items are shown in a popup with a prompt to search over.
+    --"colorbuddy.nvim",
     "space-nvim-theme", -- My spacemacs colorscheme
-    "Dusk-til-Dawn.nvim"
+    "Dusk-til-Dawn.nvim", -- Automatically change colorscheme based on time
 }
 
 for _, plugin in ipairs(plugins) do
@@ -26,9 +29,14 @@ for _, plugin in ipairs(plugins) do
     vim.cmd('packadd ' .. plugin)
 end
 
-require 'Dusk-til-Dawn'
-require 'plugins/lsp'
-require 'plugins/snippets'
+require('plenary')
+
+-- Automatically require plugins
+-- Works for any plugin with a directory in plugins
+local len = string.len(vim.fn.stdpath("config") .. '/lua/') + 1
+for _,k in pairs(vim.fn.systemlist("fd . $HOME'/.config/nvim/lua/plugins' -t d -d 1")) do
+    require(string.sub(k, len))
+end
 
 -- Requires termguicolors to be set
 require'colorizer'.setup {
