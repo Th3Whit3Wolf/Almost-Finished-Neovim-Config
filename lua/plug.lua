@@ -6,6 +6,7 @@ local function init()
     if packer == nil then
         packer = require('packer')
         packer.init({
+            -- Compiles to ~/.local/share/nvim/site/plugin/packages.vim
             compile_path = global.local_nvim .. 'site' .. global.path_sep .. 'plugin' .. global.path_sep .. 'packges.vim',
             config = {
                 display = {
@@ -44,7 +45,7 @@ local function init()
         opt = true
     }
 
-    -- Vim plugin, insert or delete brackets, parens, quotes in pair 
+    -- Vim plugin, insert or delete brackets, parens, quotes in pair
     use {'jiangmiao/auto-pairs'}
 
     -- plugin for interacting with databases
@@ -58,12 +59,6 @@ local function init()
 
     -- Modern vim-startify
     use {'glepnir/dashboard-nvim'}
-
-    --  Modern performant generic finder and dispatcher for NeoVim
-    use {
-        'liuchengxu/vim-clap',
-        run = ':call clap#installer#force_download()'
-    }
 
     -- Tame the quickfix window
     use {'romainl/vim-qf'}
@@ -93,6 +88,18 @@ local function init()
     -- All the lua functions I don't want to write twice.
     use {
         'nvim-lua/plenary.nvim',
+        opt = true
+    }
+
+    -- An implementation of the Popup API from vim in Neovim
+    use {
+        'nvim-lua/popup.nvim',
+        opt = true
+    }
+
+    -- elescope is a highly extendable fuzzy finder over lists. Items are shown in a popup with a prompt to search over.
+    use {
+        'nvim-lua/telescope.nvim',
         opt = true
     }
 
@@ -143,8 +150,6 @@ local function init()
         --    vim.bo.foldmethod = 'expr'
         --    vim.bo.foldexpr = 'nvim_treesitter#foldexpr()'
         --end,
-        run = ':TSInstall all',
-        opt = true
     }
 
     -- Treesitter based completion sources.
@@ -295,6 +300,22 @@ local function init()
     -- My spacemacs colorscheme
     use {
         'Th3Whit3Wolf/space-nvim-theme',
+        opt = true,
+        branch = 'main'
+    }
+
+    use {
+        'tjdevries/colorbuddy.nvim',
+    }
+
+    use {
+        'Th3Whit3Wolf/onebuddy',
+        opt = true,
+        branch = 'main'
+    }
+
+    use {
+        'Th3Whit3Wolf/spacebuddy',
         opt = true,
         branch = 'main'
     }
@@ -471,9 +492,9 @@ local function init()
     use {
         'junegunn/rainbow_parentheses.vim',
         event = 'InsertEnter *',
-        config = function()
-            vim.cmd('RainbowParentheses')
-        end
+        -- config = function()
+            --vim.cmd('RainbowParentheses')
+        --end
     }
 
     -- Read DotEnv
@@ -704,6 +725,7 @@ local function init()
     -- Clojure
     use {
         'Olical/conjure',
+        tag = 'v4.8.0',
         ft = {
             'clojure',
             'fennel'
