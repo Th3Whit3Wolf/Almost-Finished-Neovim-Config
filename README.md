@@ -9,18 +9,18 @@ modular file structure. Lazy loading where it makes sense.
 - Take full advantage of builting tree-sitter
 - Take full advantage of lua based plugins
 - Remove need for just to be installed
-  - `plug.lua`, thanks to neopack can install plugins
-  - `settings`, can create directories and install python virtualenv and lsp
+  - `plug.lua`, thanks to [packer.nvim](https://github.com/wbthomason/packer.nvim) can install plugins
+  - `init.lua`, can create directories and install python virtualenv and lsp
   - Might create a `makefile` for update(or bake in that functionality)
 - All neovim settings set in lua
 - Put as much in lua as possible
 - Stay fast & keep lazy loading
 - More Custom plugins (in lua)
-  - Async builder/compiler/transpiler, runner, tester
-  - Async linter
-  - Async formatter
+  - Plugin that communicates via lsp that uses a programming languages:
+    - builder/compiler/transpiler, runner, tester
+    - linter
+    - formatter
   - Async (maybe incremental) tag generator
-  - ~~Maybe rework npack to be more easily used from neovim, with a plugin with an interface similiar to [vim-plug](https://github.com/junegunn/vim-plug) and [packer.nvim](https://github.com/wbthomason/packer.nvim)~~ [packer.nvim](https://github.com/wbthomason/packer.nvim) works great, creating a binary wouldn't provide much if any benefit
 
 <details>
   <summary>
@@ -101,6 +101,8 @@ modular file structure. Lazy loading where it makes sense.
 - Rust (curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh)
 - Neovim
 - git
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [fd](https://github.com/sharkdp/fd)
 - yarn (for vim-jsdoc)
 - Your Compiler and/or Interpreter
 - Your favorite Language Servers, Linters, and/or Code Formatters
@@ -170,19 +172,11 @@ Looks Like This
 
 ### Recommended Tools
 
-* [ripgrep](https://github.com/BurntSushi/ripgrep)
-
-  * Faster grepping (also used by vim-clap)
-
 * [fzy](https://github.com/jhawthorn/fzy)
 
   * Used by vim-claps
 
 * [sk](https://github.com/lotabout/skim)
-
-  * Used by vim-clap
-
-* [fd](https://github.com/sharkdp/fd)
 
   * Used by vim-clap
 
