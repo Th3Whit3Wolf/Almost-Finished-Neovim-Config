@@ -97,6 +97,22 @@ function M.leader_map()
     })
 end
 
+function M.commands()
+    -- Packer commands (dressed like vim-plug)
+    --- Only install missing plugins
+    api.nvim_command("command! PlugInstall execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').install()")
+    --- Update and install plugins
+    api.nvim_command("command! PlugUpdate  execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').update()")
+    --- Remove any disabled or unused plugins
+    api.nvim_command("command! PlugClean   execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').clean()")
+    --- Recompiles lazy loaded plugins
+    api.nvim_command("command! PlugCompile execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').compile()")
+    ---  -- Performs `PlugClean` and then `PlugUpdate`
+    api.nvim_command("command! PlugSync    execute 'luafile ' . stdpath('config') . '/lua/plug.lua' | packadd packer.nvim | lua require('plug').sync()")
+    --- Check if lsp is installed for current filetype
+    api.nvim_command("command! CheckLSP lua require('myplugins/lsp_install_prompt').check_lsp_installed()")
+end
+
 function M.load_core()
     M.disable_distribution_plugins()
     M.leader_map()
@@ -111,7 +127,10 @@ function M.load_core()
     map.load_mapping()
     autocmd.load_autocmds()
 
+    api.nvim_command("syntax enable")
+    api.nvim_command("filetype plugin indent on")
     require 'plugins'
+    M.commands()
 end
 
 M.load_core()
