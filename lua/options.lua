@@ -17,7 +17,7 @@ end
 
 function options:load_options()
     self.mouse = "a"; -- Enable mouse
-    self.report = 0; -- Automatically setting options from modelines
+    self.report = 2; -- 2 for telescope --0 Automatically setting options from modelines
     self.errorbells = true; -- Trigger bell on error
     self.visualbell = true; -- Use visual bell instead of beeping
     self.hidden = true; -- hide buffers when abandoned instead of unload
@@ -48,8 +48,6 @@ function options:load_options()
     -- Neovim Directories
     self.backup = false;
     self.writebackup = false;
-    self.undofile = true;
-    self.swapfile = true;
     self.undolevels = 1000; -- How many steps of undo history Vim should remember
     self.directory = global.cache_dir .. "swap/," .. global.cache_dir .. ",~/tmp,/var/tmp,/tmp";
     self.undodir = global.cache_dir .. "undo/," .. global.cache_dir .. ",~/tmp,/var/tmp,/tmp";
@@ -57,6 +55,7 @@ function options:load_options()
     self.backupskip = "/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim";
     self.viewdir = global.cache_dir .. "view/," .. global.cache_dir .. ",~/tmp,/var/tmp,/tmp";
     self.spellfile = global.cache_dir .. "spell/en.uft-8.add";
+    self.swapfile = true;
     self.history = 2000; -- History saving
     --  ShaDa/viminfo:
     --   ' - Maximum number of previously edited files marks
@@ -128,8 +127,8 @@ function options:load_options()
     self.ruler = false; -- Disable default status ruler
     self.list = true; -- Show hidden characters
     self.listchars = "tab:»·,nbsp:+,trail:·,extends:→,precedes:←";
-    self.cursorcolumn = false; -- Don't highlight the current column
-    self.cursorline = true; -- Highlight the current line
+    self.cursorcolumn = false; -- Highlight the current column
+    self.cursorline = false; -- Highlight the current line
 
     self.signcolumn = "yes"; -- Always show signcolumns
     self.laststatus = 2; -- Always show a status line
@@ -162,6 +161,8 @@ function options:load_options()
         vim.o[name] = value
         -- Show line numbers, surprisingly not a global options
         vim.wo.number = true
+        vim.bo.undofile = true;
+
     end
 end
 
